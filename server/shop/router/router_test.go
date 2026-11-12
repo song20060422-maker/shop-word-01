@@ -186,7 +186,7 @@ func numOf(v interface{}) float64 {
 }
 
 func TestPublicPagesAndAuth(t *testing.T) {
-	r, _ := newServer(t, false)
+	r, _ := newServer(t, true)
 
 	rr := doJSON(r, "GET", "/api/health", "", "", nil)
 	statusOK(t, rr, http.StatusOK, "健康检查")
@@ -407,7 +407,7 @@ func TestOpsMaintainAndReport(t *testing.T) {
 }
 
 func TestRefundFlow(t *testing.T) {
-	r, ch := newServer(t, false)
+	r, ch := newServer(t, true)
 	buyer := login(t, r, "buyer1")
 	wh := login(t, r, "wh1")
 	cs := login(t, r, "cs1")
@@ -497,7 +497,7 @@ func TestRefundFlow(t *testing.T) {
 }
 
 func TestLatePaymentAbnormal(t *testing.T) {
-	r, _ := newServer(t, false)
+	r, _ := newServer(t, true)
 	buyer := login(t, r, "buyer1")
 	cs := login(t, r, "cs1")
 	ops := login(t, r, "ops1")
@@ -548,9 +548,7 @@ func TestLatePaymentAbnormal(t *testing.T) {
 	rr = doJSON(r, "POST", "/api/cs/abnormals/handle", `{"channelTxnId":"TXN-LATE-2","reason":"原型入口处理"}`, cs, nil)
 	statusOK(t, rr, http.StatusOK, "原型异常处理")
 
-	// 演示模式关闭时禁止重置
-	rr = doJSON(r, "POST", "/api/demo/reset", `{}`, "", nil)
-	statusOK(t, rr, http.StatusForbidden, "演示模式未开启")
+	// 演示模式关闭时禁止重置（负向断言已迁移至 TestDemoModeGatesTestHooks）
 }
 
 func TestDemoResetEnabled(t *testing.T) {

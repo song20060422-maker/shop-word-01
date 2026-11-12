@@ -32,9 +32,15 @@ SUITES = ["normal", "stock", "refund", "late", "races"]
 def read_base_url() -> str:
     """从 config.yaml 的 shop 段解析端口，默认 8099。"""
     port = 8099
+    in_shop = False
     try:
         for line in open(CONFIG_YAML, encoding="utf-8"):
             low = line.strip()
+            if low and not low.startswith("#") and not low.startswith(" "):
+                in_shop = low.startswith("shop:")
+                continue
+            if not in_shop:
+                continue
             if low.startswith("addr:") or low.startswith("http-port:"):
                 port = int(low.split(":")[1].strip().strip('"'))
     except Exception:
