@@ -31,6 +31,12 @@
 | 24 | 2026-11-12 20:10 | 开发 Agent（本次会话） | 约束文件重构（I-07/I-21）：`.agents/dev-agent.md` 单文件拆为编号文件集 `00-index.md`~`09-bugfix.md`（技术栈/数据规则/工作流/配置部署/质量安全/自检/冲突/实现模式/缺陷修复），审计整改条款固化进对应文件；v3.0 全文归档 versions；本会话逐个编写并回读=实际加载，README 登记加载记录 | `.agents/00~09` + `dev-agent.md` v4.0 | T10 |
 | 25 | 2026-11-12 20:15 | 开发 Agent（本次会话） | shop_word 工作区精简：需求三件套+假设 v1.0 归入 `references/`，旧交付（shop/、agent-test/、index.html）归入 `archive/`（只读），顶层提示词并入 `提示词/`；根 README 建立新旧路径映射 | `shop_word/README.md` | T10 |
 | 26 | 2026-11-12 20:30 | 开发 Agent（本次会话） | 自编 Skill 实际调用（I-06/B3-02/03）：shop-trade-acceptance 首次调用 `check_evidence.py` 43/43 证据覆盖（产出 `evidence-check.md` + 40 项证据索引 `evidence-index.md`）；shop-trade-check 按 SKILL.md 直接调用逐套件 reset 复跑 **51/51**（日志 `acceptance-20261112-skill-call.log`）；skill-usage.md 登记调用 #4/#5 与直接/包装调用差异经验 | skill-usage.md、docs/evidence/* | T10 |
+| 27 | 2026-11-12 21:14 | 开发 Agent（batch3 后整改会话） | 审计 I-19：router 层新增 HTTP 数值对账测试 `TestHTTPNumericReconciliation`（金额快照、可售占用/释放、收退款汇总、库存流水守恒 initial+Σdelta==available），本机真实 MySQL 复跑通过 | router/router_test.go | T9 |
+| 28 | 2026-11-12 21:20 | 开发 Agent（batch3 后整改会话） | 审计 I-04：修复 `db/db_test.go` 三处硬编码 DSN（遵循 SHOP_TEST_DSN），Linux 容器（golang:1.26.10, CGO_ENABLED=1）执行 `go test -race -p 1 ./shop/...`，首轮发现 db 包环境性失败→修复→复跑全部 ok，DATA RACE 0；日志 `docs/evidence/race-20261112.log` | race-20261112.log | T9 |
+| 29 | 2026-11-12 21:25 | 开发 Agent（batch3 后整改会话） | 审计 I-08：GitHub MCP 建仓 `song20060422-maker/shop-word-01`（记录 `docs/evidence/github-mcp-repo-created.json`），git 推送 main + dev/01-shop 成功 | 远程仓库 | T10 |
+| 30 | 2026-11-12 21:31 | 开发 Agent（batch3 后整改会话） | 审计 I-12：推送触发 shop-ci 首次实际运行（run #1 @e067a24）；gofmt/vet/build/test/覆盖率/CI race 全部 success，冒烟步骤因 `go run .` 在 CI 全量编译超时失败 → 整改冒烟步骤为预编译二进制+240s 等待+失败打印日志 | .github/workflows/shop-ci.yml | T9 |
+| 31 | 2026-11-12 21:22 | 开发 Agent（batch3 后整改会话） | 审计 I-17：dev_log §4 提交清单补齐 24f694f~e067a24 共 11 条；`docs/evidence/sessions/export_sessions.ps1` 将 events.md 26 条事件导出为结构化 JSONL（UTF-8），产物 `sessions/events-20261112.jsonl` | dev_log.md、sessions/events-20261112.jsonl | T10 |
+| 32 | 2026-11-12 21:55 | 开发 Agent（batch3 后整改会话） | 本会话按需实际加载 `.agents` v4.0 编号文件集（00/03/05/09），README 登记加载记录 | .agents/README.md | T10 |
 
 ## 待补充的学生事件
 

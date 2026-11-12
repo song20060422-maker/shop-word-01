@@ -1,0 +1,19 @@
+{
+  "tool": "GitHub MCP create_repository",
+  "recorded_at": "2026-11-12 21:25 +08:00",
+  "request": {
+    "name": "shop-word-01",
+    "description": "题目01：小型电商的订单交易、发货与售前退款（Go + gin-vue-admin，dev/01-shop 分支开发）",
+    "private": true,
+    "autoInit": false
+  },
+  "result": {
+    "id": 1455334512,
+    "full_name": "song20060422-maker/shop-word-01",
+    "html_url": "https://github.com/song20060422-maker/shop-word-01",
+    "clone_url": "https://github.com/song20060422-maker/shop-word-01.git",
+    "default_branch": "main",
+    "created_at": "2026-11-12T13:24:17Z"
+  },
+  "purpose": "审计 I-08：GitHub MCP 建仓留证（每题独立仓库）"
+}

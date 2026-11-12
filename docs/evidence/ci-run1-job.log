@@ -1,0 +1,752 @@
+ï»¿2026-11-12T13:31:17.1235806Z Current runner version: '2.338.2'
+2026-11-12T13:31:17.1265139Z ##[group]Runner Image Provisioner
+2026-11-12T13:31:17.1266018Z Hosted Compute Agent
+2026-11-12T13:31:17.1266717Z Version: 20261028.624
+2026-11-12T13:31:17.1267379Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-12T13:31:17.1268141Z Build Date: 2026-10-28T21:51:42Z
+2026-11-12T13:31:17.1268877Z Worker ID: {a06a3230-823b-47dc-a6e9-47c3de155ed2}
+2026-11-12T13:31:17.1269594Z Region: us-east-1
+2026-11-12T13:31:17.1270520Z Cloud: AWS
+2026-11-12T13:31:17.1271161Z ##[endgroup]
+2026-11-12T13:31:17.1272850Z ##[group]Operating System
+2026-11-12T13:31:17.1273523Z Ubuntu
+2026-11-12T13:31:17.1274058Z 24.04.5
+2026-11-12T13:31:17.1274648Z LTS
+2026-11-12T13:31:17.1275202Z ##[endgroup]
+2026-11-12T13:31:17.1275773Z ##[group]Runner Image
+2026-11-12T13:31:17.1276436Z Image: ubuntu-24.04
+2026-11-12T13:31:17.1277024Z Version: 20261101.114.1
+2026-11-12T13:31:17.1278353Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.114/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-12T13:31:17.1280216Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.114
+2026-11-12T13:31:17.1281271Z ##[endgroup]
+2026-11-12T13:31:17.1282524Z ##[group]GITHUB_TOKEN Permissions
+2026-11-12T13:31:17.1285099Z Contents: read
+2026-11-12T13:31:17.1285713Z Metadata: read
+2026-11-12T13:31:17.1286323Z Packages: read
+2026-11-12T13:31:17.1286880Z ##[endgroup]
+2026-11-12T13:31:17.1289148Z Secret source: Actions
+2026-11-12T13:31:17.1290362Z Cache mode: write
+2026-11-12T13:31:17.1291424Z Prepare workflow directory
+2026-11-12T13:31:17.1753001Z Prepare all required actions
+2026-11-12T13:31:17.1807425Z Getting action download info
+2026-11-12T13:31:17.3738378Z Download action repository 'actions/checkout@v4' (SHA:11d5960a326750d5838078e36cf38b85af677262)
+2026-11-12T13:31:19.7041687Z Download action repository 'actions/setup-go@v5' (SHA:40f1582b2485089dde7abd97c1529aa768e1baff)
+2026-11-12T13:31:19.8606608Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-11-12T13:31:20.1769592Z Complete job name: è´¨éé¨ç¦ï¼gofmt / vet / build / test / è¦çç / raceï¼
+2026-11-12T13:31:20.2248637Z ##[group]Checking docker version
+2026-11-12T13:31:20.2259215Z ##[command]/usr/bin/docker version --format '{{.Server.APIVersion}}'
+2026-11-12T13:31:21.9681112Z '1.48'
+2026-11-12T13:31:21.9695469Z Docker daemon API version: '1.48'
+2026-11-12T13:31:21.9695999Z ##[command]/usr/bin/docker version --format '{{.Client.APIVersion}}'
+2026-11-12T13:31:21.9883630Z '1.48'
+2026-11-12T13:31:21.9885294Z Docker client API version: '1.48'
+2026-11-12T13:31:21.9889705Z ##[endgroup]
+2026-11-12T13:31:21.9892563Z ##[group]Clean up resources from previous jobs
+2026-11-12T13:31:21.9896166Z ##[command]/usr/bin/docker ps --all --quiet --no-trunc --filter "label=728b02"
+2026-11-12T13:31:22.0021233Z ##[command]/usr/bin/docker network prune --force --filter "label=728b02"
+2026-11-12T13:31:22.0126477Z ##[endgroup]
+2026-11-12T13:31:22.0126910Z ##[group]Create local container network
+2026-11-12T13:31:22.0134221Z ##[command]/usr/bin/docker network create --label 728b02 github_network_ffa38da164a34f28bce6be7a4ad222dd
+2026-11-12T13:31:22.0614150Z 6ceea92682b10258f1ce90238e30eb600363b9ef61d83919822a1ae11cb459e0
+2026-11-12T13:31:22.0628116Z ##[endgroup]
+2026-11-12T13:31:22.0649845Z ##[group]Starting mysql service container
+2026-11-12T13:31:22.0666652Z ##[command]/usr/bin/docker pull mysql:8.0
+2026-11-12T13:31:22.3044899Z 8.0: Pulling from library/mysql
+2026-11-12T13:31:22.4453494Z edf85873f64e: Pulling fs layer
+2026-11-12T13:31:22.4454511Z 6ef6c7b50a93: Pulling fs layer
+2026-11-12T13:31:22.4454986Z e3e5d1ac74c1: Pulling fs layer
+2026-11-12T13:31:22.4455356Z 0d74d296605b: Pulling fs layer
+2026-11-12T13:31:22.4455905Z 297d04cfe470: Pulling fs layer
+2026-11-12T13:31:22.4456328Z 4c8a3e0d4e4b: Pulling fs layer
+2026-11-12T13:31:22.4456697Z a63160a5eda1: Pulling fs layer
+2026-11-12T13:31:22.4457183Z 7534d1db9f8d: Pulling fs layer
+2026-11-12T13:31:22.4457601Z 49ec2dab01d9: Pulling fs layer
+2026-11-12T13:31:22.4458529Z ab24264a27e9: Pulling fs layer
+2026-11-12T13:31:22.4458926Z 96d30d9fbee8: Pulling fs layer
+2026-11-12T13:31:22.4459304Z 0d74d296605b: Waiting
+2026-11-12T13:31:22.4459700Z 297d04cfe470: Waiting
+2026-11-12T13:31:22.4460516Z 4c8a3e0d4e4b: Waiting
+2026-11-12T13:31:22.4460989Z a63160a5eda1: Waiting
+2026-11-12T13:31:22.4461340Z 7534d1db9f8d: Waiting
+2026-11-12T13:31:22.4461716Z 49ec2dab01d9: Waiting
+2026-11-12T13:31:22.4462082Z ab24264a27e9: Waiting
+2026-11-12T13:31:22.4462437Z 96d30d9fbee8: Waiting
+2026-11-12T13:31:22.4898464Z 6ef6c7b50a93: Verifying Checksum
+2026-11-12T13:31:22.4899029Z 6ef6c7b50a93: Download complete
+2026-11-12T13:31:22.4915899Z e3e5d1ac74c1: Verifying Checksum
+2026-11-12T13:31:22.4917672Z e3e5d1ac74c1: Download complete
+2026-11-12T13:31:22.5472649Z 297d04cfe470: Download complete
+2026-11-12T13:31:22.5719147Z 0d74d296605b: Download complete
+2026-11-12T13:31:22.5925227Z 4c8a3e0d4e4b: Verifying Checksum
+2026-11-12T13:31:22.5927235Z 4c8a3e0d4e4b: Download complete
+2026-11-12T13:31:22.6322912Z 7534d1db9f8d: Verifying Checksum
+2026-11-12T13:31:22.6330503Z 7534d1db9f8d: Download complete
+2026-11-12T13:31:22.9392697Z edf85873f64e: Verifying Checksum
+2026-11-12T13:31:22.9393755Z edf85873f64e: Download complete
+2026-11-12T13:31:22.9955767Z ab24264a27e9: Verifying Checksum
+2026-11-12T13:31:22.9958659Z ab24264a27e9: Download complete
+2026-11-12T13:31:23.0538098Z 96d30d9fbee8: Verifying Checksum
+2026-11-12T13:31:23.0550200Z 96d30d9fbee8: Download complete
+2026-11-12T13:31:23.0896200Z a63160a5eda1: Verifying Checksum
+2026-11-12T13:31:23.0901592Z a63160a5eda1: Download complete
+2026-11-12T13:31:23.8308148Z edf85873f64e: Pull complete
+2026-11-12T13:31:23.8383365Z 6ef6c7b50a93: Pull complete
+2026-11-12T13:31:23.8535748Z e3e5d1ac74c1: Pull complete
+2026-11-12T13:31:23.9504164Z 49ec2dab01d9: Verifying Checksum
+2026-11-12T13:31:23.9510306Z 49ec2dab01d9: Download complete
+2026-11-12T13:31:23.9746323Z 0d74d296605b: Pull complete
+2026-11-12T13:31:23.9816400Z 297d04cfe470: Pull complete
+2026-11-12T13:31:23.9856599Z 4c8a3e0d4e4b: Pull complete
+2026-11-12T13:31:24.5764192Z a63160a5eda1: Pull complete
+2026-11-12T13:31:24.5823198Z 7534d1db9f8d: Pull complete
+2026-11-12T13:31:28.2013720Z 49ec2dab01d9: Pull complete
+2026-11-12T13:31:28.2060211Z ab24264a27e9: Pull complete
+2026-11-12T13:31:28.2129251Z 96d30d9fbee8: Pull complete
+2026-11-12T13:31:28.2152214Z Digest: sha256:7dcddc01f13bab2f15cde676d44d01f61fc9f99fe7785e86196dfc07d358ae2b
+2026-11-12T13:31:28.2159872Z Status: Downloaded newer image for mysql:8.0
+2026-11-12T13:31:28.2167303Z docker.io/library/mysql:8.0
+2026-11-12T13:31:28.2217842Z ##[command]/usr/bin/docker create --name 4e987baffb9240afad2f9aaacfd52ce9_mysql80_1ddc2c --label 728b02 --network github_network_ffa38da164a34f28bce6be7a4ad222dd --network-alias mysql -p 3307:3306 --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot" --health-interval=5s --health-timeout=5s --health-retries=20 -e "MYSQL_ROOT_PASSWORD=root" -e "MYSQL_DATABASE=shop_test_service" -e GITHUB_ACTIONS=true -e CI=true mysql:8.0
+2026-11-12T13:31:33.8998733Z 372323423dc0cb24dcf8beb6ebe5ade4a3dc04d765a4526ac8791ea04fa2132b
+2026-11-12T13:31:33.9028666Z ##[command]/usr/bin/docker start 372323423dc0cb24dcf8beb6ebe5ade4a3dc04d765a4526ac8791ea04fa2132b
+2026-11-12T13:31:34.7446795Z 372323423dc0cb24dcf8beb6ebe5ade4a3dc04d765a4526ac8791ea04fa2132b
+2026-11-12T13:31:34.7464306Z ##[command]/usr/bin/docker ps --all --filter id=372323423dc0cb24dcf8beb6ebe5ade4a3dc04d765a4526ac8791ea04fa2132b --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2026-11-12T13:31:34.7631091Z 372323423dc0cb24dcf8beb6ebe5ade4a3dc04d765a4526ac8791ea04fa2132b Up Less than a second (health: starting)
+2026-11-12T13:31:34.7661255Z ##[command]/usr/bin/docker port 372323423dc0cb24dcf8beb6ebe5ade4a3dc04d765a4526ac8791ea04fa2132b
+2026-11-12T13:31:34.7821744Z 3306/tcp -> 0.0.0.0:3307
+2026-11-12T13:31:34.7822588Z 3306/tcp -> [::]:3307
+2026-11-12T13:31:34.7917409Z ##[endgroup]
+2026-11-12T13:31:34.7919161Z ##[group]Starting redis service container
+2026-11-12T13:31:34.7921019Z ##[command]/usr/bin/docker pull redis:7
+2026-11-12T13:31:35.0288942Z 7: Pulling from library/redis
+2026-11-12T13:31:35.1024349Z dd051e1b8c92: Pulling fs layer
+2026-11-12T13:31:35.1025193Z 94e14de0ef29: Pulling fs layer
+2026-11-12T13:31:35.1025461Z e68f2e5c8d50: Pulling fs layer
+2026-11-12T13:31:35.1025753Z f43705d71c46: Pulling fs layer
+2026-11-12T13:31:35.1026035Z 1af2d1c5b5d7: Pulling fs layer
+2026-11-12T13:31:35.1026320Z 4f4fb700ef54: Pulling fs layer
+2026-11-12T13:31:35.1026585Z b978112db001: Pulling fs layer
+2026-11-12T13:31:35.1026826Z 1af2d1c5b5d7: Waiting
+2026-11-12T13:31:35.1027053Z 4f4fb700ef54: Waiting
+2026-11-12T13:31:35.1029423Z b978112db001: Waiting
+2026-11-12T13:31:35.1030382Z f43705d71c46: Waiting
+2026-11-12T13:31:35.1523461Z 94e14de0ef29: Verifying Checksum
+2026-11-12T13:31:35.1524611Z 94e14de0ef29: Download complete
+2026-11-12T13:31:35.1531132Z e68f2e5c8d50: Verifying Checksum
+2026-11-12T13:31:35.1539599Z e68f2e5c8d50: Download complete
+2026-11-12T13:31:35.1968956Z 1af2d1c5b5d7: Download complete
+2026-11-12T13:31:35.2473645Z 4f4fb700ef54: Verifying Checksum
+2026-11-12T13:31:35.2480780Z 4f4fb700ef54: Download complete
+2026-11-12T13:31:35.2917766Z b978112db001: Verifying Checksum
+2026-11-12T13:31:35.2920780Z b978112db001: Download complete
+2026-11-12T13:31:35.3307273Z f43705d71c46: Verifying Checksum
+2026-11-12T13:31:35.3308720Z f43705d71c46: Download complete
+2026-11-12T13:31:35.4074156Z dd051e1b8c92: Verifying Checksum
+2026-11-12T13:31:35.4075881Z dd051e1b8c92: Download complete
+2026-11-12T13:31:36.5264533Z dd051e1b8c92: Pull complete
+2026-11-12T13:31:36.5334736Z 94e14de0ef29: Pull complete
+2026-11-12T13:31:36.5377636Z e68f2e5c8d50: Pull complete
+2026-11-12T13:31:36.7187254Z f43705d71c46: Pull complete
+2026-11-12T13:31:36.7247775Z 1af2d1c5b5d7: Pull complete
+2026-11-12T13:31:36.7291168Z 4f4fb700ef54: Pull complete
+2026-11-12T13:31:36.7335453Z b978112db001: Pull complete
+2026-11-12T13:31:36.7356166Z Digest: sha256:2e3eb11462c4e3759e6972678dd051d150ff54b1e60714b3c33b701260172a90
+2026-11-12T13:31:36.7361919Z Status: Downloaded newer image for redis:7
+2026-11-12T13:31:36.7370688Z docker.io/library/redis:7
+2026-11-12T13:31:36.7381144Z ##[command]/usr/bin/docker create --name 64a51e4993d9403eb4e083a926f08733_redis7_ff84ed --label 728b02 --network github_network_ffa38da164a34f28bce6be7a4ad222dd --network-alias redis -p 6379:6379 --health-cmd="redis-cli ping" --health-interval=5s --health-timeout=5s --health-retries=10 -e GITHUB_ACTIONS=true -e CI=true redis:7
+2026-11-12T13:31:36.8916756Z 92c0eba13789058a9e4bc71e0d3fbc4da8fdab5bfe9149fe21492ba5deda74a6
+2026-11-12T13:31:36.8920588Z ##[command]/usr/bin/docker start 92c0eba13789058a9e4bc71e0d3fbc4da8fdab5bfe9149fe21492ba5deda74a6
+2026-11-12T13:31:37.0077812Z 92c0eba13789058a9e4bc71e0d3fbc4da8fdab5bfe9149fe21492ba5deda74a6
+2026-11-12T13:31:37.0099862Z ##[command]/usr/bin/docker ps --all --filter id=92c0eba13789058a9e4bc71e0d3fbc4da8fdab5bfe9149fe21492ba5deda74a6 --filter status=running --no-trunc --format "{{.ID}} {{.Status}}"
+2026-11-12T13:31:37.0246548Z 92c0eba13789058a9e4bc71e0d3fbc4da8fdab5bfe9149fe21492ba5deda74a6 Up Less than a second (health: starting)
+2026-11-12T13:31:37.0258451Z ##[command]/usr/bin/docker port 92c0eba13789058a9e4bc71e0d3fbc4da8fdab5bfe9149fe21492ba5deda74a6
+2026-11-12T13:31:37.0387790Z 6379/tcp -> 0.0.0.0:6379
+2026-11-12T13:31:37.0390514Z 6379/tcp -> [::]:6379
+2026-11-12T13:31:37.0396728Z ##[endgroup]
+2026-11-12T13:31:37.0405770Z ##[group]Waiting for all services to be ready
+2026-11-12T13:31:37.0417453Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 372323423dc0cb24dcf8beb6ebe5ade4a3dc04d765a4526ac8791ea04fa2132b
+2026-11-12T13:31:37.0529741Z starting
+2026-11-12T13:31:37.0543951Z mysql service is starting, waiting 2 seconds before checking again.
+2026-11-12T13:31:39.0547488Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 372323423dc0cb24dcf8beb6ebe5ade4a3dc04d765a4526ac8791ea04fa2132b
+2026-11-12T13:31:39.0729698Z starting
+2026-11-12T13:31:39.0755454Z mysql service is starting, waiting 4 seconds before checking again.
+2026-11-12T13:31:43.2177020Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 372323423dc0cb24dcf8beb6ebe5ade4a3dc04d765a4526ac8791ea04fa2132b
+2026-11-12T13:31:43.2292225Z starting
+2026-11-12T13:31:43.2301353Z mysql service is starting, waiting 8 seconds before checking again.
+2026-11-12T13:31:51.4731342Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 372323423dc0cb24dcf8beb6ebe5ade4a3dc04d765a4526ac8791ea04fa2132b
+2026-11-12T13:31:51.4852778Z healthy
+2026-11-12T13:31:51.4866281Z mysql service is healthy.
+2026-11-12T13:31:51.4867449Z ##[command]/usr/bin/docker inspect --format="{{if .Config.Healthcheck}}{{print .State.Health.Status}}{{end}}" 92c0eba13789058a9e4bc71e0d3fbc4da8fdab5bfe9149fe21492ba5deda74a6
+2026-11-12T13:31:51.4971113Z healthy
+2026-11-12T13:31:51.4980595Z redis service is healthy.
+2026-11-12T13:31:51.4981309Z ##[endgroup]
+2026-11-12T13:31:51.5213903Z ##[group]Run actions/checkout@v4
+2026-11-12T13:31:51.5214285Z with:
+2026-11-12T13:31:51.5214529Z   repository: song20060422-maker/shop-word-01
+2026-11-12T13:31:51.5216580Z   token: ***
+2026-11-12T13:31:51.5216813Z   ssh-strict: true
+2026-11-12T13:31:51.5217057Z   ssh-user: git
+2026-11-12T13:31:51.5217287Z   persist-credentials: true
+2026-11-12T13:31:51.5217533Z   clean: true
+2026-11-12T13:31:51.5217813Z   sparse-checkout-cone-mode: true
+2026-11-12T13:31:51.5218082Z   fetch-depth: 1
+2026-11-12T13:31:51.5218342Z   fetch-tags: false
+2026-11-12T13:31:51.5218571Z   show-progress: true
+2026-11-12T13:31:51.5218792Z   lfs: false
+2026-11-12T13:31:51.5219041Z   submodules: false
+2026-11-12T13:31:51.5219272Z   set-safe-directory: true
+2026-11-12T13:31:51.5219534Z   allow-unsafe-pr-checkout: false
+2026-11-12T13:31:51.5219885Z ##[endgroup]
+2026-11-12T13:31:54.9436654Z Syncing repository: song20060422-maker/shop-word-01
+2026-11-12T13:31:54.9437874Z ##[group]Getting Git version info
+2026-11-12T13:31:54.9438403Z Working directory is '/home/runner/work/shop-word-01/shop-word-01'
+2026-11-12T13:31:54.9438988Z [command]/usr/bin/git version
+2026-11-12T13:31:55.2670266Z git version 2.56.0
+2026-11-12T13:31:55.2677730Z ##[endgroup]
+2026-11-12T13:31:55.2690314Z Temporarily overriding HOME='/home/runner/work/_temp/98c63bf9-f9fa-4f9d-9f32-19986a2af8e5' before making global git config changes
+2026-11-12T13:31:55.2691542Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-12T13:31:55.2695029Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/shop-word-01/shop-word-01
+2026-11-12T13:31:55.3064478Z Deleting the contents of '/home/runner/work/shop-word-01/shop-word-01'
+2026-11-12T13:31:55.3073672Z ##[group]Initializing the repository
+2026-11-12T13:31:55.3074379Z [command]/usr/bin/git init /home/runner/work/shop-word-01/shop-word-01
+2026-11-12T13:31:55.3558249Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-11-12T13:31:55.3558974Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-11-12T13:31:55.3559434Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-11-12T13:31:55.3560088Z hint: call:
+2026-11-12T13:31:55.3560622Z hint:
+2026-11-12T13:31:55.3561093Z hint: 	git config --global init.defaultBranch <name>
+2026-11-12T13:31:55.3561558Z hint:
+2026-11-12T13:31:55.3562198Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-11-12T13:31:55.3562735Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-11-12T13:31:55.3563129Z hint:
+2026-11-12T13:31:55.3563436Z hint: 	git branch -m <name>
+2026-11-12T13:31:55.3564167Z hint:
+2026-11-12T13:31:55.3564633Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-11-12T13:31:55.3571762Z Initialized empty Git repository in /home/runner/work/shop-word-01/shop-word-01/.git/
+2026-11-12T13:31:55.3581032Z [command]/usr/bin/git remote add origin https://github.com/song20060422-maker/shop-word-01
+2026-11-12T13:31:55.3632550Z ##[endgroup]
+2026-11-12T13:31:55.3633416Z ##[group]Disabling automatic garbage collection
+2026-11-12T13:31:55.3634209Z [command]/usr/bin/git config --local gc.auto 0
+2026-11-12T13:31:55.3660555Z ##[endgroup]
+2026-11-12T13:31:55.3661407Z ##[group]Setting up auth
+2026-11-12T13:31:55.3666504Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T13:31:55.3696740Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T13:31:55.8413665Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T13:31:55.8440951Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T13:31:55.8594801Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T13:31:55.8615378Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T13:31:55.8779754Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-11-12T13:31:55.8798960Z ##[endgroup]
+2026-11-12T13:31:55.8800528Z ##[group]Fetching the repository
+2026-11-12T13:31:55.8812471Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +e067a243cb0411fb5de2bf46ffa9548c21cf90ea:refs/remotes/origin/dev/01-shop
+2026-11-12T13:31:56.3203674Z From https://github.com/song20060422-maker/shop-word-01
+2026-11-12T13:31:56.3204859Z  * [new ref]         e067a243cb0411fb5de2bf46ffa9548c21cf90ea -> origin/dev/01-shop
+2026-11-12T13:31:56.3207181Z ##[endgroup]
+2026-11-12T13:31:56.3207721Z ##[group]Determining the checkout info
+2026-11-12T13:31:56.3208318Z ##[endgroup]
+2026-11-12T13:31:56.3217665Z [command]/usr/bin/git sparse-checkout disable
+2026-11-12T13:31:56.3331383Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-11-12T13:31:56.3367669Z ##[group]Checking out the ref
+2026-11-12T13:31:56.3368600Z [command]/usr/bin/git checkout --progress --force -B dev/01-shop refs/remotes/origin/dev/01-shop
+2026-11-12T13:31:56.3754265Z Switched to a new branch 'dev/01-shop'
+2026-11-12T13:31:56.3768425Z branch 'dev/01-shop' set up to track 'origin/dev/01-shop'.
+2026-11-12T13:31:56.3770247Z ##[endgroup]
+2026-11-12T13:31:56.3813495Z [command]/usr/bin/git log -1 --format=%H
+2026-11-12T13:31:56.3851022Z e067a243cb0411fb5de2bf46ffa9548c21cf90ea
+2026-11-12T13:31:56.4037019Z ##[group]Run actions/setup-go@v5
+2026-11-12T13:31:56.4037314Z with:
+2026-11-12T13:31:56.4037543Z   go-version-file: server/go.mod
+2026-11-12T13:31:56.4037876Z   cache-dependency-path: server/go.sum
+2026-11-12T13:31:56.4038144Z   check-latest: false
+2026-11-12T13:31:56.4040098Z   token: ***
+2026-11-12T13:31:56.4040364Z   cache: true
+2026-11-12T13:31:56.4040578Z ##[endgroup]
+2026-11-12T13:31:56.5137247Z Setup go version spec 1.26.10
+2026-11-12T13:31:56.5503133Z Found in cache @ /opt/hostedtoolcache/go/1.26.10/x64
+2026-11-12T13:31:56.5504679Z (node:2866) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-12T13:31:56.5505703Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-12T13:31:56.5509063Z Added go to the path
+2026-11-12T13:31:56.5514668Z Successfully set up Go version 1.26.10
+2026-11-12T13:31:57.4447947Z [command]/opt/hostedtoolcache/go/1.26.10/x64/bin/go env GOMODCACHE
+2026-11-12T13:31:57.4487446Z [command]/opt/hostedtoolcache/go/1.26.10/x64/bin/go env GOCACHE
+2026-11-12T13:31:57.4513337Z /home/runner/go/pkg/mod
+2026-11-12T13:31:57.4541004Z /home/runner/.cache/go-build
+2026-11-12T13:31:57.6197570Z Cache is not found
+2026-11-12T13:31:57.6223770Z go version go1.26.10 linux/amd64
+2026-11-12T13:31:57.6224195Z 
+2026-11-12T13:31:57.6224734Z ##[group]go env
+2026-11-12T13:31:59.3585475Z AR='ar'
+2026-11-12T13:31:59.3585904Z CC='gcc'
+2026-11-12T13:31:59.3586395Z CGO_CFLAGS='-O2 -g'
+2026-11-12T13:31:59.3586715Z CGO_CPPFLAGS=''
+2026-11-12T13:31:59.3587024Z CGO_CXXFLAGS='-O2 -g'
+2026-11-12T13:31:59.3587328Z CGO_ENABLED='1'
+2026-11-12T13:31:59.3587632Z CGO_FFLAGS='-O2 -g'
+2026-11-12T13:31:59.3587959Z CGO_LDFLAGS='-O2 -g'
+2026-11-12T13:31:59.3590296Z CXX='g++'
+2026-11-12T13:31:59.3590664Z GCCGO='gccgo'
+2026-11-12T13:31:59.3591126Z GO111MODULE=''
+2026-11-12T13:31:59.3591410Z GOAMD64='v1'
+2026-11-12T13:31:59.3591940Z GOARCH='amd64'
+2026-11-12T13:31:59.3592201Z GOAUTH='netrc'
+2026-11-12T13:31:59.3592657Z GOBIN=''
+2026-11-12T13:31:59.3592983Z GOCACHE='/home/runner/.cache/go-build'
+2026-11-12T13:31:59.3593501Z GOCACHEPROG=''
+2026-11-12T13:31:59.3593790Z GODEBUG=''
+2026-11-12T13:31:59.3594282Z GOENV='/home/runner/.config/go/env'
+2026-11-12T13:31:59.3594582Z GOEXE=''
+2026-11-12T13:31:59.3595004Z GOEXPERIMENT=''
+2026-11-12T13:31:59.3595284Z GOFIPS140='off'
+2026-11-12T13:31:59.3595732Z GOFLAGS=''
+2026-11-12T13:31:59.3596566Z GOGCCFLAGS='-fPIC -m64 -pthread -Wl,--no-gc-sections -fmessage-length=0 -ffile-prefix-map=/tmp/go-build133881102=/tmp/go-build -gno-record-gcc-switches'
+2026-11-12T13:31:59.3597347Z GOHOSTARCH='amd64'
+2026-11-12T13:31:59.3597836Z GOHOSTOS='linux'
+2026-11-12T13:31:59.3598165Z GOINSECURE=''
+2026-11-12T13:31:59.3598553Z GOMOD='/dev/null'
+2026-11-12T13:31:59.3598870Z GOMODCACHE='/home/runner/go/pkg/mod'
+2026-11-12T13:31:59.3599372Z GONOPROXY=''
+2026-11-12T13:31:59.3599689Z GONOSUMDB=''
+2026-11-12T13:31:59.3600264Z GOOS='linux'
+2026-11-12T13:31:59.3601201Z GOPATH='/home/runner/go'
+2026-11-12T13:31:59.3602143Z GOPRIVATE=''
+2026-11-12T13:31:59.3602634Z GOPROXY='https://proxy.golang.org,direct'
+2026-11-12T13:31:59.3603197Z GOROOT='/opt/hostedtoolcache/go/1.26.10/x64'
+2026-11-12T13:31:59.3603600Z GOSUMDB='sum.golang.org'
+2026-11-12T13:31:59.3603890Z GOTELEMETRY='local'
+2026-11-12T13:31:59.3604376Z GOTELEMETRYDIR='/home/runner/.config/go/telemetry'
+2026-11-12T13:31:59.3604780Z GOTMPDIR=''
+2026-11-12T13:31:59.3605074Z GOTOOLCHAIN='auto'
+2026-11-12T13:31:59.3605617Z GOTOOLDIR='/opt/hostedtoolcache/go/1.26.10/x64/pkg/tool/linux_amd64'
+2026-11-12T13:31:59.3606029Z GOVCS=''
+2026-11-12T13:31:59.3606324Z GOVERSION='go1.26.10'
+2026-11-12T13:31:59.3606597Z GOWORK=''
+2026-11-12T13:31:59.3606872Z PKG_CONFIG='pkg-config'
+2026-11-12T13:31:59.3607100Z 
+2026-11-12T13:31:59.3608103Z ##[endgroup]
+2026-11-12T13:31:59.3714092Z ##[group]Run go mod download
+2026-11-12T13:31:59.3714499Z [36;1mgo mod download[0m
+2026-11-12T13:31:59.3742921Z shell: /usr/bin/bash -e {0}
+2026-11-12T13:31:59.3743228Z ##[endgroup]
+2026-11-12T13:32:10.1164441Z ##[group]Run out=$(gofmt -l shop initialize/router_biz.go)
+2026-11-12T13:32:10.1164883Z [36;1mout=$(gofmt -l shop initialize/router_biz.go)[0m
+2026-11-12T13:32:10.1165246Z [36;1mif [ -n "$out" ]; then[0m
+2026-11-12T13:32:10.1165593Z [36;1m  echo "ä»¥ä¸æä»¶ä¸ç¬¦å gofmtï¼éç»ä¸ LF + æ åæ ¼å¼ï¼ï¼"[0m
+2026-11-12T13:32:10.1165892Z [36;1m  echo "$out"[0m
+2026-11-12T13:32:10.1166148Z [36;1m  exit 1[0m
+2026-11-12T13:32:10.1166353Z [36;1mfi[0m
+2026-11-12T13:32:10.1190475Z shell: /usr/bin/bash -e {0}
+2026-11-12T13:32:10.1190944Z ##[endgroup]
+2026-11-12T13:32:10.3540488Z ##[group]Run go vet ./shop/...
+2026-11-12T13:32:10.3541001Z [36;1mgo vet ./shop/...[0m
+2026-11-12T13:32:10.3567064Z shell: /usr/bin/bash -e {0}
+2026-11-12T13:32:10.3567397Z ##[endgroup]
+2026-11-12T13:33:08.1528378Z ##[group]Run go build ./...
+2026-11-12T13:33:08.1528870Z [36;1mgo build ./...[0m
+2026-11-12T13:33:08.1560858Z shell: /usr/bin/bash -e {0}
+2026-11-12T13:33:08.1561263Z ##[endgroup]
+2026-11-12T13:34:29.0848277Z ##[group]Run go test ./shop/... -count=1 -coverprofile=coverage.out -coverpkg=./shop/...
+2026-11-12T13:34:29.0848811Z [36;1mgo test ./shop/... -count=1 -coverprofile=coverage.out -coverpkg=./shop/...[0m
+2026-11-12T13:34:29.0871704Z shell: /usr/bin/bash -e {0}
+2026-11-12T13:34:29.0871993Z env:
+2026-11-12T13:34:29.0872202Z   SHOP_TEST_DSN: 
+2026-11-12T13:34:29.0872478Z ##[endgroup]
+2026-11-12T13:34:36.6482391Z ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/api	0.333s	coverage: 45.8% of statements in ./shop/...
+2026-11-12T13:34:36.6491866Z ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/config	0.006s	coverage: 2.6% of statements in ./shop/...
+2026-11-12T13:34:37.2053381Z ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/db	0.105s	coverage: 3.9% of statements in ./shop/...
+2026-11-12T13:34:39.0405331Z ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/initialize	0.109s	coverage: 7.9% of statements in ./shop/...
+2026-11-12T13:34:39.3072099Z ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/middleware	0.007s	coverage: 2.9% of statements in ./shop/...
+2026-11-12T13:34:39.3090519Z ?   	github.com/flipped-aurora/gin-vue-admin/server/shop/migrations	[no test files]
+2026-11-12T13:34:40.4647669Z 	github.com/flipped-aurora/gin-vue-admin/server/shop/model		coverage: 0.0% of statements
+2026-11-12T13:34:40.4659164Z ?   	github.com/flipped-aurora/gin-vue-admin/server/shop/model/request	[no test files]
+2026-11-12T13:34:40.4791541Z 	github.com/flipped-aurora/gin-vue-admin/server/shop/model/response		coverage: 0.0% of statements
+2026-11-12T13:34:41.7439060Z ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/router	0.561s	coverage: 70.0% of statements in ./shop/...
+2026-11-12T13:34:42.6673741Z ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/service	0.919s	coverage: 39.6% of statements in ./shop/...
+2026-11-12T13:34:42.6675137Z ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/utils	0.009s	coverage: 3.2% of statements in ./shop/...
+2026-11-12T13:34:42.6676123Z 	github.com/flipped-aurora/gin-vue-admin/server/shop/web		coverage: 0.0% of statements
+2026-11-12T13:34:42.6948884Z ##[group]Run go tool cover -func=coverage.out | tee coverage-func.txt
+2026-11-12T13:34:42.6949509Z [36;1mgo tool cover -func=coverage.out | tee coverage-func.txt[0m
+2026-11-12T13:34:42.6950884Z [36;1mtotal=$(tail -1 coverage-func.txt | awk '{print $3}' | tr -d '%')[0m
+2026-11-12T13:34:42.6951386Z [36;1mecho "æ»è¦çç: ${total}%"[0m
+2026-11-12T13:34:42.6951862Z [36;1mawk -v t="$total" 'BEGIN { if (t+0 < 85) { printf "è¦ççä¸è¶³ï¼%s%% < 85%%\n", t; exit 1 } }'[0m
+2026-11-12T13:34:42.6985490Z shell: /usr/bin/bash -e {0}
+2026-11-12T13:34:42.6986024Z ##[endgroup]
+2026-11-12T13:34:42.8478649Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/auth.go:17:			Login			100.0%
+2026-11-12T13:34:42.8480613Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/auth.go:32:			Me			100.0%
+2026-11-12T13:34:42.8481533Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/auth.go:43:			Users			60.0%
+2026-11-12T13:34:42.8482415Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/buyer.go:19:			Products		75.0%
+2026-11-12T13:34:42.8483127Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/buyer.go:41:			CreateOrder		100.0%
+2026-11-12T13:34:42.8483939Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/buyer.go:58:			MyOrders		66.7%
+2026-11-12T13:34:42.8484768Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/buyer.go:69:			OrderDetail		100.0%
+2026-11-12T13:34:42.8485686Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/buyer.go:80:			Cancel			100.0%
+2026-11-12T13:34:42.8486621Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/buyer.go:91:			RefundApply		100.0%
+2026-11-12T13:34:42.8487496Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/buyer.go:106:			MyRefund		100.0%
+2026-11-12T13:34:42.8488275Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:44:			NewCompatApi		100.0%
+2026-11-12T13:34:42.8489130Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:52:			PublicGuard		100.0%
+2026-11-12T13:34:42.8489833Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:63:			AuthGuard		100.0%
+2026-11-12T13:34:42.8490827Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:74:			delegate		100.0%
+2026-11-12T13:34:42.8491798Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:115:			orderStatusLabel	100.0%
+2026-11-12T13:34:42.8492564Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:133:			refundStatusLabel	100.0%
+2026-11-12T13:34:42.8493366Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:149:			refundFailReason	100.0%
+2026-11-12T13:34:42.8496100Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:160:			ts			100.0%
+2026-11-12T13:34:42.8496814Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:168:			tsP			100.0%
+2026-11-12T13:34:42.8497581Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:176:			productView		100.0%
+2026-11-12T13:34:42.8498425Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:195:			refundView		100.0%
+2026-11-12T13:34:42.8499280Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:226:			orderView		100.0%
+2026-11-12T13:34:42.8500269Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:279:			bindAny			100.0%
+2026-11-12T13:34:42.8501048Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:289:			strOf			100.0%
+2026-11-12T13:34:42.8501777Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:313:			intOf			91.7%
+2026-11-12T13:34:42.8502555Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:338:			boolOf			100.0%
+2026-11-12T13:34:42.8503354Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:350:			failJSON		83.3%
+2026-11-12T13:34:42.8509060Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:367:			okJSON			85.7%
+2026-11-12T13:34:42.8513895Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:380:			resolveProduct		100.0%
+2026-11-12T13:34:42.8515054Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:393:			Login			100.0%
+2026-11-12T13:34:42.8515839Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:433:			Products		75.0%
+2026-11-12T13:34:42.8516612Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:454:			CreateOrder		100.0%
+2026-11-12T13:34:42.8517386Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:490:			OrderDetail		68.2%
+2026-11-12T13:34:42.8518165Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:538:			CancelOrder		85.7%
+2026-11-12T13:34:42.8518927Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:560:			RefundApply		73.7%
+2026-11-12T13:34:42.8519708Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:601:			OpsProductUpdate	90.6%
+2026-11-12T13:34:42.8520786Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:646:			OpsSummary		81.8%
+2026-11-12T13:34:42.8521645Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:700:			noticeStatusLabel	100.0%
+2026-11-12T13:34:42.8522399Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:716:			OpsPayments		77.8%
+2026-11-12T13:34:42.8523160Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:774:			PayChannelPay		100.0%
+2026-11-12T13:34:42.8523906Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:801:			hmacHex			100.0%
+2026-11-12T13:34:42.8524623Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:808:			PayNotify		90.0%
+2026-11-12T13:34:42.8525427Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:863:			PayChannelMode		100.0%
+2026-11-12T13:34:42.8526231Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:894:			WarehouseOrders		75.0%
+2026-11-12T13:34:42.8527001Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:908:			WarehouseShip		90.5%
+2026-11-12T13:34:42.8527860Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:940:			CSRefunds		83.3%
+2026-11-12T13:34:42.8528672Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:960:			CSRefundDecide		87.5%
+2026-11-12T13:34:42.8529430Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:1012:			CSRefundRetry		88.9%
+2026-11-12T13:34:42.8530819Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:1044:			abnormalStatusLabel	100.0%
+2026-11-12T13:34:42.8531681Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:1052:			CSExceptions		77.8%
+2026-11-12T13:34:42.8532406Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:1084:			CSExceptionRefund	95.0%
+2026-11-12T13:34:42.8533235Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:1121:			diffNos			100.0%
+2026-11-12T13:34:42.8534020Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/compat.go:1139:			TestExpireOrders	52.0%
+2026-11-12T13:34:42.8534845Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/demo.go:15:			Reset			50.0%
+2026-11-12T13:34:42.8535619Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/enter.go:24:			NewApiGroup		100.0%
+2026-11-12T13:34:42.8536383Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/enter.go:35:			fail			100.0%
+2026-11-12T13:34:42.8537086Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/enter.go:40:			ok			100.0%
+2026-11-12T13:34:42.8537930Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/enter.go:44:			statusOf		100.0%
+2026-11-12T13:34:42.8538751Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/pay.go:20:			Notify			100.0%
+2026-11-12T13:34:42.8545716Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/pay.go:36:			CloseExpired		60.0%
+2026-11-12T13:34:42.8546562Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/pay.go:46:			ChannelMode		100.0%
+2026-11-12T13:34:42.8547446Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/pay.go:62:			PendingOrders		75.0%
+2026-11-12T13:34:42.8548233Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/pay.go:82:			ChannelState		100.0%
+2026-11-12T13:34:42.8549296Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:21:			ProductUpdate		100.0%
+2026-11-12T13:34:42.8550328Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:37:			Summary			60.0%
+2026-11-12T13:34:42.8551141Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:47:			Orders			60.0%
+2026-11-12T13:34:42.8551947Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:57:			OrderTrace		100.0%
+2026-11-12T13:34:42.8552767Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:68:			Notices			71.4%
+2026-11-12T13:34:42.8553525Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:89:			Abnormals		60.0%
+2026-11-12T13:34:42.8554272Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:99:			Ledger			66.7%
+2026-11-12T13:34:42.8554966Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:110:			Trail			60.0%
+2026-11-12T13:34:42.8555808Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:122:			Shipable		60.0%
+2026-11-12T13:34:42.8556578Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:132:			Ship			100.0%
+2026-11-12T13:34:42.8557367Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:148:			Shipments		60.0%
+2026-11-12T13:34:42.8558096Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:160:			Refunds			60.0%
+2026-11-12T13:34:42.8558879Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:170:			RefundAudit		100.0%
+2026-11-12T13:34:42.8562244Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:187:			RefundRetry		90.0%
+2026-11-12T13:34:42.8563080Z github.com/flipped-aurora/gin-vue-admin/server/shop/api/staff.go:203:			HandleAbnormal		100.0%
+2026-11-12T13:34:42.8563782Z github.com/flipped-aurora/gin-vue-admin/server/shop/config/config.go:55:		Default			100.0%
+2026-11-12T13:34:42.8564356Z github.com/flipped-aurora/gin-vue-admin/server/shop/config/config.go:71:		Load			95.2%
+2026-11-12T13:34:42.8565134Z github.com/flipped-aurora/gin-vue-admin/server/shop/config/config.go:106:		OrderTimeout		66.7%
+2026-11-12T13:34:42.8565706Z github.com/flipped-aurora/gin-vue-admin/server/shop/config/config.go:114:		AllowRefundByChannel	100.0%
+2026-11-12T13:34:42.8566384Z github.com/flipped-aurora/gin-vue-admin/server/shop/config/viper.go:12:			FromViper		100.0%
+2026-11-12T13:34:42.8566905Z github.com/flipped-aurora/gin-vue-admin/server/shop/db/db.go:23:			Gorm			78.9%
+2026-11-12T13:34:42.8567375Z github.com/flipped-aurora/gin-vue-admin/server/shop/db/db.go:51:			createDatabase		82.4%
+2026-11-12T13:34:42.8567837Z github.com/flipped-aurora/gin-vue-admin/server/shop/db/db.go:77:			Migrate			85.7%
+2026-11-12T13:34:42.8568336Z github.com/flipped-aurora/gin-vue-admin/server/shop/db/db.go:101:			splitSQL		100.0%
+2026-11-12T13:34:42.8568807Z github.com/flipped-aurora/gin-vue-admin/server/shop/db/db.go:121:			SeedAccounts		85.7%
+2026-11-12T13:34:42.8569292Z github.com/flipped-aurora/gin-vue-admin/server/shop/initialize/boot.go:17:		Boot			84.6%
+2026-11-12T13:34:42.8569810Z github.com/flipped-aurora/gin-vue-admin/server/shop/middleware/middleware.go:19:	JWT			100.0%
+2026-11-12T13:34:42.8571243Z github.com/flipped-aurora/gin-vue-admin/server/shop/middleware/middleware.go:45:	RequireRole		100.0%
+2026-11-12T13:34:42.8571983Z github.com/flipped-aurora/gin-vue-admin/server/shop/middleware/middleware.go:61:	ClaimsOf		100.0%
+2026-11-12T13:34:42.8572697Z github.com/flipped-aurora/gin-vue-admin/server/shop/middleware/middleware.go:71:	IsBuyer			100.0%
+2026-11-12T13:34:42.8573424Z github.com/flipped-aurora/gin-vue-admin/server/shop/model/model.go:77:			TableName		100.0%
+2026-11-12T13:34:42.8574107Z github.com/flipped-aurora/gin-vue-admin/server/shop/model/model.go:92:			TableName		100.0%
+2026-11-12T13:34:42.8574769Z github.com/flipped-aurora/gin-vue-admin/server/shop/model/model.go:113:			TableName		100.0%
+2026-11-12T13:34:42.8575462Z github.com/flipped-aurora/gin-vue-admin/server/shop/model/model.go:125:			TableName		100.0%
+2026-11-12T13:34:42.8576309Z github.com/flipped-aurora/gin-vue-admin/server/shop/model/model.go:140:			TableName		100.0%
+2026-11-12T13:34:42.8576971Z github.com/flipped-aurora/gin-vue-admin/server/shop/model/model.go:160:			TableName		100.0%
+2026-11-12T13:34:42.8577654Z github.com/flipped-aurora/gin-vue-admin/server/shop/model/model.go:172:			TableName		100.0%
+2026-11-12T13:34:42.8578153Z github.com/flipped-aurora/gin-vue-admin/server/shop/model/model.go:188:			TableName		100.0%
+2026-11-12T13:34:42.8578665Z github.com/flipped-aurora/gin-vue-admin/server/shop/model/model.go:201:			TableName		100.0%
+2026-11-12T13:34:42.8579223Z github.com/flipped-aurora/gin-vue-admin/server/shop/model/model.go:214:			TableName		100.0%
+2026-11-12T13:34:42.8579787Z github.com/flipped-aurora/gin-vue-admin/server/shop/model/response/response.go:14:	OK			100.0%
+2026-11-12T13:34:42.8580562Z github.com/flipped-aurora/gin-vue-admin/server/shop/model/response/response.go:17:	Fail			100.0%
+2026-11-12T13:34:42.8581117Z github.com/flipped-aurora/gin-vue-admin/server/shop/router/compat_router.go:20:		InitCompatRouter	100.0%
+2026-11-12T13:34:42.8581692Z github.com/flipped-aurora/gin-vue-admin/server/shop/router/router.go:20:		InitShopRouter		97.2%
+2026-11-12T13:34:42.8582196Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/auth.go:18:			Login			82.4%
+2026-11-12T13:34:42.8582661Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/auth.go:50:			User			100.0%
+2026-11-12T13:34:42.8583171Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/auth.go:59:			Users			100.0%
+2026-11-12T13:34:42.8583686Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/catalog.go:17:		OnSale			100.0%
+2026-11-12T13:34:42.8584185Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/catalog.go:24:		All			100.0%
+2026-11-12T13:34:42.8584667Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/catalog.go:31:		Get			100.0%
+2026-11-12T13:34:42.8585253Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/catalog.go:40:		Update			96.3%
+2026-11-12T13:34:42.8585823Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/catalog.go:84:		appendLedger		75.0%
+2026-11-12T13:34:42.8586343Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/catalog.go:100:		logOp			100.0%
+2026-11-12T13:34:42.8587184Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/catalog.go:111:		CurrentAvailable	75.0%
+2026-11-12T13:34:42.8587752Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/channel.go:22:		NewSimulatedChannel	100.0%
+2026-11-12T13:34:42.8588309Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/channel.go:31:		Refund			100.0%
+2026-11-12T13:34:42.8588873Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/channel.go:39:		SetRefundMode		100.0%
+2026-11-12T13:34:42.8589415Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/channel.go:48:		RefundMode		100.0%
+2026-11-12T13:34:42.8590112Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/channel.go:55:		RefundCalls		100.0%
+2026-11-12T13:34:42.8590684Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/compat.go:17:		ProductBySKU		100.0%
+2026-11-12T13:34:42.8591317Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/compat.go:31:		OverwriteAvailable	88.2%
+2026-11-12T13:34:42.8591884Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/compat.go:62:		FindByRef		100.0%
+2026-11-12T13:34:42.8592427Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/compat.go:80:		PendingOrderNos		100.0%
+2026-11-12T13:34:42.8592971Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/compat.go:89:		ForceExpire		100.0%
+2026-11-12T13:34:42.8593512Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/compat.go:103:		FindByRef		100.0%
+2026-11-12T13:34:42.8594072Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/compat.go:124:		PaymentsByOrder		100.0%
+2026-11-12T13:34:42.8594668Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/compat.go:132:		AbnormalByID		100.0%
+2026-11-12T13:34:42.8595238Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/demo.go:16:			Reset			75.0%
+2026-11-12T13:34:42.8595760Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/enter.go:37:		NewServiceGroup		92.9%
+2026-11-12T13:34:42.8596302Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/enter.go:62:		Error			100.0%
+2026-11-12T13:34:42.8596817Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/enter.go:65:		NewBizError		100.0%
+2026-11-12T13:34:42.8597344Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/enter.go:101:		IsBiz			100.0%
+2026-11-12T13:34:42.8597851Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/enter.go:107:		BizCode			100.0%
+2026-11-12T13:34:42.8598402Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/enter.go:116:		BizCodeMsg		100.0%
+2026-11-12T13:34:42.8598941Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/order.go:19:		Create			87.5%
+2026-11-12T13:34:42.8599440Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/order.go:72:		Cancel			86.4%
+2026-11-12T13:34:42.8600139Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/order.go:108:		CloseExpired		73.7%
+2026-11-12T13:34:42.8600671Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/order.go:141:		Get			100.0%
+2026-11-12T13:34:42.8601176Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/order.go:150:		ListByBuyer		83.3%
+2026-11-12T13:34:42.8601780Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/order.go:161:		ListByStatus		100.0%
+2026-11-12T13:34:42.8602312Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/order.go:177:		releaseStock		62.5%
+2026-11-12T13:34:42.8602846Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/order.go:196:		stateError		85.7%
+2026-11-12T13:34:42.8603373Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/order.go:213:		uniqueOrderNo		85.7%
+2026-11-12T13:34:42.8603874Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/order.go:225:		itoa			100.0%
+2026-11-12T13:34:42.8604570Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/payment.go:17:		isDuplicateEntry	100.0%
+2026-11-12T13:34:42.8605122Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/payment.go:43:		Notify			81.0%
+2026-11-12T13:34:42.8605771Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/payment.go:140:		markAbnormal		81.8%
+2026-11-12T13:34:42.8606331Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/payment.go:165:		noticeInTx		83.3%
+2026-11-12T13:34:42.8606842Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/payment.go:185:		saveNotice		100.0%
+2026-11-12T13:34:42.8607397Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/payment.go:200:		Notices			100.0%
+2026-11-12T13:34:42.8607931Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/payment.go:207:		NoticesByResult		87.5%
+2026-11-12T13:34:42.8608463Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/payment.go:221:		AbnormalList		100.0%
+2026-11-12T13:34:42.8609034Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/payment.go:231:		isClosedStatus		100.0%
+2026-11-12T13:34:42.8609559Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/payment.go:235:		statusLabel		100.0%
+2026-11-12T13:34:42.8610266Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/payment.go:258:		itoa64			100.0%
+2026-11-12T13:34:42.8610777Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/refund.go:20:		Apply			81.1%
+2026-11-12T13:34:42.8611277Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/refund.go:100:		Audit			88.9%
+2026-11-12T13:34:42.8611792Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/refund.go:155:		HandleAbnormal		86.0%
+2026-11-12T13:34:42.8612310Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/refund.go:260:		Retry			100.0%
+2026-11-12T13:34:42.8612899Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/refund.go:277:		callChannel		77.1%
+2026-11-12T13:34:42.8613410Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/refund.go:372:		Get			100.0%
+2026-11-12T13:34:42.8613959Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/refund.go:381:		List			100.0%
+2026-11-12T13:34:42.8614474Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/refund.go:391:		uniqueRefundNo		85.7%
+2026-11-12T13:34:42.8615013Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/refund.go:403:		boolLabel		100.0%
+2026-11-12T13:34:42.8615531Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/report.go:16:		OrderDetail		91.7%
+2026-11-12T13:34:42.8616060Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/report.go:53:		Summary			76.3%
+2026-11-12T13:34:42.8616550Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/report.go:185:		Trail			100.0%
+2026-11-12T13:34:42.8617051Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/report.go:196:		Ledger			100.0%
+2026-11-12T13:34:42.8617586Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/shipment.go:17:		Shipable		100.0%
+2026-11-12T13:34:42.8618098Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/shipment.go:24:		Ship			85.2%
+2026-11-12T13:34:42.8618584Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/shipment.go:73:		Get			100.0%
+2026-11-12T13:34:42.8619072Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/shipment.go:82:		List			100.0%
+2026-11-12T13:34:42.8619650Z github.com/flipped-aurora/gin-vue-admin/server/shop/service/shipment.go:89:		shipStateError		100.0%
+2026-11-12T13:34:42.8620358Z github.com/flipped-aurora/gin-vue-admin/server/shop/utils/utils.go:25:			HashPassword		80.0%
+2026-11-12T13:34:42.8620895Z github.com/flipped-aurora/gin-vue-admin/server/shop/utils/utils.go:35:			VerifyPassword		92.9%
+2026-11-12T13:34:42.8621391Z github.com/flipped-aurora/gin-vue-admin/server/shop/utils/utils.go:70:			b64			100.0%
+2026-11-12T13:34:42.8621857Z github.com/flipped-aurora/gin-vue-admin/server/shop/utils/utils.go:73:			SignJWT			88.9%
+2026-11-12T13:34:42.8622361Z github.com/flipped-aurora/gin-vue-admin/server/shop/utils/utils.go:87:			ParseJWT		88.9%
+2026-11-12T13:34:42.8622897Z github.com/flipped-aurora/gin-vue-admin/server/shop/utils/utils.go:117:			randDigits		75.0%
+2026-11-12T13:34:42.8623464Z github.com/flipped-aurora/gin-vue-admin/server/shop/utils/utils.go:131:			NewOrderNo		100.0%
+2026-11-12T13:34:42.8623993Z github.com/flipped-aurora/gin-vue-admin/server/shop/utils/utils.go:136:			NewRefundNo		100.0%
+2026-11-12T13:34:42.8624533Z github.com/flipped-aurora/gin-vue-admin/server/shop/utils/utils.go:141:			PaySign			100.0%
+2026-11-12T13:34:42.8625039Z github.com/flipped-aurora/gin-vue-admin/server/shop/utils/utils.go:148:			Fen			100.0%
+2026-11-12T13:34:42.8625634Z github.com/flipped-aurora/gin-vue-admin/server/shop/web/web.go:10:			Index			100.0%
+2026-11-12T13:34:42.8626058Z total:											(statements)		88.7%
+2026-11-12T13:34:42.8626547Z æ»è¦çç: 88.7%
+2026-11-12T13:34:42.8652813Z ##[group]Run go test -race ./shop/service ./shop/router -count=1 \
+2026-11-12T13:34:42.8653236Z [36;1mgo test -race ./shop/service ./shop/router -count=1 \[0m
+2026-11-12T13:34:42.8653699Z [36;1m  -run 'Concurrent|Race|Notify|Refund|Ship|LatePayment'[0m
+2026-11-12T13:34:42.8675788Z shell: /usr/bin/bash -e {0}
+2026-11-12T13:34:42.8676088Z ##[endgroup]
+2026-11-12T13:35:18.0471523Z ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/service	2.415s
+2026-11-12T13:35:26.4315868Z ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/router	1.389s
+2026-11-12T13:35:26.4810180Z ##[group]Run go run . > server.log 2>&1 &
+2026-11-12T13:35:26.4810574Z [36;1mgo run . > server.log 2>&1 &[0m
+2026-11-12T13:35:26.4810865Z [36;1mfor i in $(seq 1 60); do[0m
+2026-11-12T13:35:26.4811271Z [36;1m  if curl -fsS http://127.0.0.1:8099/api/health > /dev/null; then break; fi[0m
+2026-11-12T13:35:26.4811684Z [36;1m  sleep 2[0m
+2026-11-12T13:35:26.4811914Z [36;1mdone[0m
+2026-11-12T13:35:26.4812168Z [36;1mcurl -fsS http://127.0.0.1:8099/api/health[0m
+2026-11-12T13:35:26.4812486Z [36;1mbash ./scripts/ci-smoke.sh[0m
+2026-11-12T13:35:26.4812788Z [36;1mgrep -i "shop ä¸å¡è·¯ç±æ³¨åå®æ" server.log[0m
+2026-11-12T13:35:26.4843504Z shell: /usr/bin/bash -e {0}
+2026-11-12T13:35:26.4843814Z ##[endgroup]
+2026-11-12T13:35:26.5390092Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:28.5462304Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:30.5521360Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:32.5581458Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:34.5643727Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:36.5697589Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:38.5759231Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:40.5813161Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:42.5870616Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:44.5930595Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:46.5988248Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:48.6047697Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:50.6106152Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:52.6164522Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:54.6223964Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:56.6283928Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:35:58.6347960Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:00.6402411Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:02.6459396Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:04.6518895Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:06.6576669Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:08.6635693Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:10.6697690Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:12.6753347Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:14.6812019Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:16.6871221Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:18.6931331Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:20.6991107Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:22.7056225Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:24.7115384Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:26.7170176Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:28.7228985Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:30.7289081Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:32.7352014Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:34.7409687Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:36.7470174Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:38.7532374Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:40.7587915Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:42.7646772Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:44.7743606Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:46.7800747Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:48.7860387Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:50.7921468Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:52.7981537Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:54.8042452Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:56.8103218Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:36:58.8162489Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:00.8225906Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:02.8284039Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:04.8343125Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:06.8401105Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:08.8460476Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:10.8519869Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:12.8578609Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:14.8637445Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:16.8700296Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:18.8756894Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:20.8818082Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:22.8879424Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:24.8934510Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:26.8994349Z curl: (7) Failed to connect to 127.0.0.1 port 8099 after 0 ms: Couldn't connect to server
+2026-11-12T13:37:26.9013538Z ##[error]Process completed with exit code 7.
+2026-11-12T13:37:26.9071146Z ##[group]Run actions/upload-artifact@v4
+2026-11-12T13:37:26.9071390Z with:
+2026-11-12T13:37:26.9071560Z   name: shop-test-evidence
+2026-11-12T13:37:26.9071835Z   path: server/coverage.out
+server/coverage-func.txt
+server/server.log
+
+2026-11-12T13:37:26.9072133Z   if-no-files-found: warn
+2026-11-12T13:37:26.9072318Z   compression-level: 6
+2026-11-12T13:37:26.9072492Z   overwrite: false
+2026-11-12T13:37:26.9072663Z   include-hidden-files: false
+2026-11-12T13:37:26.9072867Z ##[endgroup]
+2026-11-12T13:37:27.0411911Z (node:19614) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-12T13:37:27.0412955Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-12T13:37:27.0543568Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-11-12T13:37:27.0601608Z The least common ancestor is /home/runner/work/shop-word-01/shop-word-01/server. This will be the root directory of the artifact
+2026-11-12T13:37:27.0721731Z With the provided path, there will be 3 files uploaded
+2026-11-12T13:37:27.0722434Z Artifact name is valid!
+2026-11-12T13:37:27.0722728Z Root directory input is valid!
+2026-11-12T13:37:27.2613009Z Beginning upload of artifact content to blob storage
+2026-11-12T13:37:27.4786677Z (node:19614) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-11-12T13:37:27.5568105Z Uploaded bytes 76281
+2026-11-12T13:37:27.5662386Z Finished uploading artifact content to blob storage!
+2026-11-12T13:37:27.5666413Z SHA256 digest of uploaded artifact zip is 9e2bb58fe71dfdff8be43040704b103f8d54ba7728598bcb3c5cd4d416dd1437
+2026-11-12T13:37:27.5670843Z Finalizing artifact upload
+2026-11-12T13:39:27.5795217Z Attempt 1 of 5 failed with error: Unexpected token '<', "<!DOCTYPE "... is not valid JSON. Retrying request in 3000 ms...
+2026-11-12T13:40:21.0657022Z Artifact shop-test-evidence.zip successfully finalized. Artifact ID 13948728399
+2026-11-12T13:40:21.0657872Z Artifact shop-test-evidence has been successfully uploaded! Final size is 76281 bytes. Artifact ID is 13948728399
+2026-11-12T13:40:21.0666059Z Artifact download URL: https://github.com/song20060422-maker/shop-word-01/actions/runs/43228066959/artifacts/13948728399
+2026-11-12T13:40:21.0833630Z Post job cleanup.
+2026-11-12T13:40:21.1587617Z [command]/usr/bin/git version
+2026-11-12T13:40:21.1650972Z git version 2.56.0
+2026-11-12T13:40:21.1741072Z Temporarily overriding HOME='/home/runner/work/_temp/3db792ee-5154-4878-b26f-36a3fff5d50d' before making global git config changes
+2026-11-12T13:40:21.1760755Z Adding repository directory to the temporary git global config as a safe directory
+2026-11-12T13:40:21.1761697Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/shop-word-01/shop-word-01
+2026-11-12T13:40:21.1784982Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-11-12T13:40:21.1786684Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-11-12T13:40:21.2051000Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-11-12T13:40:21.2091062Z http.https://github.com/.extraheader
+2026-11-12T13:40:21.2150929Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-11-12T13:40:21.2172299Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-11-12T13:40:21.2402994Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-11-12T13:40:21.2457373Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-11-12T13:40:21.2756091Z Print service container logs: 4e987baffb9240afad2f9aaacfd52ce9_mysql80_1ddc2c
+2026-11-12T13:40:21.2759471Z ##[command]/usr/bin/docker logs --details 372323423dc0cb24dcf8beb6ebe5ade4a3dc04d765a4526ac8791ea04fa2132b
+2026-11-12T13:40:21.2877279Z  2026-11-12T13:31:35.004889Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2026-11-12T13:40:21.2878770Z  2026-11-12T13:31:35.004948Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.46) initializing of server in progress as process 79
+2026-11-12T13:40:21.2879553Z  2026-11-12 13:31:34+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.46-1.el9 started.
+2026-11-12T13:40:21.2880617Z  2026-11-12T13:31:35.008404Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2026-11-12T13:40:21.2881382Z  2026-11-12 13:31:34+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2026-11-12T13:40:21.2889628Z  2026-11-12T13:31:35.130277Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2026-11-12T13:40:21.2890460Z  2026-11-12 13:31:34+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.46-1.el9 started.
+2026-11-12T13:40:21.2890941Z  2026-11-12 13:31:34+00:00 [Note] [Entrypoint]: Initializing database files
+2026-11-12T13:40:21.2891354Z  2026-11-12 13:31:37+00:00 [Note] [Entrypoint]: Database files initialized
+2026-11-12T13:40:21.2891757Z  2026-11-12 13:31:37+00:00 [Note] [Entrypoint]: Starting temporary server
+2026-11-12T13:40:21.2892149Z  2026-11-12 13:31:38+00:00 [Note] [Entrypoint]: Temporary server started.
+2026-11-12T13:40:21.2892557Z  '/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
+2026-11-12T13:40:21.2893278Z  2026-11-12T13:31:35.774772Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2026-11-12T13:40:21.2894128Z  2026-11-12T13:31:38.140315Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2026-11-12T13:40:21.2894778Z  2026-11-12T13:31:38.141581Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.46) starting as process 121
+2026-11-12T13:40:21.2895213Z  2026-11-12T13:31:38.153927Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2026-11-12T13:40:21.2895604Z  2026-11-12T13:31:38.230070Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2026-11-12T13:40:21.2896000Z  2026-11-12T13:31:38.332286Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2026-11-12T13:40:21.2896556Z  2026-11-12T13:31:38.332312Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2026-11-12T13:40:21.2897520Z  2026-11-12T13:31:38.333345Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2026-11-12T13:40:21.2898224Z  2026-11-12T13:31:38.342955Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+2026-11-12T13:40:21.2898906Z  2026-11-12T13:31:38.343024Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.46'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
+2026-11-12T13:40:21.2899516Z  Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+2026-11-12T13:40:21.2900181Z  Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
+2026-11-12T13:40:21.2900739Z  Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
+2026-11-12T13:40:21.2901311Z  Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
+2026-11-12T13:40:21.2901971Z  Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+2026-11-12T13:40:21.2902486Z  Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+2026-11-12T13:40:21.2903107Z  2026-11-12T13:31:39.183391Z 11 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.46).
+2026-11-12T13:40:21.2903708Z  2026-11-12T13:31:39.867361Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.46)  MySQL Community Server - GPL.
+2026-11-12T13:40:21.2904438Z  2026-11-12T13:31:40.408932Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2026-11-12T13:40:21.2905240Z  2026-11-12T13:31:40.410180Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.46) starting as process 1
+2026-11-12T13:40:21.2905703Z  2026-11-12T13:31:40.414228Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2026-11-12T13:40:21.2906101Z  2026-11-12T13:31:40.493765Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2026-11-12T13:40:21.2906492Z  2026-11-12T13:31:40.579802Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2026-11-12T13:40:21.2907098Z  2026-11-12T13:31:40.579831Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2026-11-12T13:40:21.2907883Z  2026-11-12T13:31:40.581145Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2026-11-12T13:40:21.2908669Z  2026-11-12T13:31:40.591303Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2026-11-12T13:40:21.2909430Z  2026-11-12T13:31:40.591358Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.46'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2026-11-12T13:40:21.2910217Z  2026-11-12 13:31:39+00:00 [Note] [Entrypoint]: Creating database shop_test_service
+2026-11-12T13:40:21.2910500Z  
+2026-11-12T13:40:21.2910719Z  2026-11-12 13:31:39+00:00 [Note] [Entrypoint]: Stopping temporary server
+2026-11-12T13:40:21.2911036Z  2026-11-12 13:31:40+00:00 [Note] [Entrypoint]: Temporary server stopped
+2026-11-12T13:40:21.2911285Z  
+2026-11-12T13:40:21.2911531Z  2026-11-12 13:31:40+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
+2026-11-12T13:40:21.2911814Z  
+2026-11-12T13:40:21.2915658Z Stop and remove container: 4e987baffb9240afad2f9aaacfd52ce9_mysql80_1ddc2c
+2026-11-12T13:40:21.2919318Z ##[command]/usr/bin/docker rm --force 372323423dc0cb24dcf8beb6ebe5ade4a3dc04d765a4526ac8791ea04fa2132b
+2026-11-12T13:40:21.4035673Z 372323423dc0cb24dcf8beb6ebe5ade4a3dc04d765a4526ac8791ea04fa2132b
+2026-11-12T13:40:21.4062874Z Print service container logs: 64a51e4993d9403eb4e083a926f08733_redis7_ff84ed
+2026-11-12T13:40:21.4064037Z ##[command]/usr/bin/docker logs --details 92c0eba13789058a9e4bc71e0d3fbc4da8fdab5bfe9149fe21492ba5deda74a6
+2026-11-12T13:40:21.4261247Z  1:C 12 Nov 2026 13:31:37.014 # WARNING Memory overcommit must be enabled! Without it, a background save or replication may fail under low memory condition. Being disabled, it can also cause failures without low memory condition, see https://github.com/jemalloc/jemalloc/issues/1328. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+2026-11-12T13:40:21.4268665Z  1:C 12 Nov 2026 13:31:37.014 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+2026-11-12T13:40:21.4269370Z  1:C 12 Nov 2026 13:31:37.014 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+2026-11-12T13:40:21.4270791Z  1:C 12 Nov 2026 13:31:37.014 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+2026-11-12T13:40:21.4271514Z  1:M 12 Nov 2026 13:31:37.014 * monotonic clock: POSIX clock_gettime
+2026-11-12T13:40:21.4271915Z  1:M 12 Nov 2026 13:31:37.015 * Running mode=standalone, port=6379.
+2026-11-12T13:40:21.4272267Z  1:M 12 Nov 2026 13:31:37.015 * Server initialized
+2026-11-12T13:40:21.4272619Z  1:M 12 Nov 2026 13:31:37.015 * Ready to accept connections tcp
+2026-11-12T13:40:21.4273596Z Stop and remove container: 64a51e4993d9403eb4e083a926f08733_redis7_ff84ed
+2026-11-12T13:40:21.4274254Z ##[command]/usr/bin/docker rm --force 92c0eba13789058a9e4bc71e0d3fbc4da8fdab5bfe9149fe21492ba5deda74a6
+2026-11-12T13:40:21.5103862Z 92c0eba13789058a9e4bc71e0d3fbc4da8fdab5bfe9149fe21492ba5deda74a6
+2026-11-12T13:40:21.5141098Z Remove container network: github_network_ffa38da164a34f28bce6be7a4ad222dd
+2026-11-12T13:40:21.5148558Z ##[command]/usr/bin/docker network rm github_network_ffa38da164a34f28bce6be7a4ad222dd
+2026-11-12T13:40:21.6000626Z github_network_ffa38da164a34f28bce6be7a4ad222dd
+2026-11-12T13:40:21.6071523Z Cleaning up orphan processes
+2026-11-12T13:40:21.6292843Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-go@v5, actions/upload-artifact@v4. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
