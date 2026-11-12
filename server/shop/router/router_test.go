@@ -559,3 +559,165 @@ func TestDemoResetEnabled(t *testing.T) {
 		t.Fatalf("重置响应错误: %s", rr.Body.String())
 	}
 }
+
+// ---------- I-19：HTTP 层数值对账断言 ----------
+//
+// router 层此前以状态码断言为主，金额/库存数值对账依赖 service 层测试兜底。
+// 本测试在 HTTP 响应上直接核对：订单金额快照、可售占用/释放、收退款汇总、库存流水守恒。
+
+type skuStat struct {
+	price     int64
+	available int64
+	occupied  int64
+	initial   int64
+	paid      int64
+	refunded  int64
+}
+
+func summaryOf(t *testing.T, r *gin.Engine, opsToken, sku string) skuStat {
+	t.Helper()
+	rr := doJSON(r, "GET", "/api/ops/summary", "", opsToken, nil)
+	statusOK(t, rr, http.StatusOK, "交易汇总")
+	res := parseBody(t, rr)
+	list, ok := res["products"].([]interface{})
+	if !ok {
+		t.Fatalf("汇总缺少 products: %s", rr.Body.String())
+	}
+	for _, it := range list {
+		m := it.(map[string]interface{})
+		if m["sku"] == sku {
+			return skuStat{
+				price:     int64(numOf(m["price_cents"])),
+				available: int64(numOf(m["available"])),
+				occupied:  int64(numOf(m["occupied"])),
+				initial:   int64(numOf(m["initial_stock"])),
+				paid:      int64(numOf(m["paid_total"])),
+				refunded:  int64(numOf(m["refunded_total"])),
+			}
+		}
+	}
+	t.Fatalf("汇总中未找到 %s: %s", sku, rr.Body.String())
+	return skuStat{}
+}
+
+func productDBID(t *testing.T, r *gin.Engine, sku string) int64 {
+	t.Helper()
+	rr := doJSON(r, "GET", "/api/products", "", "", nil)
+	statusOK(t, rr, http.StatusOK, "商品列表")
+	for _, it := range parseBody(t, rr)["products"].([]interface{}) {
+		m := it.(map[string]interface{})
+		if m["sku"] == sku {
+			return int64(numOf(m["db_id"]))
+		}
+	}
+	t.Fatalf("商品列表中未找到 %s", sku)
+	return 0
+}
+
+func TestHTTPNumericReconciliation(t *testing.T) {
+	r, _ := newServer(t, false)
+	buyer := login(t, r, "buyer1")
+	ops := login(t, r, "ops1")
+	cs := login(t, r, "cs1")
+
+	// 1) HTTP 读取单价与初始可售
+	before := summaryOf(t, r, ops, "SKU-A")
+	if before.price <= 0 || before.available <= 0 {
+		t.Fatalf("商品基线异常: %+v", before)
+	}
+
+	// 2) 下单 SKU-A×2：金额=单价×数量（快照），可售立即反映占用
+	rr := doJSON(r, "POST", "/api/orders", `{"product_id":"SKU-A","quantity":2}`, buyer, nil)
+	statusOK(t, rr, http.StatusOK, "下单")
+	res := parseBody(t, rr)
+	orderNo, _ := res["order_no"].(string)
+	if orderNo == "" {
+		t.Fatalf("缺少订单号: %s", rr.Body.String())
+	}
+	if amount := int64(numOf(res["amount"])); amount != before.price*2 {
+		t.Fatalf("订单金额应=单价×数量 %d, 实际 %d", before.price*2, amount)
+	}
+	afterOrder := summaryOf(t, r, ops, "SKU-A")
+	if afterOrder.available != before.available-2 {
+		t.Fatalf("下单后可售应 %d, 实际 %d", before.available-2, afterOrder.available)
+	}
+	if afterOrder.occupied < 2 {
+		t.Fatalf("下单后占用应≥2, 实际 %d", afterOrder.occupied)
+	}
+	amount := before.price * 2
+
+	// 3) 支付：已收款精确增加 amount，可售不变
+	rr = compatPayNotify(t, r, orderNo, "TXN-RECON-1", amount, "")
+	statusOK(t, rr, http.StatusOK, "支付通知")
+	if res := parseBody(t, rr); res["status"] != "SUCCESS" {
+		t.Fatalf("支付未受理: %s", rr.Body.String())
+	}
+	afterPay := summaryOf(t, r, ops, "SKU-A")
+	if afterPay.paid != afterOrder.paid+amount {
+		t.Fatalf("支付后已收款应 %d, 实际 %d", afterOrder.paid+amount, afterPay.paid)
+	}
+	if afterPay.available != afterOrder.available {
+		t.Fatalf("支付不应改变可售: %d → %d", afterOrder.available, afterPay.available)
+	}
+
+	// 4) 售前退款全额成功：可售恢复 2，已退款=amount，已收款不变
+	rr = doJSON(r, "POST", "/api/orders/"+orderNo+"/refund", `{"reason":"对账测试"}`, buyer, nil)
+	statusOK(t, rr, http.StatusOK, "退款申请")
+	rr = doJSON(r, "POST", "/api/cs/refunds/audit", `{"orderNo":"`+orderNo+`","approve":true,"reason":"ok"}`, cs, nil)
+	statusOK(t, rr, http.StatusOK, "审核同意")
+	afterRefund := summaryOf(t, r, ops, "SKU-A")
+	if afterRefund.available != afterPay.available+2 {
+		t.Fatalf("退款成功后可售应恢复 %d, 实际 %d", afterPay.available+2, afterRefund.available)
+	}
+	if afterRefund.refunded != afterPay.refunded+amount {
+		t.Fatalf("退款后已退款应 %d, 实际 %d", afterPay.refunded+amount, afterRefund.refunded)
+	}
+	if afterRefund.paid != afterPay.paid {
+		t.Fatalf("退款不改变已收款: %d → %d", afterPay.paid, afterRefund.paid)
+	}
+
+	// 5) 取消待付款订单：金额快照=单价，取消后可售释放、收退款汇总不变
+	rr = doJSON(r, "POST", "/api/orders", `{"product_id":"SKU-A","quantity":1}`, buyer, nil)
+	statusOK(t, rr, http.StatusOK, "第二单")
+	res = parseBody(t, rr)
+	no2, _ := res["order_no"].(string)
+	if amt := int64(numOf(res["amount"])); amt != before.price {
+		t.Fatalf("第二单金额应=单价 %d, 实际 %d", before.price, amt)
+	}
+	mid := summaryOf(t, r, ops, "SKU-A")
+	if mid.available != afterRefund.available-1 {
+		t.Fatalf("第二单下单后可售应 %d, 实际 %d", afterRefund.available-1, mid.available)
+	}
+	rr = doJSON(r, "POST", "/api/orders/"+no2+"/cancel", "", buyer, nil)
+	statusOK(t, rr, http.StatusOK, "取消")
+	afterCancel := summaryOf(t, r, ops, "SKU-A")
+	if afterCancel.available != afterRefund.available {
+		t.Fatalf("取消后可售应回到 %d, 实际 %d", afterRefund.available, afterCancel.available)
+	}
+	if afterCancel.paid != afterRefund.paid || afterCancel.refunded != afterRefund.refunded {
+		t.Fatalf("取消不应改变收退款汇总: %+v → %+v", afterRefund, afterCancel)
+	}
+
+	// 6) 库存流水守恒（HTTP 层）：initial_stock + Σdelta == 当前可售，
+	//    且最后一条流水的 available_after == 当前可售
+	rr = doJSON(r, "GET", "/api/ops/ledger?productId="+itoa(productDBID(t, r, "SKU-A")), "", ops, nil)
+	statusOK(t, rr, http.StatusOK, "库存流水")
+	data, ok := parseBody(t, rr)["data"].([]interface{})
+	if !ok || len(data) == 0 {
+		t.Fatalf("库存流水为空: %s", rr.Body.String())
+	}
+	var sumDelta int64
+	var lastAfter int64
+	for _, e := range data {
+		m := e.(map[string]interface{})
+		sumDelta += int64(numOf(m["delta"]))
+		lastAfter = int64(numOf(m["availableAfter"]))
+	}
+	if want := afterCancel.initial + sumDelta; want != afterCancel.available {
+		t.Fatalf("库存流水不守恒: 初始 %d + Σdelta %d = %d, 当前可售 %d",
+			afterCancel.initial, sumDelta, want, afterCancel.available)
+	}
+	if lastAfter != afterCancel.available {
+		t.Fatalf("流水末条 available_after %d 应等于当前可售 %d", lastAfter, afterCancel.available)
+	}
+}

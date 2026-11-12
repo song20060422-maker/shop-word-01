@@ -2,14 +2,34 @@ package db
 
 import (
 	"errors"
+	"fmt"
 	"io/fs"
 	"os"
 	"testing"
 	"testing/fstest"
 
+	driver "github.com/go-sql-driver/mysql"
+
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/migrations"
 )
+
+// dsnOnTestHost 返回指向当前测试库主机端口的 DSN：
+// 设置了 SHOP_TEST_DSN 时复用其主机端口与口令（容器/远程 MySQL 场景），
+// 否则回落到本机 3307 默认值。
+func dsnOnTestHost(dbname string) string {
+	if dsn := os.Getenv("SHOP_TEST_DSN"); dsn != "" {
+		if parsed, err := driver.ParseDSN(dsn); err == nil && parsed.Addr != "" {
+			user := parsed.User
+			if user == "" {
+				user = "root"
+			}
+			passwd := parsed.Passwd
+			return fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", user, passwd, parsed.Addr, dbname)
+		}
+	}
+	return "root:root@tcp(127.0.0.1:3307)/" + dbname + "?charset=utf8mb4&parseTime=True&loc=Local"
+}
 
 func testConfig(t *testing.T) config.Config {
 	t.Helper()
@@ -17,7 +37,7 @@ func testConfig(t *testing.T) config.Config {
 	if dsn := os.Getenv("SHOP_TEST_DSN"); dsn != "" {
 		cfg.Mysql.DSN = dsn
 	} else {
-		cfg.Mysql.DSN = "root:root@tcp(127.0.0.1:3307)/shop_test_db?charset=utf8mb4&parseTime=True&loc=Local"
+		cfg.Mysql.DSN = dsnOnTestHost("shop_test_db")
 	}
 	cfg.Mysql.MaxIdleConns = 2
 	cfg.Mysql.MaxOpenConns = 4
@@ -27,7 +47,7 @@ func testConfig(t *testing.T) config.Config {
 func TestGormCreateDatabaseAndMigrate(t *testing.T) {
 	cfg := testConfig(t)
 	// 库不存在时自动创建（覆盖 createDatabase 分支）
-	cfg.Mysql.DSN = "root:root@tcp(127.0.0.1:3307)/shop_test_db_autocreate?charset=utf8mb4&parseTime=True&loc=Local"
+	cfg.Mysql.DSN = dsnOnTestHost("shop_test_db_autocreate")
 	gdb, err := Gorm(cfg)
 	if err != nil {
 		t.Fatalf("自动建库连接失败: %v", err)
@@ -48,7 +68,7 @@ func TestGormCreateDatabaseAndMigrate(t *testing.T) {
 		t.Fatal("非法 SQL 应报错")
 	}
 	// 正常迁移与种子补齐
-	cfg.Mysql.DSN = "root:root@tcp(127.0.0.1:3307)/shop_test_db?charset=utf8mb4&parseTime=True&loc=Local"
+	cfg.Mysql.DSN = dsnOnTestHost("shop_test_db")
 	gdb2, err := Gorm(cfg)
 	if err != nil {
 		t.Fatalf("连接测试库失败: %v", err)
@@ -92,7 +112,7 @@ func TestGormAndMigrateErrorBranches(t *testing.T) {
 		t.Fatal("非法 DSN 应报错")
 	}
 	// DSN 未指定库名：自动建库内部必须报错（直接调内部函数，避免连接默认库成功）
-	if err := createDatabase("root:root@tcp(127.0.0.1:3307)/?charset=utf8mb4"); err == nil {
+	if err := createDatabase(dsnOnTestHost("")); err == nil {
 		t.Fatal("未指定库名应报错")
 	}
 
