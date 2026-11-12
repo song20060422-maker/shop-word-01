@@ -1,2 +1,4 @@
 *.sql linguist-language=GO
 *.html linguist-language=GO
+*.go text eol=lf
+*.sh text eol=lf

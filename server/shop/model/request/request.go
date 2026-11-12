@@ -54,8 +54,8 @@ type AbnormalHandle struct {
 
 // ProductUpdate 运营维护商品
 type ProductUpdate struct {
-	ProductID uint64 `json:"productId" binding:"required"`
-	OnSale    *bool  `json:"onSale"`
+	ProductID  uint64 `json:"productId" binding:"required"`
+	OnSale     *bool  `json:"onSale"`
 	PriceCents *int64 `json:"priceCents"`
 }
 

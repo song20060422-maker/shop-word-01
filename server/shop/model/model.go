@@ -7,14 +7,14 @@ import "time"
 
 // 订单状态机：pending_payment -> paid -> shipped / refund_requested -> refunded|refund_failed
 const (
-	OrderStatusPendingPayment   = "pending_payment"
-	OrderStatusCancelled        = "cancelled"
-	OrderStatusClosed           = "closed"
-	OrderStatusPaid             = "paid"
-	OrderStatusShipped          = "shipped"
-	OrderStatusRefundRequested  = "refund_requested"
-	OrderStatusRefundFailed     = "refund_failed"
-	OrderStatusRefunded         = "refunded"
+	OrderStatusPendingPayment  = "pending_payment"
+	OrderStatusCancelled       = "cancelled"
+	OrderStatusClosed          = "closed"
+	OrderStatusPaid            = "paid"
+	OrderStatusShipped         = "shipped"
+	OrderStatusRefundRequested = "refund_requested"
+	OrderStatusRefundFailed    = "refund_failed"
+	OrderStatusRefunded        = "refunded"
 )
 
 // 角色
@@ -27,7 +27,7 @@ const (
 
 // 退款来源：售前退款 / 迟到支付退款
 const (
-	RefundSourcePresale     = "presale"
+	RefundSourcePresale      = "presale"
 	RefundSourceAbnormalLate = "abnormal_late"
 )
 
