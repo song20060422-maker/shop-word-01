@@ -92,6 +92,9 @@ jobs:
 
       - name: 冒烟（启动服务 + 健康检查 + 登录 + 下单）
         run: |
+          # 服务端启动依赖 gva（gva 框架）与 shop（业务库）两个数据库，先创建
+          cid=$(docker ps --format '{{.Names}}' | grep -i mysql | head -n1)
+          docker exec "$cid" mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS gva DEFAULT CHARACTER SET utf8mb4; CREATE DATABASE IF NOT EXISTS shop DEFAULT CHARACTER SET utf8mb4;"
           go build -o shop-server .
           ./shop-server > server.log 2>&1 &
           ok=0
