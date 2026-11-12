@@ -1,0 +1,113 @@
+name: shop-ci
+
+# Shop 商城小型交易系统质量门禁（题目 01）
+# 触发：推送到任意分支 / 针对 main 的 PR
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["main"]
+
+concurrency:
+  group: shop-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-gate:
+    name: 质量门禁（gofmt / vet / build / test / 覆盖率 / race）
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: shop_test_service
+        ports:
+          - 3307:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+
+      redis:
+        image: redis:7
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd="redis-cli ping"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: server/go.mod
+          cache-dependency-path: server/go.sum
+
+      - name: 依赖下载
+        run: go mod download
+
+      - name: gofmt 格式检查（自研代码）
+        run: |
+          out=$(gofmt -l shop initialize/router_biz.go)
+          if [ -n "$out" ]; then
+            echo "以下文件不符合 gofmt（需统一 LF + 标准格式）："
+            echo "$out"
+            exit 1
+          fi
+
+      - name: go vet（自研代码）
+        run: go vet ./shop/...
+
+      - name: 编译全仓
+        run: go build ./...
+
+      - name: 单元测试 + 集成测试 + 覆盖率
+        env:
+          SHOP_TEST_DSN: ""
+        run: |
+          go test ./shop/... -count=1 -coverprofile=coverage.out -coverpkg=./shop/...
+
+      - name: 覆盖率阈值（≥85%）
+        run: |
+          go tool cover -func=coverage.out | tee coverage-func.txt
+          total=$(tail -1 coverage-func.txt | awk '{print $3}' | tr -d '%')
+          echo "总覆盖率: ${total}%"
+          awk -v t="$total" 'BEGIN { if (t+0 < 85) { printf "覆盖率不足：%s%% < 85%%\n", t; exit 1 } }'
+
+      - name: 并发路径 race 检测
+        run: |
+          go test -race ./shop/service ./shop/router -count=1 \
+            -run 'Concurrent|Race|Notify|Refund|Ship|LatePayment'
+
+      - name: 冒烟（启动服务 + 健康检查 + 登录 + 下单）
+        run: |
+          go run . > server.log 2>&1 &
+          for i in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:8099/api/health > /dev/null; then break; fi
+            sleep 2
+          done
+          curl -fsS http://127.0.0.1:8099/api/health
+          bash ./scripts/ci-smoke.sh
+          grep -i "shop 业务路由注册完成" server.log
+
+      - name: 上传测试产物
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: shop-test-evidence
+          path: |
+            server/coverage.out
+            server/coverage-func.txt
+            server/server.log
+          if-no-files-found: warn

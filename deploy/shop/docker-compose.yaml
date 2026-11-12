@@ -1,0 +1,62 @@
+version: "3.8"
+
+# Shop 商城小型交易系统 · 一键落地（MySQL 8 + Redis 7 + Shop 服务）
+# 启动：docker compose -f deploy/shop/docker-compose.yaml up -d --build
+# 冒烟：curl -fsS http://127.0.0.1:18099/api/health
+# 版本标识：SHOP_VERSION 由构建时注入镜像 tag（见 deploy/shop/README.md）
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: shop-mysql
+    restart: always
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: shop
+    ports:
+      - "13307:3306"
+    volumes:
+      - shop-mysql:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7
+    container_name: shop-redis
+    restart: always
+    ports:
+      - "16379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  server:
+    build:
+      context: ../../server
+      dockerfile: Dockerfile.shop
+    image: shop-server:${SHOP_VERSION:-dev}
+    container_name: shop-server
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - "18099:8099"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8099/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+volumes:
+  shop-mysql:
