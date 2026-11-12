@@ -1,0 +1,759 @@
+您正在使用命令行的 '-c' 参数传递的值, config 的路径为 config-8097.yaml
+[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.004ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.512ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.472ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_apis' AND table_type = 'BASE TABLE'[32m
+[0m[33m[44.318ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.534ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[48.352ms] [34;1m[rows:-][0m SELECT * FROM `sys_apis` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.761ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_apis' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.022ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.697ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.097ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_apis' AND index_name = 'idx_sys_apis_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.147ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.945ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.722ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_ignore_apis' AND table_type = 'BASE TABLE'[32m
+[0m[33m[42.413ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.867ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.477ms] [34;1m[rows:-][0m SELECT * FROM `sys_ignore_apis` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[48.117ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_ignore_apis' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.821ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.510ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.586ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_ignore_apis' AND index_name = 'idx_sys_ignore_apis_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.532ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.528ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.190ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_users' AND table_type = 'BASE TABLE'[32m
+[0m[33m[43.773ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.693ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[48.501ms] [34;1m[rows:-][0m SELECT * FROM `sys_users` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[48.773ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_users' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/model/common/basetypes.go:117
+[0m[33m[46.329ms] [34;1m[rows:1][0m SELECT VERSION()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.005ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.564ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.496ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_users' AND index_name = 'idx_sys_users_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.614ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.166ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.915ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_users' AND index_name = 'idx_sys_users_uuid'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.528ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.516ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.274ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_users' AND index_name = 'idx_sys_users_username'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.766ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[3.394ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.938ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_authorities' AND table_type = 'BASE TABLE'[32m
+[0m[33m[41.130ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.638ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[46.518ms] [34;1m[rows:-][0m SELECT * FROM `sys_authorities` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.108ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_authorities' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.238ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.827ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.879ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_user_authority' AND table_type = 'BASE TABLE'[32m
+[0m[33m[43.236ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.429ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.236ms] [34;1m[rows:-][0m SELECT * FROM `sys_user_authority` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[49.250ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_user_authority' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.304ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.172ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.219ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_base_menus' AND table_type = 'BASE TABLE'[32m
+[0m[33m[42.701ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.018ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.758ms] [34;1m[rows:-][0m SELECT * FROM `sys_base_menus` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.319ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_base_menus' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.321ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.043ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.168ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_base_menus' AND index_name = 'idx_sys_base_menus_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.711ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.833ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.977ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_authority_menus' AND table_type = 'BASE TABLE'[32m
+[0m[33m[42.077ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[0.507ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.321ms] [34;1m[rows:-][0m SELECT * FROM `sys_authority_menus` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.507ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_authority_menus' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.486ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.418ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.005ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_data_authority_id' AND table_type = 'BASE TABLE'[32m
+[0m[33m[44.591ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.637ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.067ms] [34;1m[rows:-][0m SELECT * FROM `sys_data_authority_id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.792ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_data_authority_id' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.903ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.410ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[48.441ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'jwt_blacklists' AND table_type = 'BASE TABLE'[32m
+[0m[33m[40.748ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.036ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.189ms] [34;1m[rows:-][0m SELECT * FROM `jwt_blacklists` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.070ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'jwt_blacklists' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.467ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[0.606ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.213ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'jwt_blacklists' AND index_name = 'idx_jwt_blacklists_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.521ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[0.508ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.991ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_dictionaries' AND table_type = 'BASE TABLE'[32m
+[0m[33m[45.843ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.925ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[32.694ms] [34;1m[rows:-][0m SELECT * FROM `sys_dictionaries` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.467ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_dictionaries' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.169ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.542ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[48.184ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_dictionaries' AND index_name = 'idx_sys_dictionaries_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.248ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.134ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[49.988ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_operation_records' AND table_type = 'BASE TABLE'[32m
+[0m[33m[42.361ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.561ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.521ms] [34;1m[rows:-][0m SELECT * FROM `sys_operation_records` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[49.629ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_operation_records' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.249ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.732ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.994ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_operation_records' AND index_name = 'idx_sys_operation_records_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.415ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[3.164ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.184ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_auto_code_histories' AND table_type = 'BASE TABLE'[32m
+[0m[33m[48.258ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.546ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.995ms] [34;1m[rows:-][0m SELECT * FROM `sys_auto_code_histories` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.258ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_auto_code_histories' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[40.315ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.107ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[48.301ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_auto_code_histories' AND index_name = 'idx_sys_auto_code_histories_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.911ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.954ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.090ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_dictionary_details' AND table_type = 'BASE TABLE'[32m
+[0m[33m[42.945ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[3.076ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.062ms] [34;1m[rows:-][0m SELECT * FROM `sys_dictionary_details` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.622ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_dictionary_details' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.927ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.249ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.540ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_dictionary_details' AND index_name = 'idx_sys_dictionary_details_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.339ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.632ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[46.593ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_base_menu_parameters' AND table_type = 'BASE TABLE'[32m
+[0m[33m[40.425ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.613ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.256ms] [34;1m[rows:-][0m SELECT * FROM `sys_base_menu_parameters` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.837ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_base_menu_parameters' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.243ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.311ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.054ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_base_menu_parameters' AND index_name = 'idx_sys_base_menu_parameters_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.449ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.315ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.442ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_base_menu_btns' AND table_type = 'BASE TABLE'[32m
+[0m[33m[42.406ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.004ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.070ms] [34;1m[rows:-][0m SELECT * FROM `sys_base_menu_btns` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[48.118ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_base_menu_btns' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.761ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[3.511ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.506ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_base_menu_btns' AND index_name = 'idx_sys_base_menu_btns_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.910ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.872ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.904ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_authority_btns' AND table_type = 'BASE TABLE'[32m
+[0m[33m[42.700ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.849ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[49.793ms] [34;1m[rows:-][0m SELECT * FROM `sys_authority_btns` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.209ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_authority_btns' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.921ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.090ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.222ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_auto_code_packages' AND table_type = 'BASE TABLE'[32m
+[0m[33m[46.381ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[3.243ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.995ms] [34;1m[rows:-][0m SELECT * FROM `sys_auto_code_packages` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[46.000ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_auto_code_packages' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.130ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.081ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.595ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_auto_code_packages' AND index_name = 'idx_sys_auto_code_packages_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.788ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[3.660ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.984ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_export_templates' AND table_type = 'BASE TABLE'[32m
+[0m[33m[46.245ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[3.935ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.519ms] [34;1m[rows:-][0m SELECT * FROM `sys_export_templates` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.385ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_export_templates' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.240ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.518ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.671ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_export_templates' AND index_name = 'idx_sys_export_templates_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.684ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.517ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.197ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_export_template_condition' AND table_type = 'BASE TABLE'[32m
+[0m[33m[42.283ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.424ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.986ms] [34;1m[rows:-][0m SELECT * FROM `sys_export_template_condition` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.239ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_export_template_condition' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.545ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.397ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.576ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_export_template_condition' AND index_name = 'idx_sys_export_template_condition_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.749ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.147ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.189ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_export_template_join' AND table_type = 'BASE TABLE'[32m
+[0m[33m[42.476ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.510ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.736ms] [34;1m[rows:-][0m SELECT * FROM `sys_export_template_join` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[46.176ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_export_template_join' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.430ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.674ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[48.939ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_export_template_join' AND index_name = 'idx_sys_export_template_join_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.749ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.426ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.322ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_params' AND table_type = 'BASE TABLE'[32m
+[0m[33m[46.787ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.622ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.008ms] [34;1m[rows:-][0m SELECT * FROM `sys_params` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.591ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_params' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[46.593ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.411ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.258ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_params' AND index_name = 'idx_sys_params_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.340ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.333ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.493ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_versions' AND table_type = 'BASE TABLE'[32m
+[0m[33m[42.502ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.640ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.062ms] [34;1m[rows:-][0m SELECT * FROM `sys_versions` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.895ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_versions' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[40.870ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.161ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.241ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_versions' AND index_name = 'idx_sys_versions_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.810ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.516ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.570ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_error' AND table_type = 'BASE TABLE'[32m
+[0m[33m[41.921ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.866ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[46.434ms] [34;1m[rows:-][0m SELECT * FROM `sys_error` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.435ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_error' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.134ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.779ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.222ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_error' AND index_name = 'idx_sys_error_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.418ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[3.067ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.316ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_api_tokens' AND table_type = 'BASE TABLE'[32m
+[0m[33m[44.902ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.853ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.494ms] [34;1m[rows:-][0m SELECT * FROM `sys_api_tokens` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[46.005ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_api_tokens' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.858ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.818ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.160ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_api_tokens' AND index_name = 'idx_sys_api_tokens_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.533ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.638ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.487ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_login_logs' AND table_type = 'BASE TABLE'[32m
+[0m[33m[42.045ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.016ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.612ms] [34;1m[rows:-][0m SELECT * FROM `sys_login_logs` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.523ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_login_logs' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.808ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.826ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.209ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_login_logs' AND index_name = 'idx_sys_login_logs_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.403ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[0.744ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.267ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'exa_files' AND table_type = 'BASE TABLE'[32m
+[0m[33m[41.888ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[2.595ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.999ms] [34;1m[rows:-][0m SELECT * FROM `exa_files` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.889ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'exa_files' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[45.995ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.698ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.034ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'exa_files' AND index_name = 'idx_exa_files_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.514ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.537ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.571ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'exa_customers' AND table_type = 'BASE TABLE'[32m
+[0m[33m[42.965ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.660ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.567ms] [34;1m[rows:-][0m SELECT * FROM `exa_customers` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.786ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'exa_customers' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.837ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.680ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.403ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'exa_customers' AND index_name = 'idx_exa_customers_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.782ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[3.506ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.518ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'exa_file_chunks' AND table_type = 'BASE TABLE'[32m
+[0m[33m[46.198ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.453ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.200ms] [34;1m[rows:-][0m SELECT * FROM `exa_file_chunks` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.421ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'exa_file_chunks' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[46.315ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.463ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.824ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'exa_file_chunks' AND index_name = 'idx_exa_file_chunks_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.468ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.501ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.134ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'exa_file_upload_and_downloads' AND table_type = 'BASE TABLE'[32m
+[0m[33m[43.342ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.596ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.548ms] [34;1m[rows:-][0m SELECT * FROM `exa_file_upload_and_downloads` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.411ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'exa_file_upload_and_downloads' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[46.402ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.709ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[43.985ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'exa_file_upload_and_downloads' AND index_name = 'idx_exa_file_upload_and_downloads_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.525ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[3.482ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[42.841ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'exa_attachment_category' AND table_type = 'BASE TABLE'[32m
+[0m[33m[41.505ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.443ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[41.527ms] [34;1m[rows:-][0m SELECT * FROM `exa_attachment_category` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.720ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'exa_attachment_category' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[44.721ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[1.349ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:44
+[0m[33m[47.290ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'exa_attachment_category' AND index_name = 'idx_exa_attachment_category_deleted_at'[github.com/flipped-aurora/gin-vue-admin/server]2026-11-12 09:29:02.306	[34minfo[0m	D:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/gorm.go:86	register table success
+[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/service/system/jwt_black_list.go:44
+[0m[33m[43.986ms] [34;1m[rows:0][0m SELECT `jwt` FROM `jwt_blacklists` WHERE `jwt_blacklists`.`deleted_at` IS NULL[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /uploads/file/*filepath   --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] HEAD   /uploads/file/*filepath   --> github.com/gin-gonic/gin.(*RouterGroup).createStaticHandler.func1 (3 handlers)
+[GIN-debug] GET    /swagger/*any             --> github.com/swaggo/gin-swagger.CustomWrapHandler.func1 (3 handlers)
+[github.com/flipped-aurora/gin-vue-admin/server]2026-11-12 09:29:02.351	[34minfo[0m	D:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/router.go:62	register swagger handler
+[GIN-debug] GET    /health                   --> github.com/flipped-aurora/gin-vue-admin/server/initialize.Routers.func1 (3 handlers)
+[GIN-debug] POST   /base/login               --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*BaseApi).Login-fm (3 handlers)
+[GIN-debug] POST   /base/captcha             --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*BaseApi).Captcha-fm (3 handlers)
+[GIN-debug] POST   /init/initdb              --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DBApi).InitDB-fm (3 handlers)
+[GIN-debug] POST   /init/checkdb             --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DBApi).CheckDB-fm (3 handlers)
+[GIN-debug] GET    /api/getApiGroups         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).GetApiGroups-fm (6 handlers)
+[GIN-debug] GET    /api/syncApi              --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).SyncApi-fm (6 handlers)
+[GIN-debug] POST   /api/ignoreApi            --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).IgnoreApi-fm (6 handlers)
+[GIN-debug] POST   /api/enterSyncApi         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).EnterSyncApi-fm (6 handlers)
+[GIN-debug] POST   /api/createApi            --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).CreateApi-fm (6 handlers)
+[GIN-debug] POST   /api/deleteApi            --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).DeleteApi-fm (6 handlers)
+[GIN-debug] POST   /api/getApiById           --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).GetApiById-fm (6 handlers)
+[GIN-debug] POST   /api/updateApi            --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).UpdateApi-fm (6 handlers)
+[GIN-debug] DELETE /api/deleteApisByIds      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).DeleteApisByIds-fm (6 handlers)
+[GIN-debug] POST   /api/setApiRoles          --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).SetApiRoles-fm (6 handlers)
+[GIN-debug] POST   /api/getAllApis           --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).GetAllApis-fm (5 handlers)
+[GIN-debug] POST   /api/getApiList           --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).GetApiList-fm (5 handlers)
+[GIN-debug] GET    /api/getApiRoles          --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).GetApiRoles-fm (5 handlers)
+[GIN-debug] GET    /api/freshCasbin          --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApiApi).FreshCasbin-fm (3 handlers)
+[GIN-debug] POST   /jwt/jsonInBlacklist      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*JwtApi).JsonInBlacklist-fm (5 handlers)
+[GIN-debug] POST   /user/admin_register      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*BaseApi).Register-fm (6 handlers)
+[GIN-debug] POST   /user/changePassword      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*BaseApi).ChangePassword-fm (6 handlers)
+[GIN-debug] POST   /user/setUserAuthority    --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*BaseApi).SetUserAuthority-fm (6 handlers)
+[GIN-debug] DELETE /user/deleteUser          --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*BaseApi).DeleteUser-fm (6 handlers)
+[GIN-debug] PUT    /user/setUserInfo         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*BaseApi).SetUserInfo-fm (6 handlers)
+[GIN-debug] PUT    /user/setSelfInfo         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*BaseApi).SetSelfInfo-fm (6 handlers)
+[GIN-debug] POST   /user/setUserAuthorities  --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*BaseApi).SetUserAuthorities-fm (6 handlers)
+[GIN-debug] POST   /user/resetPassword       --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*BaseApi).ResetPassword-fm (6 handlers)
+[GIN-debug] PUT    /user/setSelfSetting      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*BaseApi).SetSelfSetting-fm (6 handlers)
+[GIN-debug] POST   /user/getUserList         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*BaseApi).GetUserList-fm (5 handlers)
+[GIN-debug] GET    /user/getUserInfo         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*BaseApi).GetUserInfo-fm (5 handlers)
+[GIN-debug] POST   /menu/addBaseMenu         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityMenuApi).AddBaseMenu-fm (6 handlers)
+[GIN-debug] POST   /menu/addMenuAuthority    --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityMenuApi).AddMenuAuthority-fm (6 handlers)
+[GIN-debug] POST   /menu/deleteBaseMenu      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityMenuApi).DeleteBaseMenu-fm (6 handlers)
+[GIN-debug] POST   /menu/updateBaseMenu      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityMenuApi).UpdateBaseMenu-fm (6 handlers)
+[GIN-debug] POST   /menu/setMenuRoles        --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityMenuApi).SetMenuRoles-fm (6 handlers)
+[GIN-debug] POST   /menu/getMenu             --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityMenuApi).GetMenu-fm (5 handlers)
+[GIN-debug] POST   /menu/getMenuList         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityMenuApi).GetMenuList-fm (5 handlers)
+[GIN-debug] POST   /menu/getBaseMenuTree     --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityMenuApi).GetBaseMenuTree-fm (5 handlers)
+[GIN-debug] POST   /menu/getMenuAuthority    --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityMenuApi).GetMenuAuthority-fm (5 handlers)
+[GIN-debug] POST   /menu/getBaseMenuById     --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityMenuApi).GetBaseMenuById-fm (5 handlers)
+[GIN-debug] GET    /menu/getMenuRoles        --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityMenuApi).GetMenuRoles-fm (5 handlers)
+[GIN-debug] POST   /system/setSystemConfig   --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApi).SetSystemConfig-fm (6 handlers)
+[GIN-debug] POST   /system/reloadSystem      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApi).ReloadSystem-fm (6 handlers)
+[GIN-debug] POST   /system/getSystemConfig   --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApi).GetSystemConfig-fm (5 handlers)
+[GIN-debug] POST   /system/getServerInfo     --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SystemApi).GetServerInfo-fm (5 handlers)
+[GIN-debug] DELETE /sysVersion/deleteSysVersion --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysVersionApi).DeleteSysVersion-fm (6 handlers)
+[GIN-debug] DELETE /sysVersion/deleteSysVersionByIds --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysVersionApi).DeleteSysVersionByIds-fm (6 handlers)
+[GIN-debug] POST   /sysVersion/exportVersion --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysVersionApi).ExportVersion-fm (6 handlers)
+[GIN-debug] POST   /sysVersion/importVersion --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysVersionApi).ImportVersion-fm (6 handlers)
+[GIN-debug] GET    /sysVersion/findSysVersion --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysVersionApi).FindSysVersion-fm (5 handlers)
+[GIN-debug] GET    /sysVersion/getSysVersionList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysVersionApi).GetSysVersionList-fm (5 handlers)
+[GIN-debug] GET    /sysVersion/downloadVersionJson --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysVersionApi).DownloadVersionJson-fm (5 handlers)
+[GIN-debug] POST   /casbin/updateCasbin      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*CasbinApi).UpdateCasbin-fm (6 handlers)
+[GIN-debug] POST   /casbin/getPolicyPathByAuthorityId --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*CasbinApi).GetPolicyPathByAuthorityId-fm (5 handlers)
+[GIN-debug] POST   /authority/createAuthority --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityApi).CreateAuthority-fm (6 handlers)
+[GIN-debug] POST   /authority/deleteAuthority --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityApi).DeleteAuthority-fm (6 handlers)
+[GIN-debug] PUT    /authority/updateAuthority --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityApi).UpdateAuthority-fm (6 handlers)
+[GIN-debug] POST   /authority/copyAuthority  --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityApi).CopyAuthority-fm (6 handlers)
+[GIN-debug] POST   /authority/setDataAuthority --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityApi).SetDataAuthority-fm (6 handlers)
+[GIN-debug] POST   /authority/setRoleUsers   --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityApi).SetRoleUsers-fm (6 handlers)
+[GIN-debug] POST   /authority/getAuthorityList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityApi).GetAuthorityList-fm (5 handlers)
+[GIN-debug] GET    /authority/getUsersByAuthority --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityApi).GetUsersByAuthority-fm (5 handlers)
+[GIN-debug] POST   /sysDictionary/createSysDictionary --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryApi).CreateSysDictionary-fm (6 handlers)
+[GIN-debug] DELETE /sysDictionary/deleteSysDictionary --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryApi).DeleteSysDictionary-fm (6 handlers)
+[GIN-debug] PUT    /sysDictionary/updateSysDictionary --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryApi).UpdateSysDictionary-fm (6 handlers)
+[GIN-debug] POST   /sysDictionary/importSysDictionary --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryApi).ImportSysDictionary-fm (6 handlers)
+[GIN-debug] GET    /sysDictionary/exportSysDictionary --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryApi).ExportSysDictionary-fm (6 handlers)
+[GIN-debug] GET    /sysDictionary/findSysDictionary --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryApi).FindSysDictionary-fm (5 handlers)
+[GIN-debug] GET    /sysDictionary/getSysDictionaryList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryApi).GetSysDictionaryList-fm (5 handlers)
+[GIN-debug] DELETE /sysOperationRecord/deleteSysOperationRecord --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*OperationRecordApi).DeleteSysOperationRecord-fm (5 handlers)
+[GIN-debug] DELETE /sysOperationRecord/deleteSysOperationRecordByIds --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*OperationRecordApi).DeleteSysOperationRecordByIds-fm (5 handlers)
+[GIN-debug] GET    /sysOperationRecord/findSysOperationRecord --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*OperationRecordApi).FindSysOperationRecord-fm (5 handlers)
+[GIN-debug] GET    /sysOperationRecord/getSysOperationRecordList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*OperationRecordApi).GetSysOperationRecordList-fm (5 handlers)
+[GIN-debug] POST   /sysDictionaryDetail/createSysDictionaryDetail --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryDetailApi).CreateSysDictionaryDetail-fm (6 handlers)
+[GIN-debug] DELETE /sysDictionaryDetail/deleteSysDictionaryDetail --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryDetailApi).DeleteSysDictionaryDetail-fm (6 handlers)
+[GIN-debug] PUT    /sysDictionaryDetail/updateSysDictionaryDetail --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryDetailApi).UpdateSysDictionaryDetail-fm (6 handlers)
+[GIN-debug] GET    /sysDictionaryDetail/findSysDictionaryDetail --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryDetailApi).FindSysDictionaryDetail-fm (5 handlers)
+[GIN-debug] GET    /sysDictionaryDetail/getSysDictionaryDetailList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryDetailApi).GetSysDictionaryDetailList-fm (5 handlers)
+[GIN-debug] GET    /sysDictionaryDetail/getDictionaryTreeList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryDetailApi).GetDictionaryTreeList-fm (5 handlers)
+[GIN-debug] GET    /sysDictionaryDetail/getDictionaryTreeListByType --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryDetailApi).GetDictionaryTreeListByType-fm (5 handlers)
+[GIN-debug] GET    /sysDictionaryDetail/getDictionaryDetailsByParent --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryDetailApi).GetDictionaryDetailsByParent-fm (5 handlers)
+[GIN-debug] GET    /sysDictionaryDetail/getDictionaryPath --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*DictionaryDetailApi).GetDictionaryPath-fm (5 handlers)
+[GIN-debug] POST   /authorityBtn/getAuthorityBtn --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityBtnApi).GetAuthorityBtn-fm (5 handlers)
+[GIN-debug] POST   /authorityBtn/setAuthorityBtn --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityBtnApi).SetAuthorityBtn-fm (5 handlers)
+[GIN-debug] POST   /authorityBtn/canRemoveAuthorityBtn --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AuthorityBtnApi).CanRemoveAuthorityBtn-fm (5 handlers)
+[GIN-debug] POST   /sysExportTemplate/createSysExportTemplate --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysExportTemplateApi).CreateSysExportTemplate-fm (6 handlers)
+[GIN-debug] DELETE /sysExportTemplate/deleteSysExportTemplate --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysExportTemplateApi).DeleteSysExportTemplate-fm (6 handlers)
+[GIN-debug] DELETE /sysExportTemplate/deleteSysExportTemplateByIds --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysExportTemplateApi).DeleteSysExportTemplateByIds-fm (6 handlers)
+[GIN-debug] PUT    /sysExportTemplate/updateSysExportTemplate --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysExportTemplateApi).UpdateSysExportTemplate-fm (6 handlers)
+[GIN-debug] POST   /sysExportTemplate/importExcel --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysExportTemplateApi).ImportExcel-fm (6 handlers)
+[GIN-debug] GET    /sysExportTemplate/findSysExportTemplate --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysExportTemplateApi).FindSysExportTemplate-fm (5 handlers)
+[GIN-debug] GET    /sysExportTemplate/getSysExportTemplateList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysExportTemplateApi).GetSysExportTemplateList-fm (5 handlers)
+[GIN-debug] GET    /sysExportTemplate/exportExcel --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysExportTemplateApi).ExportExcel-fm (5 handlers)
+[GIN-debug] GET    /sysExportTemplate/exportTemplate --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysExportTemplateApi).ExportTemplate-fm (5 handlers)
+[GIN-debug] GET    /sysExportTemplate/previewSQL --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysExportTemplateApi).PreviewSQL-fm (5 handlers)
+[GIN-debug] GET    /sysExportTemplate/exportExcelByToken --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysExportTemplateApi).ExportExcelByToken-fm (3 handlers)
+[GIN-debug] GET    /sysExportTemplate/exportTemplateByToken --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysExportTemplateApi).ExportTemplateByToken-fm (3 handlers)
+[GIN-debug] POST   /sysParams/createSysParams --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysParamsApi).CreateSysParams-fm (6 handlers)
+[GIN-debug] DELETE /sysParams/deleteSysParams --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysParamsApi).DeleteSysParams-fm (6 handlers)
+[GIN-debug] DELETE /sysParams/deleteSysParamsByIds --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysParamsApi).DeleteSysParamsByIds-fm (6 handlers)
+[GIN-debug] PUT    /sysParams/updateSysParams --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysParamsApi).UpdateSysParams-fm (6 handlers)
+[GIN-debug] GET    /sysParams/findSysParams  --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysParamsApi).FindSysParams-fm (5 handlers)
+[GIN-debug] GET    /sysParams/getSysParamsList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysParamsApi).GetSysParamsList-fm (5 handlers)
+[GIN-debug] GET    /sysParams/getSysParam    --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysParamsApi).GetSysParam-fm (5 handlers)
+[GIN-debug] DELETE /sysError/deleteSysError  --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysErrorApi).DeleteSysError-fm (6 handlers)
+[GIN-debug] DELETE /sysError/deleteSysErrorByIds --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysErrorApi).DeleteSysErrorByIds-fm (6 handlers)
+[GIN-debug] PUT    /sysError/updateSysError  --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysErrorApi).UpdateSysError-fm (6 handlers)
+[GIN-debug] GET    /sysError/getSysErrorSolution --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysErrorApi).GetSysErrorSolution-fm (6 handlers)
+[GIN-debug] GET    /sysError/findSysError    --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysErrorApi).FindSysError-fm (5 handlers)
+[GIN-debug] GET    /sysError/getSysErrorList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysErrorApi).GetSysErrorList-fm (5 handlers)
+[GIN-debug] POST   /sysError/createSysError  --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SysErrorApi).CreateSysError-fm (3 handlers)
+[GIN-debug] DELETE /sysLoginLog/deleteLoginLog --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*LoginLogApi).DeleteLoginLog-fm (6 handlers)
+[GIN-debug] DELETE /sysLoginLog/deleteLoginLogByIds --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*LoginLogApi).DeleteLoginLogByIds-fm (6 handlers)
+[GIN-debug] GET    /sysLoginLog/findLoginLog --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*LoginLogApi).FindLoginLog-fm (5 handlers)
+[GIN-debug] GET    /sysLoginLog/getLoginLogList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*LoginLogApi).GetLoginLogList-fm (5 handlers)
+[GIN-debug] POST   /sysApiToken/createApiToken --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*ApiTokenApi).CreateApiToken-fm (6 handlers)
+[GIN-debug] POST   /sysApiToken/getApiTokenList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*ApiTokenApi).GetApiTokenList-fm (6 handlers)
+[GIN-debug] POST   /sysApiToken/deleteApiToken --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*ApiTokenApi).DeleteApiToken-fm (6 handlers)
+[GIN-debug] POST   /customer/customer        --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*CustomerApi).CreateExaCustomer-fm (6 handlers)
+[GIN-debug] PUT    /customer/customer        --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*CustomerApi).UpdateExaCustomer-fm (6 handlers)
+[GIN-debug] DELETE /customer/customer        --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*CustomerApi).DeleteExaCustomer-fm (6 handlers)
+[GIN-debug] GET    /customer/customer        --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*CustomerApi).GetExaCustomer-fm (5 handlers)
+[GIN-debug] GET    /customer/customerList    --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*CustomerApi).GetExaCustomerList-fm (5 handlers)
+[GIN-debug] POST   /fileUploadAndDownload/upload --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*FileUploadAndDownloadApi).UploadFile-fm (5 handlers)
+[GIN-debug] POST   /fileUploadAndDownload/getFileList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*FileUploadAndDownloadApi).GetFileList-fm (5 handlers)
+[GIN-debug] POST   /fileUploadAndDownload/deleteFile --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*FileUploadAndDownloadApi).DeleteFile-fm (5 handlers)
+[GIN-debug] POST   /fileUploadAndDownload/editFileName --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*FileUploadAndDownloadApi).EditFileName-fm (5 handlers)
+[GIN-debug] POST   /fileUploadAndDownload/breakpointContinue --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*FileUploadAndDownloadApi).BreakpointContinue-fm (5 handlers)
+[GIN-debug] GET    /fileUploadAndDownload/findFile --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*FileUploadAndDownloadApi).FindFile-fm (5 handlers)
+[GIN-debug] POST   /fileUploadAndDownload/breakpointContinueFinish --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*FileUploadAndDownloadApi).BreakpointContinueFinish-fm (5 handlers)
+[GIN-debug] POST   /fileUploadAndDownload/removeChunk --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*FileUploadAndDownloadApi).RemoveChunk-fm (5 handlers)
+[GIN-debug] POST   /fileUploadAndDownload/importURL --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*FileUploadAndDownloadApi).ImportURL-fm (5 handlers)
+[GIN-debug] GET    /attachmentCategory/getCategoryList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*AttachmentCategoryApi).GetCategoryList-fm (5 handlers)
+[GIN-debug] POST   /attachmentCategory/addCategory --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*AttachmentCategoryApi).AddCategory-fm (5 handlers)
+[GIN-debug] POST   /attachmentCategory/deleteCategory --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/example.(*AttachmentCategoryApi).DeleteCategory-fm (5 handlers)
+email 注册开始!
+[GIN-debug] POST   /email/emailTest          --> github.com/flipped-aurora/gin-vue-admin/server/plugin/email/api.(*EmailApi).EmailTest-fm (6 handlers)
+[GIN-debug] POST   /email/sendEmail          --> github.com/flipped-aurora/gin-vue-admin/server/plugin/email/api.(*EmailApi).SendEmail-fm (6 handlers)
+email 注册成功!
+[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[0.930ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/info/createInfo' AND method = 'POST' AND api_group = '公告' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[47.527ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/info/deleteInfo' AND method = 'DELETE' AND api_group = '公告' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[46.903ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/info/deleteInfoByIds' AND method = 'DELETE' AND api_group = '公告' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[43.926ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/info/updateInfo' AND method = 'PUT' AND api_group = '公告' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[43.452ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/info/findInfo' AND method = 'GET' AND api_group = '公告' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[43.367ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/info/getInfoList' AND method = 'GET' AND api_group = '公告' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:74
+[0m[33m[1.309ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'anInfo'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/announcement/initialize/gorm.go:13
+[0m[33m[0.000ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/announcement/initialize/gorm.go:13
+[0m[33m[2.071ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/announcement/initialize/gorm.go:13
+[0m[33m[45.711ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'gva_announcements_info' AND table_type = 'BASE TABLE'[32m
+[0m[33m[41.966ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/announcement/initialize/gorm.go:13
+[0m[33m[1.579ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/announcement/initialize/gorm.go:13
+[0m[33m[47.328ms] [34;1m[rows:-][0m SELECT * FROM `gva_announcements_info` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/announcement/initialize/gorm.go:13
+[0m[33m[43.364ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'gva_announcements_info' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/announcement/initialize/gorm.go:13
+[0m[33m[43.059ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/announcement/initialize/gorm.go:13
+[0m[33m[0.509ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/announcement/initialize/gorm.go:13
+[0m[33m[45.498ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'gva_announcements_info' AND index_name = 'idx_gva_announcements_info_deleted_at'[GIN-debug] POST   /info/createInfo          --> github.com/flipped-aurora/gin-vue-admin/server/plugin/announcement/api.(*info).CreateInfo-fm (6 handlers)
+[GIN-debug] DELETE /info/deleteInfo          --> github.com/flipped-aurora/gin-vue-admin/server/plugin/announcement/api.(*info).DeleteInfo-fm (6 handlers)
+[GIN-debug] DELETE /info/deleteInfoByIds     --> github.com/flipped-aurora/gin-vue-admin/server/plugin/announcement/api.(*info).DeleteInfoByIds-fm (6 handlers)
+[GIN-debug] PUT    /info/updateInfo          --> github.com/flipped-aurora/gin-vue-admin/server/plugin/announcement/api.(*info).UpdateInfo-fm (6 handlers)
+[GIN-debug] GET    /info/findInfo            --> github.com/flipped-aurora/gin-vue-admin/server/plugin/announcement/api.(*info).FindInfo-fm (5 handlers)
+[GIN-debug] GET    /info/getInfoList         --> github.com/flipped-aurora/gin-vue-admin/server/plugin/announcement/api.(*info).GetInfoList-fm (5 handlers)
+[GIN-debug] GET    /info/getInfoDataSource   --> github.com/flipped-aurora/gin-vue-admin/server/plugin/announcement/api.(*info).GetInfoDataSource-fm (3 handlers)
+[GIN-debug] GET    /info/getInfoPublic       --> github.com/flipped-aurora/gin-vue-admin/server/plugin/announcement/api.(*info).GetInfoPublic-fm (3 handlers)
+[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[2.481ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/getDB' AND method = 'GET' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[42.398ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/getTables' AND method = 'GET' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[46.633ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/getColumn' AND method = 'GET' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.307ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/preview' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[43.377ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/createTemp' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[47.243ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/mcp' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[43.693ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/mcpStatus' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.941ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/mcpStart' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[35.977ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/mcpStop' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[47.983ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/mcpList' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.350ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/mcpRoutes' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[43.969ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/mcpTest' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.416ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/pubPlug' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[42.442ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/installPlugin' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[45.564ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/removePlugin' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[43.979ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/getPluginList' AND method = 'GET' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[41.746ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/saveAIWorkflowSession' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[48.272ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/getAIWorkflowSessionList' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[47.776ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/getAIWorkflowSessionDetail' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.228ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/deleteAIWorkflowSession' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[42.351ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/dumpAIWorkflowMarkdown' AND method = 'POST' AND api_group = '代码生成器' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[49.593ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/getPackage' AND method = 'POST' AND api_group = '模板配置' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.390ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/delPackage' AND method = 'POST' AND api_group = '模板配置' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[43.187ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/createPackage' AND method = 'POST' AND api_group = '模板配置' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[43.369ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/getTemplates' AND method = 'GET' AND api_group = '模板配置' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[42.751ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/getMeta' AND method = 'POST' AND api_group = '代码生成器历史' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.767ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/rollback' AND method = 'POST' AND api_group = '代码生成器历史' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[40.821ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/delSysHistory' AND method = 'POST' AND api_group = '代码生成器历史' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[46.958ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/getSysHistory' AND method = 'POST' AND api_group = '代码生成器历史' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.508ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/autoCode/addFunc' AND method = 'POST' AND api_group = '代码生成器历史' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[43.992ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/getTools' AND method = 'GET' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.687ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/getSkillList' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[42.839ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/getSkillDetail' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.548ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/saveSkill' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[43.973ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/deleteSkill' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.127ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/createScript' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[41.687ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/getScript' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[47.775ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/saveScript' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[43.625ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/createResource' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[47.775ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/getResource' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[47.742ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/saveResource' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[48.314ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/createReference' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.175ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/getReference' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[47.734ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/saveReference' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.062ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/createTemplate' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[42.926ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/getTemplate' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[42.988ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/saveTemplate' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[45.311ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/getGlobalConstraint' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[41.946ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/saveGlobalConstraint' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[44.831ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/packageSkill' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:50
+[0m[33m[43.906ms] [34;1m[rows:1][0m SELECT * FROM `sys_apis` WHERE (path = '/skills/downloadOnlineSkill' AND method = 'POST' AND api_group = 'skills' ) AND `sys_apis`.`deleted_at` IS NULL ORDER BY `sys_apis`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:74
+[0m[33m[1.039ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'AutoRoot'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:82
+[0m[33m[42.965ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'AutoCode'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:82
+[0m[33m[44.127ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'AutoPkg'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:82
+[0m[33m[43.750ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'formCreate'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:82
+[0m[33m[48.013ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'AIWorkflow'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:82
+[0m[33m[48.304ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'autoCodeEdit'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:82
+[0m[33m[43.900ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'exportTemplate'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:82
+[0m[33m[48.155ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'MCP'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:82
+[0m[33m[43.990ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'MCPTest'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:82
+[0m[33m[43.313ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'AutoInstallPlugin'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:82
+[0m[33m[44.264ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'PubPlug'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:82
+[0m[33m[43.062ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'Skills'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:82
+[0m[33m[43.432ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'picture'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/plugin-tool/utils/check.go:82
+[0m[33m[43.195ms] [34;1m[rows:1][0m SELECT * FROM `sys_base_menus` WHERE name = 'AutoCodeAdmin'  AND `sys_base_menus`.`deleted_at` IS NULL ORDER BY `sys_base_menus`.`id` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[2.869ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[1.347ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[49.263ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_ai_workflow_sessions' AND table_type = 'BASE TABLE'[32m
+[0m[33m[46.245ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[1.420ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[43.401ms] [34;1m[rows:-][0m SELECT * FROM `sys_ai_workflow_sessions` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[44.789ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_ai_workflow_sessions' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[40.786ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[2.622ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[41.566ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_ai_workflow_sessions' AND index_name = 'idx_sys_ai_workflow_sessions_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[43.206ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[1.382ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[41.391ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_ai_workflow_sessions' AND index_name = 'idx_sys_ai_workflow_sessions_user_id'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[42.384ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[2.113ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[42.822ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_ai_workflow_sessions' AND index_name = 'idx_sys_ai_workflow_sessions_tab'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[41.385ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[2.068ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[31.964ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_auto_code_histories' AND table_type = 'BASE TABLE'[32m
+[0m[33m[44.380ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[1.728ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[50.437ms] [34;1m[rows:-][0m SELECT * FROM `sys_auto_code_histories` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[43.705ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_auto_code_histories' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[61.584ms] [34;1m[rows:0][0m ALTER TABLE `sys_auto_code_histories` MODIFY COLUMN `package` varchar(191) COMMENT '模块名或插件名'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[12.683ms] [34;1m[rows:0][0m ALTER TABLE `sys_auto_code_histories` MODIFY COLUMN `abbreviation` varchar(191) COMMENT '结构体简称'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[8.918ms] [34;1m[rows:0][0m ALTER TABLE `sys_auto_code_histories` MODIFY COLUMN `description` varchar(191) COMMENT '结构体中文名'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[10.813ms] [34;1m[rows:0][0m ALTER TABLE `sys_auto_code_histories` MODIFY COLUMN `injections` text COMMENT '注入信息'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[11.756ms] [34;1m[rows:0][0m ALTER TABLE `sys_auto_code_histories` MODIFY COLUMN `api_ids` varchar(191) COMMENT '关联API ID'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[0.590ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[1.709ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[47.154ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_auto_code_histories' AND index_name = 'idx_sys_auto_code_histories_deleted_at'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[48.269ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[1.046ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[43.069ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.tables WHERE table_schema = 'gva' AND table_name = 'sys_auto_code_packages' AND table_type = 'BASE TABLE'[32m
+[0m[33m[46.224ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[1.231ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[42.770ms] [34;1m[rows:-][0m SELECT * FROM `sys_auto_code_packages` LIMIT 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[42.935ms] [34;1m[rows:-][0m SELECT column_name, column_default, is_nullable = 'YES', data_type, character_maximum_length, column_type, column_key, extra, column_comment, numeric_precision, numeric_scale , datetime_precision FROM information_schema.columns WHERE table_schema = 'gva' AND table_name = 'sys_auto_code_packages' ORDER BY ORDINAL_POSITION[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[55.725ms] [34;1m[rows:0][0m ALTER TABLE `sys_auto_code_packages` MODIFY COLUMN `label` varchar(191) COMMENT '显示名称'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[9.539ms] [34;1m[rows:0][0m ALTER TABLE `sys_auto_code_packages` MODIFY COLUMN `template` varchar(191) COMMENT '模板'[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[0.515ms] [34;1m[rows:-][0m SELECT DATABASE()[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[1.674ms] [34;1m[rows:1][0m SELECT SCHEMA_NAME from Information_schema.SCHEMATA where SCHEMA_NAME LIKE 'gva%' ORDER BY SCHEMA_NAME='gva' DESC,SCHEMA_NAME limit 1[32mD:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/plugin/auto/initialize/gorm.go:14
+[0m[33m[42.057ms] [34;1m[rows:-][0m SELECT count(*) FROM information_schema.statistics WHERE table_schema = 'gva' AND table_name = 'sys_auto_code_packages' AND index_name = 'idx_sys_auto_code_packages_deleted_at'[GIN-debug] GET    /autoCode/getDB           --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeApi).GetDB-fm (5 handlers)
+[GIN-debug] GET    /autoCode/getTables       --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeApi).GetTables-fm (5 handlers)
+[GIN-debug] GET    /autoCode/getColumn       --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeApi).GetColumn-fm (5 handlers)
+[GIN-debug] POST   /autoCode/preview         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeTemplateApi).Preview-fm (5 handlers)
+[GIN-debug] POST   /autoCode/createTemp      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeTemplateApi).Create-fm (5 handlers)
+[GIN-debug] POST   /autoCode/addFunc         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeTemplateApi).AddFunc-fm (5 handlers)
+[GIN-debug] POST   /autoCode/mcp             --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeTemplateApi).MCP-fm (5 handlers)
+[GIN-debug] POST   /autoCode/mcpStatus       --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeTemplateApi).MCPStatus-fm (5 handlers)
+[GIN-debug] POST   /autoCode/mcpStart        --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeTemplateApi).MCPStart-fm (5 handlers)
+[GIN-debug] POST   /autoCode/mcpStop         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeTemplateApi).MCPStop-fm (5 handlers)
+[GIN-debug] POST   /autoCode/mcpList         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeTemplateApi).MCPList-fm (5 handlers)
+[GIN-debug] POST   /autoCode/mcpRoutes       --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeTemplateApi).MCPRoutes-fm (5 handlers)
+[GIN-debug] POST   /autoCode/mcpTest         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeTemplateApi).MCPTest-fm (5 handlers)
+[GIN-debug] POST   /autoCode/getPackage      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodePackageApi).All-fm (5 handlers)
+[GIN-debug] POST   /autoCode/delPackage      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodePackageApi).Delete-fm (5 handlers)
+[GIN-debug] POST   /autoCode/createPackage   --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodePackageApi).Create-fm (5 handlers)
+[GIN-debug] POST   /autoCode/saveAIWorkflowSession --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AIWorkflowSessionApi).Save-fm (5 handlers)
+[GIN-debug] POST   /autoCode/getAIWorkflowSessionList --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AIWorkflowSessionApi).GetList-fm (5 handlers)
+[GIN-debug] POST   /autoCode/getAIWorkflowSessionDetail --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AIWorkflowSessionApi).GetDetail-fm (5 handlers)
+[GIN-debug] POST   /autoCode/deleteAIWorkflowSession --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AIWorkflowSessionApi).Delete-fm (5 handlers)
+[GIN-debug] POST   /autoCode/dumpAIWorkflowMarkdown --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AIWorkflowSessionApi).DumpMarkdown-fm (5 handlers)
+[GIN-debug] GET    /autoCode/getTemplates    --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodePackageApi).Templates-fm (5 handlers)
+[GIN-debug] POST   /autoCode/pubPlug         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodePluginApi).Packaged-fm (5 handlers)
+[GIN-debug] POST   /autoCode/installPlugin   --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodePluginApi).Install-fm (5 handlers)
+[GIN-debug] POST   /autoCode/removePlugin    --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodePluginApi).Remove-fm (5 handlers)
+[GIN-debug] GET    /autoCode/getPluginList   --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodePluginApi).GetPluginList-fm (5 handlers)
+[GIN-debug] POST   /autoCode/llmAuto         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeApi).LLMAuto-fm (3 handlers)
+[GIN-debug] POST   /autoCode/llmAutoSSE      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeApi).LLMAutoSSE-fm (3 handlers)
+[GIN-debug] POST   /autoCode/initMenu        --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodePluginApi).InitMenu-fm (3 handlers)
+[GIN-debug] POST   /autoCode/initAPI         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodePluginApi).InitAPI-fm (3 handlers)
+[GIN-debug] POST   /autoCode/initDictionary  --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodePluginApi).InitDictionary-fm (3 handlers)
+[GIN-debug] POST   /autoCode/getMeta         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeHistoryApi).First-fm (5 handlers)
+[GIN-debug] POST   /autoCode/rollback        --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeHistoryApi).RollBack-fm (5 handlers)
+[GIN-debug] POST   /autoCode/delSysHistory   --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeHistoryApi).Delete-fm (5 handlers)
+[GIN-debug] POST   /autoCode/getSysHistory   --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*AutoCodeHistoryApi).GetList-fm (5 handlers)
+[GIN-debug] GET    /skills/getTools          --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).GetTools-fm (5 handlers)
+[GIN-debug] POST   /skills/getSkillList      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).GetSkillList-fm (5 handlers)
+[GIN-debug] POST   /skills/getSkillDetail    --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).GetSkillDetail-fm (5 handlers)
+[GIN-debug] POST   /skills/saveSkill         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).SaveSkill-fm (5 handlers)
+[GIN-debug] POST   /skills/deleteSkill       --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).DeleteSkill-fm (5 handlers)
+[GIN-debug] POST   /skills/createScript      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).CreateScript-fm (5 handlers)
+[GIN-debug] POST   /skills/getScript         --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).GetScript-fm (5 handlers)
+[GIN-debug] POST   /skills/saveScript        --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).SaveScript-fm (5 handlers)
+[GIN-debug] POST   /skills/createResource    --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).CreateResource-fm (5 handlers)
+[GIN-debug] POST   /skills/getResource       --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).GetResource-fm (5 handlers)
+[GIN-debug] POST   /skills/saveResource      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).SaveResource-fm (5 handlers)
+[GIN-debug] POST   /skills/createReference   --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).CreateReference-fm (5 handlers)
+[GIN-debug] POST   /skills/getReference      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).GetReference-fm (5 handlers)
+[GIN-debug] POST   /skills/saveReference     --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).SaveReference-fm (5 handlers)
+[GIN-debug] POST   /skills/createTemplate    --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).CreateTemplate-fm (5 handlers)
+[GIN-debug] POST   /skills/getTemplate       --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).GetTemplate-fm (5 handlers)
+[GIN-debug] POST   /skills/saveTemplate      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).SaveTemplate-fm (5 handlers)
+[GIN-debug] POST   /skills/getGlobalConstraint --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).GetGlobalConstraint-fm (5 handlers)
+[GIN-debug] POST   /skills/saveGlobalConstraint --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).SaveGlobalConstraint-fm (5 handlers)
+[GIN-debug] POST   /skills/packageSkill      --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).PackageSkill-fm (5 handlers)
+[GIN-debug] POST   /skills/downloadOnlineSkill --> github.com/flipped-aurora/gin-vue-admin/server/api/v1/system.(*SkillsApi).DownloadOnlineSkill-fm (3 handlers)
+[github.com/flipped-aurora/gin-vue-admin/server]2026-11-12 09:29:07.243	[34minfo[0m	D:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/shop/initialize/boot.go:32	shop 业务模块初始化完成
+[GIN-debug] GET    /api/health               --> github.com/flipped-aurora/gin-vue-admin/server/shop/router.InitShopRouter.func1 (3 handlers)
+[GIN-debug] POST   /api/login                --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.AuthApi.Login-fm (3 handlers)
+[GIN-debug] GET    /api/users                --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.AuthApi.Users-fm (3 handlers)
+[GIN-debug] GET    /api/products             --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.BuyerApi.Products-fm (3 handlers)
+[GIN-debug] GET    /api/pay/pending          --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.PayApi.PendingOrders-fm (3 handlers)
+[GIN-debug] POST   /api/pay/notify           --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.PayApi.Notify-fm (3 handlers)
+[GIN-debug] GET    /api/pay/channel          --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.PayApi.ChannelState-fm (3 handlers)
+[GIN-debug] POST   /api/jobs/close-expired   --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.PayApi.CloseExpired-fm (3 handlers)
+[GIN-debug] POST   /api/demo/reset           --> github.com/flipped-aurora/gin-vue-admin/server/shop/router.InitShopRouter.func2 (3 handlers)
+[GIN-debug] GET    /shop                     --> github.com/flipped-aurora/gin-vue-admin/server/shop/router.InitShopRouter.func3 (3 handlers)
+[GIN-debug] GET    /shop/                    --> github.com/flipped-aurora/gin-vue-admin/server/shop/router.InitShopRouter.func3 (3 handlers)
+[GIN-debug] GET    /api/me                   --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.AuthApi.Me-fm (4 handlers)
+[GIN-debug] POST   /api/orders               --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.BuyerApi.CreateOrder-fm (4 handlers)
+[GIN-debug] GET    /api/orders               --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.BuyerApi.MyOrders-fm (4 handlers)
+[GIN-debug] GET    /api/orders/:orderNo      --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.BuyerApi.OrderDetail-fm (4 handlers)
+[GIN-debug] POST   /api/orders/:orderNo/cancel --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.BuyerApi.Cancel-fm (4 handlers)
+[GIN-debug] POST   /api/orders/:orderNo/refund --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.BuyerApi.RefundApply-fm (4 handlers)
+[GIN-debug] GET    /api/orders/:orderNo/refund --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.BuyerApi.MyRefund-fm (4 handlers)
+[GIN-debug] PATCH  /api/ops/products         --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.ProductUpdate-fm (5 handlers)
+[GIN-debug] GET    /api/ops/summary          --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.Summary-fm (5 handlers)
+[GIN-debug] GET    /api/ops/orders           --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.Orders-fm (5 handlers)
+[GIN-debug] GET    /api/ops/orders/:orderNo  --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.OrderTrace-fm (5 handlers)
+[GIN-debug] GET    /api/ops/notices          --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.Notices-fm (5 handlers)
+[GIN-debug] GET    /api/ops/abnormals        --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.Abnormals-fm (5 handlers)
+[GIN-debug] GET    /api/ops/ledger           --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.Ledger-fm (5 handlers)
+[GIN-debug] GET    /api/ops/trail            --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.Trail-fm (5 handlers)
+[GIN-debug] GET    /api/warehouse/shipable   --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.Shipable-fm (5 handlers)
+[GIN-debug] POST   /api/warehouse/ship       --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.Ship-fm (5 handlers)
+[GIN-debug] GET    /api/warehouse/shipments  --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.Shipments-fm (5 handlers)
+[GIN-debug] GET    /api/warehouse/orders/:orderNo --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.OrderTrace-fm (5 handlers)
+[GIN-debug] GET    /api/cs/refunds           --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.Refunds-fm (5 handlers)
+[GIN-debug] POST   /api/cs/refunds/audit     --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.RefundAudit-fm (5 handlers)
+[GIN-debug] POST   /api/cs/refunds/retry     --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.RefundRetry-fm (5 handlers)
+[GIN-debug] GET    /api/cs/abnormals         --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.Abnormals-fm (5 handlers)
+[GIN-debug] POST   /api/cs/abnormals/handle  --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.HandleAbnormal-fm (5 handlers)
+[GIN-debug] GET    /api/cs/notices           --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.Notices-fm (5 handlers)
+[GIN-debug] GET    /api/cs/orders/:orderNo   --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.StaffApi.OrderTrace-fm (5 handlers)
+[GIN-debug] POST   /api/cs/channel/mode      --> github.com/flipped-aurora/gin-vue-admin/server/shop/api.PayApi.ChannelMode-fm (5 handlers)
+[github.com/flipped-aurora/gin-vue-admin/server]2026-11-12 09:29:07.253	[34minfo[0m	D:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/router_biz.go:35	shop 业务路由注册完成
+[github.com/flipped-aurora/gin-vue-admin/server]2026-11-12 09:29:07.254	[34minfo[0m	D:/Users/Lenovo/Desktop/shop_word/gin-vue-admin/server/initialize/router.go:112	router register success
+
+	欢迎使用 gin-vue-admin
+	当前版本:v2.9.2
+	项目地址:https://github.com/flipped-aurora/gin-vue-admin
+	授权版体验:https://vip.gin-vue-admin.com
+	插件市场:https://plugin.gin-vue-admin.com
+	默认自动化文档地址:http://127.0.0.1:8097/swagger/index.html
+	MCP 独立服务请手动启动: go run ./cmd/mcp -config ./cmd/mcp/config.yaml
+	默认MCP StreamHTTP地址:http://127.0.0.1:8889/mcp
+	默认前端文件运行地址:http://127.0.0.1:8080
+[GIN] 2026/11/12 - 09:29:07 | 200 |            0s |       127.0.0.1 | GET      "/api/health"
+[GIN] 2026/11/12 - 09:29:07 | 200 |     55.6607ms |       127.0.0.1 | POST     "/api/demo/reset"
+[GIN] 2026/11/12 - 09:29:07 | 200 |      2.1319ms |       127.0.0.1 | POST     "/api/login"
+[GIN] 2026/11/12 - 09:29:07 | 200 |     40.1942ms |       127.0.0.1 | POST     "/api/login"
+[GIN] 2026/11/12 - 09:29:07 | 200 |     42.7834ms |       127.0.0.1 | POST     "/api/login"
+[GIN] 2026/11/12 - 09:29:08 | 200 |    184.5141ms |       127.0.0.1 | PATCH    "/api/ops/products"
+[GIN] 2026/11/12 - 09:29:08 | 200 |    181.2511ms |       127.0.0.1 | PATCH    "/api/ops/products"
+[GIN] 2026/11/12 - 09:29:08 | 200 |     46.8442ms |       127.0.0.1 | GET      "/api/products"
+[GIN] 2026/11/12 - 09:29:08 | 200 |    361.9595ms |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:08 | 200 |    269.9264ms |       127.0.0.1 | POST     "/api/pay/notify"
+[GIN] 2026/11/12 - 09:29:09 | 200 |    314.4738ms |       127.0.0.1 | GET      "/api/orders/SH261112092908789521"
+[GIN] 2026/11/12 - 09:29:09 | 200 |     42.2301ms |       127.0.0.1 | GET      "/api/warehouse/shipable"
+[GIN] 2026/11/12 - 09:29:09 | 200 |    356.9217ms |       127.0.0.1 | POST     "/api/warehouse/ship"
+[GIN] 2026/11/12 - 09:29:10 | 200 |    318.0965ms |       127.0.0.1 | GET      "/api/orders/SH261112092908789521"
+[GIN] 2026/11/12 - 09:29:10 | 200 |     177.815ms |       127.0.0.1 | GET      "/api/ops/summary"
+[GIN] 2026/11/12 - 09:29:10 | 200 |      2.1201ms |       127.0.0.1 | GET      "/api/ops/ledger"
+[GIN] 2026/11/12 - 09:29:10 | 200 |     94.5578ms |       127.0.0.1 | POST     "/api/demo/reset"
+[GIN] 2026/11/12 - 09:29:10 | 200 |      2.6058ms |       127.0.0.1 | POST     "/api/login"
+[GIN] 2026/11/12 - 09:29:10 | 200 |     40.6962ms |       127.0.0.1 | POST     "/api/login"
+[GIN] 2026/11/12 - 09:29:10 | 200 |     41.3569ms |       127.0.0.1 | POST     "/api/login"
+[GIN] 2026/11/12 - 09:29:10 | 200 |    347.8522ms |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:10 | 200 |    576.3883ms |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 200 |    800.1389ms |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 200 |    1.0311349s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2625375s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2627281s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 200 |    1.2650124s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |     1.264468s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2655015s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2649734s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2666698s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2670949s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2682576s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2698324s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2715695s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2729036s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2734115s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2750234s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2760978s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 409 |    1.2776813s |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:11 | 200 |      1.4532ms |       127.0.0.1 | GET      "/api/products"
+[GIN] 2026/11/12 - 09:29:12 | 200 |    412.7606ms |       127.0.0.1 | POST     "/api/orders/SH261112092910539288/cancel"
+[GIN] 2026/11/12 - 09:29:12 | 200 |    326.1546ms |       127.0.0.1 | POST     "/api/orders/SH261112092910749538/cancel"
+[GIN] 2026/11/12 - 09:29:12 | 200 |    323.0731ms |       127.0.0.1 | POST     "/api/orders/SH261112092910921036/cancel"
+[GIN] 2026/11/12 - 09:29:13 | 200 |    324.5693ms |       127.0.0.1 | POST     "/api/orders/SH261112092910876047/cancel"
+[GIN] 2026/11/12 - 09:29:13 | 200 |    314.7423ms |       127.0.0.1 | POST     "/api/orders/SH261112092910257404/cancel"
+[GIN] 2026/11/12 - 09:29:13 | 200 |       1.756ms |       127.0.0.1 | GET      "/api/products"
+[GIN] 2026/11/12 - 09:29:13 | 200 |    364.5335ms |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:14 | 200 |    361.6971ms |       127.0.0.1 | POST     "/api/orders/SH261112092913978412/cancel"
+[GIN] 2026/11/12 - 09:29:14 | 200 |     55.4478ms |       127.0.0.1 | POST     "/api/demo/reset"
+[GIN] 2026/11/12 - 09:29:14 | 200 |      2.9362ms |       127.0.0.1 | POST     "/api/login"
+[GIN] 2026/11/12 - 09:29:14 | 200 |     43.9174ms |       127.0.0.1 | POST     "/api/login"
+[GIN] 2026/11/12 - 09:29:14 | 200 |     42.0555ms |       127.0.0.1 | POST     "/api/login"
+[GIN] 2026/11/12 - 09:29:14 | 200 |    361.5189ms |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:14 | 200 |     271.855ms |       127.0.0.1 | POST     "/api/pay/notify"
+[GIN] 2026/11/12 - 09:29:15 | 200 |    284.2357ms |       127.0.0.1 | POST     "/api/orders/SH261112092914103721/refund"
+[GIN] 2026/11/12 - 09:29:15 | 409 |     91.5455ms |       127.0.0.1 | POST     "/api/warehouse/ship"
+[GIN] 2026/11/12 - 09:29:15 | 200 |            0s |       127.0.0.1 | POST     "/api/cs/channel/mode"
+[GIN] 2026/11/12 - 09:29:15 | 409 |    403.6683ms |       127.0.0.1 | POST     "/api/cs/refunds/audit"
+[GIN] 2026/11/12 - 09:29:15 | 200 |            0s |       127.0.0.1 | POST     "/api/cs/channel/mode"
+[GIN] 2026/11/12 - 09:29:16 | 200 |    498.7353ms |       127.0.0.1 | POST     "/api/cs/refunds/retry"
+[GIN] 2026/11/12 - 09:29:16 | 200 |    367.5345ms |       127.0.0.1 | GET      "/api/orders/SH261112092914103721"
+[GIN] 2026/11/12 - 09:29:16 | 200 |     42.2656ms |       127.0.0.1 | GET      "/api/products"
+[GIN] 2026/11/12 - 09:29:16 | 200 |     42.4372ms |       127.0.0.1 | GET      "/api/products"
+[GIN] 2026/11/12 - 09:29:16 | 409 |    137.7659ms |       127.0.0.1 | POST     "/api/warehouse/ship"
+[GIN] 2026/11/12 - 09:29:16 | 200 |     54.0883ms |       127.0.0.1 | POST     "/api/demo/reset"
+[GIN] 2026/11/12 - 09:29:16 | 200 |      1.9298ms |       127.0.0.1 | POST     "/api/login"
+[GIN] 2026/11/12 - 09:29:16 | 200 |     44.9363ms |       127.0.0.1 | POST     "/api/login"
+[GIN] 2026/11/12 - 09:29:16 | 200 |     42.9119ms |       127.0.0.1 | POST     "/api/login"
+[GIN] 2026/11/12 - 09:29:17 | 200 |    369.9594ms |       127.0.0.1 | POST     "/api/orders"
+[GIN] 2026/11/12 - 09:29:19 | 200 |      1.8655ms |       127.0.0.1 | POST     "/api/jobs/close-expired"
+[GIN] 2026/11/12 - 09:29:19 | 200 |     46.4539ms |       127.0.0.1 | GET      "/api/products"
+[GIN] 2026/11/12 - 09:29:19 | 200 |    535.0375ms |       127.0.0.1 | POST     "/api/pay/notify"
+[GIN] 2026/11/12 - 09:29:20 | 200 |    321.1318ms |       127.0.0.1 | GET      "/api/orders/SH261112092916908713"
+[GIN] 2026/11/12 - 09:29:20 | 200 |       2.527ms |       127.0.0.1 | GET      "/api/products"
+[GIN] 2026/11/12 - 09:29:20 | 200 |     42.0049ms |       127.0.0.1 | GET      "/api/cs/abnormals"

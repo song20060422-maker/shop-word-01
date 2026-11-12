@@ -1,0 +1,8 @@
+{
+  "base_url": "http://localhost:8099",
+  "channel_secret": "channel-shared-secret",
+  "signature_header": "X-Channel-Signature",
+  "product_id": "SKU-A",
+  "password": "shop123",
+  "accounts": ["buyer1", "buyer2", "buyer3", "ops1", "wh1", "cs1"]
+}
