@@ -11,7 +11,7 @@
 | D2 | 业务验收证据 | `docs/evidence/acceptance-2026-11-12.log` | 51/51 通过（退出码 0） |
 | D3 | AI 事件清单 | `docs/events.md` | 已完成 |
 | D4 | 自测命令与退出码 | `docs/evidence/checks-2026-11-12.log` | gofmt/vet/build/test 全通过 |
-| D5 | 覆盖率 profile | `docs/evidence/coverage-all.out`、`coverage-func.txt` | 总 87.0%，核心包 ≥85% |
+| D5 | 覆盖率 profile | `docs/evidence/coverage-single.out`（标准单命令生成，无拼接） | 总 **87.3%**；service 85.6%、api 88.0%（块级并集口径） |
 | D6 | race 输出 | 本文件 §4 | **本地未执行**（无 cgo），CI 执行 |
 | D7 | 假设清单 | `docs/assumptions.md` | 已完成（A-01~A-19） |
 | D8 | 修复与审核记录 | `docs/review_records.md` | 7 条闭环 |
@@ -29,24 +29,40 @@ go build ./...                     -> <no output>         exit=0
 go test ./shop/... -count=1        -> 全部 ok             exit=0
 ```
 
-## 3. D5 覆盖率（真实数据）
+## 3. D5 覆盖率（真实数据，标准单命令生成）
+
+> 2026-11-12 审计整改（I-03）：旧 evidence 的 coverage-all.out 由多份分包 profile 拼接（同块重复出现），
+> 已删除并以**单条标准命令**重新生成 `coverage-single.out`（9150 行拼接文件不再存在）。
+> 分包数字为对单次 profile 按块并集聚合的结果，可复算。
 
 ```
-total: 87.0%
-service      90.5%   api        88.6%   router     98.4%
-middleware  100.0%   config     92.4%   initialize 85.7%
-model       100.0%   web       100.0%   utils      92.6%   db 72.8%
+total:      87.3%
+service     85.6%   api         88.0%   router     97.8%
+middleware 100.0%   config      95.9%   initialize 84.6%
+model      100.0%   utils       89.2%   db         69.7%
+model/response 100.0%   web 100.0%
 ```
 
-说明：`db` 为装配层（连接/建库），剩余未覆盖分支是"迁移文件读取失败后运行期不可能触发"的防御代码；核心业务包均 ≥85%。
+说明：核心业务包 **service 85.6%、api 88.0%，均 ≥85%**（A3-03 达标）。`db`/`initialize` 为装配层
+（连接/建库/迁移），未覆盖分支主要是"迁移文件读取失败"等运行期防御代码。
 
-复现命令：
+复现命令（单命令，count=1 禁缓存）：
 
 ```powershell
 cd server
-go test ./shop/... -coverprofile=coverage.out -coverpkg=./shop/...
-go tool cover -func=coverage.out | Select-Object -Last 1
+go test ./shop/... -coverprofile=coverage-single.out -coverpkg=./shop/... -count=1
+go tool cover -func coverage-single.out | Select-Object -Last 1
 ```
+
+## 3.1 D5-补充 安全整改回归（I-01/I-02，2026-11-12 二轮）
+
+| 整改项 | 内容 | 验证 |
+| --- | --- | --- |
+| 测试钩子门禁 | `/api/test/expire-orders`、`/api/pay/channel-mode`、`/api/jobs/close-expired` 加 `shop.demo-mode` 门禁：演示环境可用（契约脚本语义不变），生产配置一律 403 | `TestDemoModeGatesTestHooks` |
+| 账号列表收敛 | `GET /api/users` 仅演示模式可用（演示页选号登录依赖）；生产 403 防枚举 | 同上 |
+| 买家区角色门禁 | 路由层 `RequireRole(RoleBuyer)` + 契约委派 handler（CreateOrder/CancelOrder/RefundApply）内复核 buyer 角色 | `TestBuyerRoleGate` |
+
+验收脚本（检查者 Skill，未改动）在 demo-mode=true 下复跑 **51/51 通过**，日志 `acceptance-20261112-fix.log`。
 
 ## 4. D6 race 说明（未执行，原因与替代）
 

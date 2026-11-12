@@ -79,3 +79,37 @@
 | 业务验收 | `py -3 shop/scripts/run_acceptance.py --no-build --no-start` | 51/51，退出码 0 |
 | 编译 | `go build ./...` | 退出码 0 |
 | race | `go test -race ...` | 本机无 cgo 工具链未执行，CI 执行（见 evidence README） |
+
+## 4. 二轮审计整改（audit-20261112-batch1，2026-11-12）
+
+针对检查报告 22 项问题中可本机整改项（I-01/I-02/I-03）逐条闭环；其余（CI 实际运行、PR、race、视频、会话导出、Token 台账）依赖远程/出镜，保持"未执行"如实标注。
+
+### I-01/I-02 无鉴权端点与买家区角色（01-A2-01 partial → 修复）
+
+| 端点 | 整改 | 结果 |
+| --- | --- | --- |
+| `POST /api/test/expire-orders` | `shop.demo-mode` 门禁（生产 403） | `TestDemoModeGatesTestHooks` PASS |
+| `POST /api/pay/channel-mode` | 同上（契约"脚本调用"语义在演示环境不变，检查者验收脚本未改） | 同上 |
+| `POST /api/jobs/close-expired` | 同上 | 同上 |
+| `GET /api/users` | 仅演示模式可用（演示页选号依赖）；生产 403 防账号枚举 | 同上 |
+| `POST /api/orders` 等买家区 6 路由 | 路由层 `RequireRole(RoleBuyer)`；契约委派 handler（CreateOrder/CancelOrder/RefundApply）内复核（AuthGuard 委派先于组门禁执行，组门禁不可达，故 handler 内复核） | `TestBuyerRoleGate` PASS（ops/wh/cs 下单 403，buyer 200） |
+
+### I-03 覆盖率证据合并方式不合规（01-A3-02/03/04）
+
+- 删除拼接 profile `coverage-all.out`（多份分包 profile 拼接、同块重复）。
+- 以**标准单命令**重新生成：`go test ./shop/... -coverprofile=coverage-single.out -coverpkg=./shop/... -count=1`，产物归档 `docs/evidence/coverage-single.out`。
+- 补 service 缺口用例（`service/gaps_test.go`：itoa 负数分支、boolLabel 两分支、CatalogGet 未命中、ListByBuyer 空列表）。
+- 单命令块级并集口径：总 **87.3%**，**service 85.6%、api 88.0%（A3-03 核心包门禁达标）**；此前文档宣称的 90.5/88.6 为统计口径错误，已在 evidence README 中以可复算脚本口径修正。
+
+### 附加修复（整改中发现）
+
+- `run_acceptance.py read_base_url` 端口解析被配置回写后其它段的 `addr:` 污染（连到 8889），已限定 shop 段解析。
+
+### 本轮复验
+
+| 验证 | 命令 | 结果 |
+| --- | --- | --- |
+| gofmt/vet/build | `gofmt -l shop` / `go vet ./shop/...` / `go build ./...` | 全通过，exit 0 |
+| 全量测试 | `go test ./shop/... -count=1` | 11 包全 ok |
+| 覆盖率 | 单命令 profile | 87.3%（service 85.6 / api 88.0） |
+| 业务验收 | `run_acceptance.py --no-build --no-start` | **51/51**，exit 0，日志 `docs/evidence/acceptance-20261112-fix.log` |

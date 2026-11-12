@@ -85,7 +85,7 @@ python scripts\run_acceptance.py --no-build --no-start   # 服务已在运行
 | go vet | 通过 | `go vet ./shop/...` |
 | 全量编译 | 通过 | `go build ./...` |
 | 单元 + 集成测试 | 全部通过 | `go test ./shop/... -count=1` |
-| 覆盖率 | 总 **87.0%**；service 90.5 / api 88.6 / router 98.4 / middleware 100 / config 92.4 / initialize 85.7 | `go test ./shop/... -coverprofile=coverage.out -coverpkg=./shop/...` |
+| 覆盖率 | 总 **87.3%**（标准单命令生成，无拼接）；service **85.6** / api **88.0** / router 97.8 / middleware 100 / config 95.9 / utils 89.2 / initialize 84.6 / db 69.7 | `go test ./shop/... -coverprofile=coverage-single.out -coverpkg=./shop/... -count=1` |
 | 业务验收 | 51/51（2026-11-12 实测） | `py -3 scripts/run_acceptance.py --no-build --no-start` |
 | CI | `.github/workflows/shop-ci.yml`：gofmt/vet/build/test/覆盖率阈值/race/冒烟 | 推送触发 |
 | 部署 | `server/Dockerfile.shop` + `deploy/shop/docker-compose.yaml`（详见 `deploy/shop/README.md`） | `docker compose -f deploy/shop/docker-compose.yaml up -d --build` |
@@ -103,7 +103,10 @@ python scripts\run_acceptance.py --no-build --no-start   # 服务已在运行
 | `api/branch_test.go` | 参数校验、未知实体、外部渠道、视图映射分支 |
 | `config/`、`middleware/`、`db/`、`initialize/`、`utils/` | 配置解析、JWT/角色、自动建库与迁移、Boot 装配、口令/签名/单号 |
 
-**本轮修复的越权问题**：契约委派路径绕过路由组角色门禁，买家可读 `GET /api/ops/summary` 与 `GET /api/cs/refunds`；已在 handler 内复核角色（本轮集成测试发现，非原审计项）。
+**越权与安全整改（两轮）**：
+
+1. 契约委派路径绕过路由组角色门禁，买家可读 `GET /api/ops/summary` 与 `GET /api/cs/refunds`——已在 handler 内复核角色（一轮集成测试发现）。
+2. 二轮审计（I-01/I-02）：`/api/test/expire-orders`、`/api/pay/channel-mode`、`/api/jobs/close-expired`、`GET /api/users` 公开可达；买家区路由未声明 RoleBuyer。已整改——三个测试钩子与账号列表加 `shop.demo-mode` 门禁（生产 403，演示环境契约语义不变）；买家区路由层 `RequireRole(RoleBuyer)` + 契约委派 handler（CreateOrder/CancelOrder/RefundApply）内复核。回归用例 `router/security_test.go`，验收 51/51 无回归。
 
 交付证据索引：`docs/evidence/README.md`（D1–D10）。
 
