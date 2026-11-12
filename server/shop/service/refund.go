@@ -165,21 +165,45 @@ func (s RefundService) HandleAbnormal(csID uint64, txnID, reason string) (model.
 		if err := tx.Where("order_no = ?", ab.OrderNo).First(&o).Error; err != nil {
 			return ErrOrderNotFound
 		}
-		refund = model.Refund{
-			RefundNo:      s.uniqueRefundNo(tx, now),
-			OrderNo:       ab.OrderNo,
-			Source:        model.RefundSourceAbnormalLate,
-			AmountCents:   ab.AmountCents,
-			AuditStatus:   model.AuditApproved, // 客服已核实才发起，无需二次审核
-			AuditReason:   reason,
-			AuditBy:       &csID,
-			AuditAt:       &now,
-			ChannelStatus: model.ChannelPending,
-			CreatedAt:     now,
-			UpdatedAt:     now,
-		}
-		if err := tx.Create(&refund).Error; err != nil {
-			return ErrRefundExists
+		var existing model.Refund
+		findErr := tx.Where("order_no = ?", ab.OrderNo).First(&existing).Error
+		if findErr == nil {
+			// 整单退款一单一张：上次渠道失败留下的退款单直接复用重试，不得重复建单
+			if existing.ChannelStatus == model.ChannelSuccess {
+				return ErrRefundExists
+			}
+			if err := tx.Model(&model.Refund{}).Where("id = ?", existing.ID).
+				Updates(map[string]interface{}{
+					"audit_status":   model.AuditApproved,
+					"audit_reason":   reason,
+					"audit_by":       csID,
+					"audit_at":       now,
+					"channel_status": model.ChannelPending,
+					"updated_at":     now,
+				}).Error; err != nil {
+				return err
+			}
+			refund = existing
+			refund.AuditStatus = model.AuditApproved
+			refund.AuditReason = reason
+			refund.ChannelStatus = model.ChannelPending
+		} else {
+			refund = model.Refund{
+				RefundNo:      s.uniqueRefundNo(tx, now),
+				OrderNo:       ab.OrderNo,
+				Source:        model.RefundSourceAbnormalLate,
+				AmountCents:   ab.AmountCents,
+				AuditStatus:   model.AuditApproved, // 客服已核实才发起，无需二次审核
+				AuditReason:   reason,
+				AuditBy:       &csID,
+				AuditAt:       &now,
+				ChannelStatus: model.ChannelPending,
+				CreatedAt:     now,
+				UpdatedAt:     now,
+			}
+			if err := tx.Create(&refund).Error; err != nil {
+				return ErrRefundExists
+			}
 		}
 		abnormalID = ab.ID
 		return logOp(tx, &ab.OrderNo, &csID, model.RoleCS, "abnormal_refund", "针对迟到支付发起退款："+reason)

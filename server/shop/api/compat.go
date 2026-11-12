@@ -1,4 +1,4 @@
-﻿package api
+package api
 
 import (
 	"crypto/hmac"
@@ -496,8 +496,8 @@ func (a *CompatApi) OrderDetail(c *gin.Context) {
 	}
 	view := a.orderView(detail.Order, detail.Refund, detail.Shipment)
 	data := gin.H{
-		"order":        view,
-		"shipableNow":  detail.ShipableNow,
+		"order":         view,
+		"shipableNow":   detail.ShipableNow,
 		"refundPending": detail.RefundPending,
 	}
 	if detail.Payment != nil {
@@ -629,6 +629,11 @@ func (a *CompatApi) OpsProductUpdate(c *gin.Context) {
 
 // OpsSummary GET /api/ops/summary -> {products:[{id,available}], paid_total, refunded_total}（分）
 func (a *CompatApi) OpsSummary(c *gin.Context) {
+	// 兼容层委派路径绕过了路由组上的 RequireRole，必须在此复核角色（E-10 越权防护）
+	if claims := middleware.ClaimsOf(c); claims.Role != model.RoleOps {
+		a.failJSON(c, service.NewBizError(2002, "当前角色无权执行该操作"))
+		return
+	}
 	sum, err := a.s.ReportService.Summary()
 	if err != nil {
 		a.failJSON(c, err)
@@ -918,6 +923,11 @@ func (a *CompatApi) WarehouseShip(c *gin.Context) {
 
 // CSRefunds GET /api/cs/refunds -> 退款单列表
 func (a *CompatApi) CSRefunds(c *gin.Context) {
+	// 兼容层委派路径绕过了路由组上的 RequireRole，必须在此复核角色（E-10 越权防护）
+	if claims := middleware.ClaimsOf(c); claims.Role != model.RoleCS {
+		a.failJSON(c, service.NewBizError(2002, "当前角色无权执行该操作"))
+		return
+	}
 	status := strings.ToLower(strings.TrimSpace(c.Query("status")))
 	list, err := a.s.RefundService.List(status)
 	if err != nil {
@@ -956,14 +966,14 @@ func (a *CompatApi) CSRefundDecide(c *gin.Context) {
 			view := refundView(updated)
 			latest, _ := a.s.OrderService.Get(r.OrderNo)
 			a.okJSON(c, gin.H{
-				"refund_id":     view["id"],
-				"status":        view["status"],
+				"refund_id":      view["id"],
+				"status":         view["status"],
 				"channel_result": "FAIL",
-				"order_no":      r.OrderNo,
-				"order_status":  orderStatusLabel(latest.Status),
-				"reason":        view["reason"],
-				"fail_reason":   view["fail_reason"],
-				"refund":        view,
+				"order_no":       r.OrderNo,
+				"order_status":   orderStatusLabel(latest.Status),
+				"reason":         view["reason"],
+				"fail_reason":    view["fail_reason"],
+				"refund":         view,
 			}, gin.H{"refund": view, "channelResult": "FAIL"})
 			return
 		}
@@ -1006,12 +1016,12 @@ func (a *CompatApi) CSRefundRetry(c *gin.Context) {
 	view := refundView(updated)
 	latest, _ := a.s.OrderService.Get(r.OrderNo)
 	a.okJSON(c, gin.H{
-		"refund_id":     view["id"],
-		"status":        view["status"],
-		"order_no":      r.OrderNo,
-		"order_status":  orderStatusLabel(latest.Status),
-		"retry_count":   view["retry_count"],
-		"refund":        view,
+		"refund_id":    view["id"],
+		"status":       view["status"],
+		"order_no":     r.OrderNo,
+		"order_status": orderStatusLabel(latest.Status),
+		"retry_count":  view["retry_count"],
+		"refund":       view,
 	}, gin.H{"refund": view})
 }
 
@@ -1148,4 +1158,3 @@ func (a *CompatApi) TestExpireOrders(c *gin.Context) {
 		"closed":  len(expired),
 	}, gin.H{"expired": expired, "closed": len(expired)})
 }
-

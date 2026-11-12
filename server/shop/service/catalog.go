@@ -38,6 +38,9 @@ func (s CatalogService) Get(id uint64) (model.Product, error) {
 
 // Update 运营维护上下架与售价；已存在订单的价格快照不受影响。
 func (s CatalogService) Update(actorID uint64, actorRole string, id uint64, onSale *bool, price *int64) (model.Product, error) {
+	if actorRole != model.RoleOps {
+		return model.Product{}, ErrForbidden
+	}
 	if price != nil && *price <= 0 {
 		return model.Product{}, NewBizError(1005, "售价必须大于 0")
 	}

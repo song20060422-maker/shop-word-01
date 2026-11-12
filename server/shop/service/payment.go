@@ -118,6 +118,9 @@ func (s PaymentService) Notify(orderNo, txn string, amount int64, sign, rawBody 
 	if err != nil {
 		return result, err
 	}
+	if result.Result == model.NoticeDuplicated {
+		return result, ErrDuplicatedPay
+	}
 	return result, nil
 }
 
