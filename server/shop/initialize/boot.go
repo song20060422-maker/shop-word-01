@@ -5,6 +5,7 @@ import (
 
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
+	shopdb "github.com/flipped-aurora/gin-vue-admin/server/shop/db"
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/migrations"
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
 )
@@ -14,14 +15,14 @@ import (
 func Boot() (*service.ServiceGroup, config.Config, error) {
 	cfg := config.FromViper(global.GVA_VP)
 
-	db, err := Gorm(cfg)
+	db, err := shopdb.Gorm(cfg)
 	if err != nil {
 		return nil, cfg, err
 	}
-	if err := Migrate(db, migrations.FS); err != nil {
+	if err := shopdb.Migrate(db, migrations.FS); err != nil {
 		return nil, cfg, err
 	}
-	if err := SeedAccounts(db, cfg.Shop.DemoPassword); err != nil {
+	if err := shopdb.SeedAccounts(db, cfg.Shop.DemoPassword); err != nil {
 		return nil, cfg, err
 	}
 	global.GVA_DB = db

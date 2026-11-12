@@ -8,7 +8,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
-	shopinit "github.com/flipped-aurora/gin-vue-admin/server/shop/initialize"
+	shopdb "github.com/flipped-aurora/gin-vue-admin/server/shop/db"
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/migrations"
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
 )
@@ -28,14 +28,14 @@ func TestMain(m *testing.M) {
 	testCfg.Mysql.DSN = dsn
 	testCfg.Shop.PayNotifySecret = "test-secret"
 	testCfg.Shop.OrderTimeoutMinutes = 10
-	db, err := shopinit.Gorm(testCfg)
+	db, err := shopdb.Gorm(testCfg)
 	if err != nil {
 		panic("连接测试库失败（请确认 MySQL 3307 可用）: " + err.Error())
 	}
-	if err := shopinit.Migrate(db, migrations.FS); err != nil {
+	if err := shopdb.Migrate(db, migrations.FS); err != nil {
 		panic("测试库迁移失败: " + err.Error())
 	}
-	if err := shopinit.SeedAccounts(db, "shop123"); err != nil {
+	if err := shopdb.SeedAccounts(db, "shop123"); err != nil {
 		panic("种子账号失败: " + err.Error())
 	}
 	testDB = db
@@ -58,10 +58,10 @@ func resetDB(t *testing.T) {
 			t.Fatalf("清理 %s 失败: %v", tbl, err)
 		}
 	}
-	if err := shopinit.Migrate(testDB, migrations.FS); err != nil {
+	if err := shopdb.Migrate(testDB, migrations.FS); err != nil {
 		t.Fatalf("重放迁移失败: %v", err)
 	}
-	if err := shopinit.SeedAccounts(testDB, "shop123"); err != nil {
+	if err := shopdb.SeedAccounts(testDB, "shop123"); err != nil {
 		t.Fatalf("重放种子账号失败: %v", err)
 	}
 }
