@@ -5,12 +5,19 @@ import (
 	"strings"
 	"time"
 
+	"github.com/go-sql-driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
 )
+
+// isDuplicateEntry 判定是否 MySQL 唯一键冲突（errno 1062）
+func isDuplicateEntry(err error) bool {
+	var me *mysql.MySQLError
+	return errors.As(err, &me) && me.Number == 1062
+}
 
 // errDuplicatePayment 内部哨兵：触发事务回滚，外层据此判定重复通知。
 var errDuplicatePayment = errors.New("duplicate payment")
@@ -98,7 +105,12 @@ func (s PaymentService) Notify(orderNo, txn string, amount int64, sign, rawBody 
 		}
 		pay := model.Payment{OrderNo: orderNo, ChannelTxnID: txn, AmountCents: amount, PaidAt: now, CreatedAt: now}
 		if err := tx.Create(&pay).Error; err != nil {
-			return errDuplicatePayment // 重复交易号或一单多记款，回滚至待付款前态
+			// I-18 错误分类：只有唯一键冲突（重复交易号/一单多记款）才判重复支付；
+			// 其它 DB 错误按真实错误上抛，不再一律误报为「重复支付」。
+			if isDuplicateEntry(err) {
+				return errDuplicatePayment
+			}
+			return err
 		}
 		result.Result = model.NoticeAccepted
 		result.OrderStatus = model.OrderStatusPaid
