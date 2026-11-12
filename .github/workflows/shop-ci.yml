@@ -92,11 +92,18 @@ jobs:
 
       - name: 冒烟（启动服务 + 健康检查 + 登录 + 下单）
         run: |
-          go run . > server.log 2>&1 &
-          for i in $(seq 1 60); do
-            if curl -fsS http://127.0.0.1:8099/api/health > /dev/null; then break; fi
+          go build -o shop-server .
+          ./shop-server > server.log 2>&1 &
+          ok=0
+          for i in $(seq 1 120); do
+            if curl -fsS http://127.0.0.1:8099/api/health > /dev/null; then ok=1; break; fi
             sleep 2
           done
+          if [ "$ok" != "1" ]; then
+            echo "服务 240s 内未就绪，server.log 尾部："
+            tail -n 80 server.log
+            exit 7
+          fi
           curl -fsS http://127.0.0.1:8099/api/health
           bash ./scripts/ci-smoke.sh
           grep -i "shop 业务路由注册完成" server.log
