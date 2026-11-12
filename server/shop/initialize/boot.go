@@ -12,6 +12,8 @@ import (
 
 // Boot 初始化 Shop 业务模块：读取 shop 配置段 -> 连接数据库 -> 执行迁移 -> 补齐种子账号。
 // 返回装配完成的 ServiceGroup，供路由层直接消费。
+// 注意：Shop 使用独立连接（Deps.DB 注入），严禁覆盖 global.GVA_DB——
+// 它是 Gin-Vue-Admin 框架主库（gva）的连接，覆盖会导致管理后台查询 shop 库失败。
 func Boot() (*service.ServiceGroup, config.Config, error) {
 	cfg := config.FromViper(global.GVA_VP)
 
@@ -25,7 +27,6 @@ func Boot() (*service.ServiceGroup, config.Config, error) {
 	if err := shopdb.SeedAccounts(db, cfg.Shop.DemoPassword); err != nil {
 		return nil, cfg, err
 	}
-	global.GVA_DB = db
 
 	now := time.Now
 	group := service.NewServiceGroup(service.Deps{DB: db, Now: now, Cfg: cfg})

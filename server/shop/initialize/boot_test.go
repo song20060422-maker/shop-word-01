@@ -33,8 +33,9 @@ func TestBoot(t *testing.T) {
 	if group == nil || cfg.Jwt.Secret != "boot-secret" {
 		t.Fatalf("Boot 装配结果错误: %+v", cfg)
 	}
-	if global.GVA_DB == nil {
-		t.Fatal("Boot 未设置全局 DB")
+	// Shop 使用独立连接，严禁覆盖框架全局 GVA_DB（gva 主库）
+	if global.GVA_DB != nil {
+		t.Fatal("Boot 不应覆盖 global.GVA_DB")
 	}
 	// 种子账号可登录
 	if _, err := group.AuthService.Login("buyer1", "shop123"); err != nil {
