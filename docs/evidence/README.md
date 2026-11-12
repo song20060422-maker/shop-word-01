@@ -11,7 +11,7 @@
 | D2 | 业务验收证据 | `docs/evidence/acceptance-2026-11-12.log` | 51/51 通过（退出码 0） |
 | D3 | AI 事件清单 | `docs/events.md` | 已完成 |
 | D4 | 自测命令与退出码 | `docs/evidence/checks-2026-11-12.log` | gofmt/vet/build/test 全通过 |
-| D5 | 覆盖率 profile | `docs/evidence/coverage-single.out`（标准单命令生成，无拼接） | 总 **87.3%**；service 85.6%、api 88.0%（块级并集口径） |
+| D5 | 覆盖率 profile | `docs/evidence/coverage-single.out`（标准单命令生成，无拼接） | 总 **88.0%**；service **87.5%**、api 88.0%（块级并集口径） |
 | D6 | race 输出 | 本文件 §4 | **本地未执行**（无 cgo），CI 执行 |
 | D7 | 假设清单 | `docs/assumptions.md` | 已完成（A-01~A-19） |
 | D8 | 修复与审核记录 | `docs/review_records.md` | 7 条闭环 |
@@ -36,14 +36,15 @@ go test ./shop/... -count=1        -> 全部 ok             exit=0
 > 分包数字为对单次 profile 按块并集聚合的结果，可复算。
 
 ```
-total:      87.3%
-service     85.6%   api         88.0%   router     97.8%
+total:      88.0%
+service     87.5%   api         88.0%   router     97.8%
 middleware 100.0%   config      95.9%   initialize 84.6%
 model      100.0%   utils       89.2%   db         69.7%
 model/response 100.0%   web 100.0%
 ```
 
-说明：核心业务包 **service 85.6%、api 88.0%，均 ≥85%**（A3-03 达标）。`db`/`initialize` 为装配层
+说明：核心业务包 **service 87.5%、api 88.0%，均 ≥85%**（A3-03 达标；batch2 整改后 service 余量
+2.5pp，由契约兼容层真实业务路径测试贡献，非工具函数补洞）。`db`/`initialize` 为装配层
 （连接/建库/迁移），未覆盖分支主要是"迁移文件读取失败"等运行期防御代码。
 
 复现命令（单命令，count=1 禁缓存）：
@@ -63,6 +64,14 @@ go tool cover -func coverage-single.out | Select-Object -Last 1
 | 买家区角色门禁 | 路由层 `RequireRole(RoleBuyer)` + 契约委派 handler（CreateOrder/CancelOrder/RefundApply）内复核 buyer 角色 | `TestBuyerRoleGate` |
 
 验收脚本（检查者 Skill，未改动）在 demo-mode=true 下复跑 **51/51 通过**，日志 `acceptance-20261112-fix.log`。
+
+## 3.2 D5-补充 batch2 整改（I-18/I-23/I-24，2026-11-12 三轮）
+
+| 整改项 | 内容 | 验证 |
+| --- | --- | --- |
+| I-18 渠道并发闸门 | Retry/审核/异常退款改为事务级行锁闸门：并发重试渠道只受理一次；记款仅唯一键冲突（errno 1062）判重复支付；callChannel 成功路径校验 RowsAffected | `service/gate_test.go`（并发 8 重试 → 渠道调用恰 1 次） |
+| I-23 覆盖质量 | 契约兼容层 service 真实业务路径测试 6 组（SKU 寻址、可售覆盖、双寻址、强制过期、异常查询、退款守卫），service **85.6% → 87.5%** | `service/compat_service_test.go` |
+| I-24 编码健壮性 | 验收包装脚本强制 UTF-8（stdout reconfigure + 子进程 PYTHONIOENCODING），GBK 控制台不再崩溃 | 无环境变量依赖复跑 51/51，日志 `acceptance-20261112-fix2.log` |
 
 ## 4. D6 race 说明（未执行，原因与替代）
 

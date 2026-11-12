@@ -20,6 +20,14 @@
 | 13 | 2026-11-12 16:17 | 开发 Agent | 重建二进制并重启本机服务（替换 15:27 旧进程） | 新服务健康检查通过 | T9 |
 | 14 | 2026-11-12 16:19 | 开发 Agent | 真实 HTTP 验收（`run_acceptance.py`） | **51/51 通过，退出码 0**，日志归档 | T8/T10 |
 | 15 | 2026-11-12 16:25 | 开发 Agent | 新增 CI 质量门禁、Shop 镜像、compose、冒烟脚本 | `.github/workflows/shop-ci.yml`、`deploy/shop/*` | T9/T10 |
+| 16 | 2026-11-12 16:40 | 开发 Agent（本次会话） | 补齐 gva 框架库初始化种子（管理后台 admin 账号），初始化流程重写 config.yaml | `24f694f` | T10 |
+| 17 | 2026-11-12 17:20 | 开发 Agent（本次会话） | batch1 审计整改：无鉴权端点加 demo-mode 门禁、买家区 RoleBuyer 声明与契约委派 handler 复核（I-01/I-02） | `abbcea2`（安全回归 `router/security_test.go`） | T9 |
+| 18 | 2026-11-12 17:25 | 开发 Agent（本次会话） | batch1 整改：补 service 缺口用例与安全回归；修复验收脚本端口解析被其它配置段 addr 污染（I-22） | `d6b8bee` | T9 |
+| 19 | 2026-11-12 17:30 | 开发 Agent（本次会话） | batch1 整改：覆盖率证据以标准单命令重生成（删除拼接 profile），总 87.3%、service 85.6/api 88.0 达标（I-03） | `5f4a8eb`，证据 `docs/evidence/coverage-single.out` | T10 |
+| 20 | 2026-11-12 18:05 | 开发 Agent（本次会话） | 修复 Boot 覆盖 `global.GVA_DB` 导致管理后台登录查询 shop 库失败（端到端排查：zap error.log 定位） | `0caa980` | T9 |
+| 21 | 2026-11-12 19:40 | 开发 Agent（本次会话） | batch2 整改 I-18：渠道重试/异常退款加事务级行锁闸门（并发只调渠道一次，回归测试 `service/gate_test.go`）；记款唯一键冲突才判重复支付（`isDuplicateEntry`）；callChannel 成功路径校验 RowsAffected | 本轮提交（见 dev_log §4） | T9 |
+| 22 | 2026-11-12 19:50 | 开发 Agent（本次会话） | batch2 整改 I-23：契约兼容层 service 真实业务路径测试（ProductBySKU/OverwriteAvailable/双寻址/ForceExpire/异常查询/退款守卫），service 覆盖 85.6% → **87.5%**，无工具函数补洞 | 本轮提交 | T9 |
+| 23 | 2026-11-12 19:55 | 开发 Agent（本次会话） | batch2 整改 I-24：验收链路强制 UTF-8（包装脚本 reconfigure + 子进程 PYTHONIOENCODING），GBK 控制台不再崩溃；无环境变量依赖复跑 **51/51 通过**，日志 `acceptance-20261112-fix2.log` | 本轮提交 | T10 |
 
 ## 待补充的学生事件
 
