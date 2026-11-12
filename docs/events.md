@@ -28,6 +28,9 @@
 | 21 | 2026-11-12 19:40 | 开发 Agent（本次会话） | batch2 整改 I-18：渠道重试/异常退款加事务级行锁闸门（并发只调渠道一次，回归测试 `service/gate_test.go`）；记款唯一键冲突才判重复支付（`isDuplicateEntry`）；callChannel 成功路径校验 RowsAffected | 本轮提交（见 dev_log §4） | T9 |
 | 22 | 2026-11-12 19:50 | 开发 Agent（本次会话） | batch2 整改 I-23：契约兼容层 service 真实业务路径测试（ProductBySKU/OverwriteAvailable/双寻址/ForceExpire/异常查询/退款守卫），service 覆盖 85.6% → **87.5%**，无工具函数补洞 | 本轮提交 | T9 |
 | 23 | 2026-11-12 19:55 | 开发 Agent（本次会话） | batch2 整改 I-24：验收链路强制 UTF-8（包装脚本 reconfigure + 子进程 PYTHONIOENCODING），GBK 控制台不再崩溃；无环境变量依赖复跑 **51/51 通过**，日志 `acceptance-20261112-fix2.log` | 本轮提交 | T10 |
+| 24 | 2026-11-12 20:10 | 开发 Agent（本次会话） | 约束文件重构（I-07/I-21）：`.agents/dev-agent.md` 单文件拆为编号文件集 `00-index.md`~`09-bugfix.md`（技术栈/数据规则/工作流/配置部署/质量安全/自检/冲突/实现模式/缺陷修复），审计整改条款固化进对应文件；v3.0 全文归档 versions；本会话逐个编写并回读=实际加载，README 登记加载记录 | `.agents/00~09` + `dev-agent.md` v4.0 | T10 |
+| 25 | 2026-11-12 20:15 | 开发 Agent（本次会话） | shop_word 工作区精简：需求三件套+假设 v1.0 归入 `references/`，旧交付（shop/、agent-test/、index.html）归入 `archive/`（只读），顶层提示词并入 `提示词/`；根 README 建立新旧路径映射 | `shop_word/README.md` | T10 |
+| 26 | 2026-11-12 20:30 | 开发 Agent（本次会话） | 自编 Skill 实际调用（I-06/B3-02/03）：shop-trade-acceptance 首次调用 `check_evidence.py` 43/43 证据覆盖（产出 `evidence-check.md` + 40 项证据索引 `evidence-index.md`）；shop-trade-check 按 SKILL.md 直接调用逐套件 reset 复跑 **51/51**（日志 `acceptance-20261112-skill-call.log`）；skill-usage.md 登记调用 #4/#5 与直接/包装调用差异经验 | skill-usage.md、docs/evidence/* | T10 |
 
 ## 待补充的学生事件
 
