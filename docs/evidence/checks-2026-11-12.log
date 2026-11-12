@@ -1,0 +1,25 @@
+﻿== gofmt -l shop ==
+<empty: all formatted>
+gofmt exit=0
+
+== go vet ./shop/... ==
+vet exit=0
+
+== go build ./... ==
+build exit=0
+
+== go test ./shop/... ==
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/api	8.014s
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/config	2.169s
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/db	0.869s
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/initialize	0.730s
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/middleware	2.258s
+?   	github.com/flipped-aurora/gin-vue-admin/server/shop/migrations	[no test files]
+?   	github.com/flipped-aurora/gin-vue-admin/server/shop/model	[no test files]
+?   	github.com/flipped-aurora/gin-vue-admin/server/shop/model/request	[no test files]
+?   	github.com/flipped-aurora/gin-vue-admin/server/shop/model/response	[no test files]
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/router	22.748s
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/service	31.425s
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/utils	1.023s
+?   	github.com/flipped-aurora/gin-vue-admin/server/shop/web	[no test files]
+test exit=0
