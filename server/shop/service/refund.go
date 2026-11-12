@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
@@ -144,18 +145,24 @@ func (s RefundService) Audit(csID uint64, orderNo string, approve bool, reason s
 		refund.AuditStatus = model.AuditRejected
 		return refund, nil
 	}
-	return s.callChannel(refund, csID, now)
+	return s.callChannel(refund, csID, model.ChannelPending, now)
 }
 
 // HandleAbnormal 客服处理迟到支付：发起异常退款，且不恢复已释放的数量。
+// I-18 并发防御：整段（锁定异常记录 -> 建/复用退款单 -> 调渠道 -> 推进）在同一事务内完成，
+// 事务内行锁串行化同一交易号的并发处理，杜绝并发重复发起渠道退款。
+// 模拟渠道为同步内存实现，事务内调用安全；真实渠道应改为闸门状态机+异步回调。
 func (s RefundService) HandleAbnormal(csID uint64, txnID, reason string) (model.Refund, error) {
 	now := s.deps.Now()
 	txnID = strings.TrimSpace(txnID)
 	var refund model.Refund
 	var abnormalID uint64
+	ok := false
 	err := s.deps.DB.Transaction(func(tx *gorm.DB) error {
+		// I-18：行锁读取异常记录，并发处理同一交易号时后到者将阻塞至前者提交
 		var ab model.AbnormalPayment
-		if err := tx.Where("channel_txn_id = ?", txnID).First(&ab).Error; err != nil {
+		if err := tx.Clauses(clause.Locking{Strength: "UPDATE"}).
+			Where("channel_txn_id = ?", txnID).First(&ab).Error; err != nil {
 			return ErrAbnormalNotFound
 		}
 		if ab.Status == model.AbnormalHandled {
@@ -165,31 +172,54 @@ func (s RefundService) HandleAbnormal(csID uint64, txnID, reason string) (model.
 		if err := tx.Where("order_no = ?", ab.OrderNo).First(&o).Error; err != nil {
 			return ErrOrderNotFound
 		}
-		refund = model.Refund{
-			RefundNo:      s.uniqueRefundNo(tx, now),
-			OrderNo:       ab.OrderNo,
-			Source:        model.RefundSourceAbnormalLate,
-			AmountCents:   ab.AmountCents,
-			AuditStatus:   model.AuditApproved, // 客服已核实才发起，无需二次审核
-			AuditReason:   reason,
-			AuditBy:       &csID,
-			AuditAt:       &now,
-			ChannelStatus: model.ChannelPending,
-			CreatedAt:     now,
-			UpdatedAt:     now,
-		}
-		if err := tx.Create(&refund).Error; err != nil {
-			return ErrRefundExists
+		var existing model.Refund
+		findErr := tx.Where("order_no = ?", ab.OrderNo).First(&existing).Error
+		if findErr == nil {
+			// 整单退款一单一张：上次渠道失败留下的退款单直接复用重试，不得重复建单
+			if existing.ChannelStatus == model.ChannelSuccess {
+				return ErrRefundExists
+			}
+			if err := tx.Model(&model.Refund{}).Where("id = ?", existing.ID).
+				Updates(map[string]interface{}{
+					"audit_status":   model.AuditApproved,
+					"audit_reason":   reason,
+					"audit_by":       csID,
+					"audit_at":       now,
+					"channel_status": model.ChannelPending,
+					"updated_at":     now,
+				}).Error; err != nil {
+				return err
+			}
+			refund = existing
+			refund.AuditStatus = model.AuditApproved
+			refund.AuditReason = reason
+			refund.ChannelStatus = model.ChannelPending
+		} else {
+			refund = model.Refund{
+				RefundNo:      s.uniqueRefundNo(tx, now),
+				OrderNo:       ab.OrderNo,
+				Source:        model.RefundSourceAbnormalLate,
+				AmountCents:   ab.AmountCents,
+				AuditStatus:   model.AuditApproved, // 客服已核实才发起，无需二次审核
+				AuditReason:   reason,
+				AuditBy:       &csID,
+				AuditAt:       &now,
+				ChannelStatus: model.ChannelPending,
+				CreatedAt:     now,
+				UpdatedAt:     now,
+			}
+			if err := tx.Create(&refund).Error; err != nil {
+				return ErrRefundExists
+			}
 		}
 		abnormalID = ab.ID
-		return logOp(tx, &ab.OrderNo, &csID, model.RoleCS, "abnormal_refund", "针对迟到支付发起退款："+reason)
-	})
-	if err != nil {
-		return model.Refund{}, err
-	}
-
-	ok, _ := s.deps.Channel.Refund(refund.RefundNo, refund.AmountCents)
-	err = s.deps.DB.Transaction(func(tx *gorm.DB) error {
+		// I-18：行锁持有期间调用渠道——同一异常记录的并发处理在事务层互斥，
+		// 渠道只会被真实受理一次；失败时异常记录保留待处理（可重试）。
+		var cerr error
+		ok, cerr = s.deps.Channel.Refund(refund.RefundNo, refund.AmountCents)
+		if cerr != nil {
+			ok = false
+		}
 		channelStatus := model.ChannelFailed
 		if ok {
 			channelStatus = model.ChannelSuccess
@@ -198,22 +228,22 @@ func (s RefundService) HandleAbnormal(csID uint64, txnID, reason string) (model.
 			Updates(map[string]interface{}{"channel_status": channelStatus, "updated_at": now}).Error; err != nil {
 			return err
 		}
-		if ok {
-			// 迟到支付场景：订单早已关闭、数量早已释放，这里绝不再恢复库存
-			if err := tx.Model(&model.AbnormalPayment{}).Where("id = ?", abnormalID).
-				Updates(map[string]interface{}{
-					"status":     model.AbnormalHandled,
-					"handled_by": csID,
-					"handled_at": now,
-					"refund_id":  refund.ID,
-				}).Error; err != nil {
-				return err
-			}
-			return logOp(tx, &refund.OrderNo, &csID, model.RoleCS, "abnormal_refund_success",
-				"异常收款退款成功，未重复释放库存")
+		if !ok {
+			return logOp(tx, &refund.OrderNo, &csID, model.RoleCS, "abnormal_refund_failed",
+				"渠道退款失败，异常记录保留待处理")
 		}
-		return logOp(tx, &refund.OrderNo, &csID, model.RoleCS, "abnormal_refund_failed",
-			"渠道退款失败，异常记录保留待处理")
+		// 迟到支付场景：订单早已关闭、数量早已释放，这里绝不再恢复库存
+		if err := tx.Model(&model.AbnormalPayment{}).Where("id = ?", abnormalID).
+			Updates(map[string]interface{}{
+				"status":     model.AbnormalHandled,
+				"handled_by": csID,
+				"handled_at": now,
+				"refund_id":  refund.ID,
+			}).Error; err != nil {
+			return err
+		}
+		return logOp(tx, &refund.OrderNo, &csID, model.RoleCS, "abnormal_refund_success",
+			"异常收款退款成功，未重复释放库存")
 	})
 	if err != nil {
 		return model.Refund{}, err
@@ -236,19 +266,30 @@ func (s RefundService) Retry(csID uint64, refundNo string) (model.Refund, error)
 	if refund.AuditStatus != model.AuditApproved || refund.ChannelStatus != model.ChannelFailed {
 		return refund, ErrRefundNotRetryable
 	}
-	return s.callChannel(refund, csID, now)
+	return s.callChannel(refund, csID, model.ChannelFailed, now)
 }
 
 // callChannel 调用模拟渠道并根据结果推进订单、退款单与库存。
-func (s RefundService) callChannel(refund model.Refund, csID uint64, now time.Time) (model.Refund, error) {
-	ok, err := s.deps.Channel.Refund(refund.RefundNo, refund.AmountCents)
-	if err != nil {
-		ok = false
-	}
+// I-18 并发防御：事务内行锁读取退款单并校验入口渠道状态（pending=首次发起，failed=重试），
+// 校验通过才真正调渠道——并发 Retry/审核到达同一退款单时，后到者在行锁上阻塞，
+// 解锁后读到的渠道状态已变更为 success/failed，闸门拒绝其再次发起渠道退款。
+// 模拟渠道为同步内存实现，事务内调用安全；真实渠道应改为闸门状态机+异步回调。
+func (s RefundService) callChannel(refund model.Refund, csID uint64, expectedChannel string, now time.Time) (model.Refund, error) {
+	ok := false
 	var result model.Refund
-	err = s.deps.DB.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Where("refund_no = ?", refund.RefundNo).First(&result).Error; err != nil {
+	err := s.deps.DB.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Clauses(clause.Locking{Strength: "UPDATE"}).
+			Where("refund_no = ?", refund.RefundNo).First(&result).Error; err != nil {
 			return ErrRefundNotFound
+		}
+		// 闸门：审核已通过且渠道状态等于入口期望，否则拒绝发起（含并发竞争失败方）
+		if result.AuditStatus != model.AuditApproved || result.ChannelStatus != expectedChannel {
+			return ErrRefundNotRetryable
+		}
+		var cerr error
+		ok, cerr = s.deps.Channel.Refund(result.RefundNo, result.AmountCents)
+		if cerr != nil {
+			ok = false
 		}
 		retry := result.RetryCount + 1
 		if !ok {
@@ -269,12 +310,18 @@ func (s RefundService) callChannel(refund model.Refund, csID uint64, now time.Ti
 				"渠道退款失败，保留待处理记录等待重试")
 		}
 
-		// 渠道成功：订单进入已退款；库存恢复受 restored 闸门保护，只做一次
-		if err := tx.Model(&model.Order{}).
+		// 渠道成功：订单进入已退款；库存恢复受 restored 闸门保护，只做一次。
+		// I-18：RowsAffected 必须为 1——订单不在可退款状态（重复推进/并发竞争）时整体回滚，
+		// 退款单不落成功、库存不恢复。
+		res := tx.Model(&model.Order{}).
 			Where("order_no = ? AND status IN ?", refund.OrderNo,
 				[]string{model.OrderStatusRefundRequested, model.OrderStatusRefundFailed}).
-			Updates(map[string]interface{}{"status": model.OrderStatusRefunded, "updated_at": now}).Error; err != nil {
-			return err
+			Updates(map[string]interface{}{"status": model.OrderStatusRefunded, "updated_at": now})
+		if res.Error != nil {
+			return res.Error
+		}
+		if res.RowsAffected != 1 {
+			return NewBizError(3010, "订单不在可退款状态，退款推进被拒绝")
 		}
 		updates := map[string]interface{}{
 			"channel_status": model.ChannelSuccess,

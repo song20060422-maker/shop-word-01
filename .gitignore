@@ -42,3 +42,6 @@ web/pnpm-lock.yaml
 *.sqlite
 *.sqlite3
 worktrees/
+
+# 本机构建产物与运行日志
+/server/bin/

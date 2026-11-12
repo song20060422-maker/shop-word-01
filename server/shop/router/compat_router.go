@@ -1,11 +1,15 @@
 package router
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/api"
+	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/middleware"
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
+	"github.com/flipped-aurora/gin-vue-admin/server/shop/model/response"
 )
 
 // InitCompatRouter 注册接口契约（api-contract.md）中新增的调用路径。
@@ -13,11 +17,22 @@ import (
 // 与原型路径重名的接口（/api/login、/api/products、/api/pay/notify、/api/orders 等）
 // 不在本文件重复注册，改由 api.CompatApi 的 PublicGuard / AuthGuard 在路由链上委派，
 // 以避免 gin 路由重复注册冲突，同时保证原型页面仍能读 data 副本。
-func InitCompatRouter(pub, authed *gin.RouterGroup, ca *api.CompatApi) {
+func InitCompatRouter(pub, authed *gin.RouterGroup, ca *api.CompatApi, cfg config.Config) {
+	// 测试钩子（渠道模拟器开关、强制过期）仅演示模式可用：
+	// 生产环境（demo-mode=false）一律 403，防止外部操控退款结果或强改订单时效。
+	demoOnly := func(handler gin.HandlerFunc) gin.HandlerFunc {
+		return func(c *gin.Context) {
+			if !cfg.Shop.DemoMode {
+				c.AbortWithStatusJSON(http.StatusForbidden, response.Fail(2002, "演示模式未开启，禁止调用测试钩子"))
+				return
+			}
+			handler(c)
+		}
+	}
 	// 公开区：模拟渠道受理付款、设定下一次渠道退款结果、超时关单测试钩子
 	pub.POST("/pay/channel-pay", ca.PayChannelPay)
-	pub.POST("/pay/channel-mode", ca.PayChannelMode)
-	pub.POST("/test/expire-orders", ca.TestExpireOrders)
+	pub.POST("/pay/channel-mode", demoOnly(ca.PayChannelMode))
+	pub.POST("/test/expire-orders", demoOnly(ca.TestExpireOrders))
 
 	// 买家：退款申请（契约独立路径，与原型 /orders/:orderNo/refund 并存）
 	authed.POST("/orders/:orderNo/refund-apply", ca.RefundApply)

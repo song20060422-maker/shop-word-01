@@ -77,6 +77,39 @@ python scripts\run_acceptance.py --no-build --no-start   # 服务已在运行
 
 > 注：验收脚本各套件按「相对当前可售数量 +1」准备库存，若把五个套件**不作重置**连续执行，可售数量会被合法消耗至不足，`races` 场景下单会因库存不足失败（脚本未捕获该失败分支）。一键脚本在每个套件前调用 `POST /api/demo/reset`，与需求「固定商品、可售 5 件」的演示现场一致。
 
+## 4.1 质量门禁与自动化测试（2026-11-12 补齐）
+
+| 项 | 结果 | 复现命令（`server/` 下） |
+| --- | --- | --- |
+| gofmt（LF） | 通过（`gofmt -l shop` 空输出） | `gofmt -l shop` |
+| go vet | 通过 | `go vet ./shop/...` |
+| 全量编译 | 通过 | `go build ./...` |
+| 单元 + 集成测试 | 全部通过 | `go test ./shop/... -count=1` |
+| 覆盖率 | 总 **87.3%**（标准单命令生成，无拼接）；service **85.6** / api **88.0** / router 97.8 / middleware 100 / config 95.9 / utils 89.2 / initialize 84.6 / db 69.7 | `go test ./shop/... -coverprofile=coverage-single.out -coverpkg=./shop/... -count=1` |
+| 业务验收 | 51/51（2026-11-12 实测） | `py -3 scripts/run_acceptance.py --no-build --no-start` |
+| CI | `.github/workflows/shop-ci.yml`：gofmt/vet/build/test/覆盖率阈值/race/冒烟 | 推送触发 |
+| 部署 | `server/Dockerfile.shop` + `deploy/shop/docker-compose.yaml`（详见 `deploy/shop/README.md`） | `docker compose -f deploy/shop/docker-compose.yaml up -d --build` |
+| race | 本机 Windows 无 cgo 工具链未执行，由 CI（ubuntu）执行 | CI 日志 |
+
+测试文件分布：
+
+| 文件 | 覆盖内容 |
+| --- | --- |
+| `service/setup_test.go` | 测试库连接、迁移、种子、纯内存模拟时钟 |
+| `service/business_test.go` | 状态机、并发下单、重复通知、迟到支付、退款、发货、报表 |
+| `service/helpers_test.go` | 错误映射、状态文案、异常退款查询分支 |
+| `router/router_test.go` | 真实 HTTP 全链路：登录/下单/支付/发货/退款/迟到/越权/演示重置 |
+| `api/api_test.go` | 被契约层遮蔽的原型 handler 直测 |
+| `api/branch_test.go` | 参数校验、未知实体、外部渠道、视图映射分支 |
+| `config/`、`middleware/`、`db/`、`initialize/`、`utils/` | 配置解析、JWT/角色、自动建库与迁移、Boot 装配、口令/签名/单号 |
+
+**越权与安全整改（两轮）**：
+
+1. 契约委派路径绕过路由组角色门禁，买家可读 `GET /api/ops/summary` 与 `GET /api/cs/refunds`——已在 handler 内复核角色（一轮集成测试发现）。
+2. 二轮审计（I-01/I-02）：`/api/test/expire-orders`、`/api/pay/channel-mode`、`/api/jobs/close-expired`、`GET /api/users` 公开可达；买家区路由未声明 RoleBuyer。已整改——三个测试钩子与账号列表加 `shop.demo-mode` 门禁（生产 403，演示环境契约语义不变）；买家区路由层 `RequireRole(RoleBuyer)` + 契约委派 handler（CreateOrder/CancelOrder/RefundApply）内复核。回归用例 `router/security_test.go`，验收 51/51 无回归。
+
+交付证据索引：`docs/evidence/README.md`（D1–D10）。
+
 ## 5. 关键设计取舍
 
 1. **状态机只走条件更新**：所有状态跃迁都是 `UPDATE ... WHERE status = <期望前态>` 并校验 `RowsAffected == 1`，不比对后写，避免并发下双写。

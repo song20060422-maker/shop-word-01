@@ -1,4 +1,4 @@
-﻿package api
+package api
 
 import (
 	"crypto/hmac"
@@ -453,6 +453,11 @@ func (a *CompatApi) Products(c *gin.Context) {
 // CreateOrder POST /api/orders -> {order_id, order_no, amount, status, expire_at}
 func (a *CompatApi) CreateOrder(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
+	// 兼容层委派路径绕过了路由组上的 RequireRole，必须在此复核角色（I-02 越权防护）
+	if claims.Role != model.RoleBuyer {
+		a.failJSON(c, service.NewBizError(2002, "当前角色无权执行该操作"))
+		return
+	}
 	body := bindAny(c)
 	ref := strOf(body, "product_id", "productId", "sku")
 	if ref == "" {
@@ -496,8 +501,8 @@ func (a *CompatApi) OrderDetail(c *gin.Context) {
 	}
 	view := a.orderView(detail.Order, detail.Refund, detail.Shipment)
 	data := gin.H{
-		"order":        view,
-		"shipableNow":  detail.ShipableNow,
+		"order":         view,
+		"shipableNow":   detail.ShipableNow,
 		"refundPending": detail.RefundPending,
 	}
 	if detail.Payment != nil {
@@ -532,6 +537,11 @@ func (a *CompatApi) OrderDetail(c *gin.Context) {
 // CancelOrder POST /api/orders/{id}/cancel -> 待付款可取消（重复取消 4xx）
 func (a *CompatApi) CancelOrder(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
+	// 兼容层委派路径绕过了路由组上的 RequireRole，必须在此复核角色（I-02 越权防护）
+	if claims.Role != model.RoleBuyer {
+		a.failJSON(c, service.NewBizError(2002, "当前角色无权执行该操作"))
+		return
+	}
 	o, err := a.s.OrderService.FindByRef(c.Param("orderNo"))
 	if err != nil {
 		a.failJSON(c, err)
@@ -549,6 +559,11 @@ func (a *CompatApi) CancelOrder(c *gin.Context) {
 // RefundApply POST /api/orders/{id}/refund-apply -> {refund_id}（仅 TO_SHIP 可申请）
 func (a *CompatApi) RefundApply(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
+	// 兼容层委派/直接注册路径均绕过 RequireRole，必须在此复核角色（I-02 越权防护）
+	if claims.Role != model.RoleBuyer {
+		a.failJSON(c, service.NewBizError(2002, "当前角色无权执行该操作"))
+		return
+	}
 	o, err := a.s.OrderService.FindByRef(c.Param("orderNo"))
 	if err != nil {
 		a.failJSON(c, err)
@@ -629,6 +644,11 @@ func (a *CompatApi) OpsProductUpdate(c *gin.Context) {
 
 // OpsSummary GET /api/ops/summary -> {products:[{id,available}], paid_total, refunded_total}（分）
 func (a *CompatApi) OpsSummary(c *gin.Context) {
+	// 兼容层委派路径绕过了路由组上的 RequireRole，必须在此复核角色（E-10 越权防护）
+	if claims := middleware.ClaimsOf(c); claims.Role != model.RoleOps {
+		a.failJSON(c, service.NewBizError(2002, "当前角色无权执行该操作"))
+		return
+	}
 	sum, err := a.s.ReportService.Summary()
 	if err != nil {
 		a.failJSON(c, err)
@@ -918,6 +938,11 @@ func (a *CompatApi) WarehouseShip(c *gin.Context) {
 
 // CSRefunds GET /api/cs/refunds -> 退款单列表
 func (a *CompatApi) CSRefunds(c *gin.Context) {
+	// 兼容层委派路径绕过了路由组上的 RequireRole，必须在此复核角色（E-10 越权防护）
+	if claims := middleware.ClaimsOf(c); claims.Role != model.RoleCS {
+		a.failJSON(c, service.NewBizError(2002, "当前角色无权执行该操作"))
+		return
+	}
 	status := strings.ToLower(strings.TrimSpace(c.Query("status")))
 	list, err := a.s.RefundService.List(status)
 	if err != nil {
@@ -956,14 +981,14 @@ func (a *CompatApi) CSRefundDecide(c *gin.Context) {
 			view := refundView(updated)
 			latest, _ := a.s.OrderService.Get(r.OrderNo)
 			a.okJSON(c, gin.H{
-				"refund_id":     view["id"],
-				"status":        view["status"],
+				"refund_id":      view["id"],
+				"status":         view["status"],
 				"channel_result": "FAIL",
-				"order_no":      r.OrderNo,
-				"order_status":  orderStatusLabel(latest.Status),
-				"reason":        view["reason"],
-				"fail_reason":   view["fail_reason"],
-				"refund":        view,
+				"order_no":       r.OrderNo,
+				"order_status":   orderStatusLabel(latest.Status),
+				"reason":         view["reason"],
+				"fail_reason":    view["fail_reason"],
+				"refund":         view,
 			}, gin.H{"refund": view, "channelResult": "FAIL"})
 			return
 		}
@@ -1006,12 +1031,12 @@ func (a *CompatApi) CSRefundRetry(c *gin.Context) {
 	view := refundView(updated)
 	latest, _ := a.s.OrderService.Get(r.OrderNo)
 	a.okJSON(c, gin.H{
-		"refund_id":     view["id"],
-		"status":        view["status"],
-		"order_no":      r.OrderNo,
-		"order_status":  orderStatusLabel(latest.Status),
-		"retry_count":   view["retry_count"],
-		"refund":        view,
+		"refund_id":    view["id"],
+		"status":       view["status"],
+		"order_no":     r.OrderNo,
+		"order_status": orderStatusLabel(latest.Status),
+		"retry_count":  view["retry_count"],
+		"refund":       view,
 	}, gin.H{"refund": view})
 }
 
@@ -1148,4 +1173,3 @@ func (a *CompatApi) TestExpireOrders(c *gin.Context) {
 		"closed":  len(expired),
 	}, gin.H{"expired": expired, "closed": len(expired)})
 }
-

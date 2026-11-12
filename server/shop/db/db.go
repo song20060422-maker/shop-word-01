@@ -1,5 +1,6 @@
-// Package initialize 负责 Shop 业务基础设施初始化：连接、迁移、种子账号。
-package initialize
+// Package db 提供 Shop 业务的基础设施：数据库连接、迁移执行与种子账号补齐。
+// 独立成包以便测试与初始化层共用，避免测试包反向依赖业务装配层形成导入环。
+package db
 
 import (
 	"fmt"
@@ -24,7 +25,7 @@ func Gorm(cfg config.Config) (*gorm.DB, error) {
 	if cfg.Mysql.LogMode {
 		newLogger = logger.Default.LogMode(logger.Info)
 	}
-	db, err := gorm.Open(mysql.Open(cfg.Mysql.DSN), &gorm.Config{Logger: newLogger})
+	gdb, err := gorm.Open(mysql.Open(cfg.Mysql.DSN), &gorm.Config{Logger: newLogger})
 	if err != nil {
 		if !strings.Contains(err.Error(), "Unknown database") {
 			return nil, err
@@ -32,19 +33,19 @@ func Gorm(cfg config.Config) (*gorm.DB, error) {
 		if cerr := createDatabase(cfg.Mysql.DSN); cerr != nil {
 			return nil, cerr
 		}
-		db, err = gorm.Open(mysql.Open(cfg.Mysql.DSN), &gorm.Config{Logger: newLogger})
+		gdb, err = gorm.Open(mysql.Open(cfg.Mysql.DSN), &gorm.Config{Logger: newLogger})
 		if err != nil {
 			return nil, err
 		}
 	}
-	sqlDB, err := db.DB()
+	sqlDB, err := gdb.DB()
 	if err != nil {
 		return nil, err
 	}
 	sqlDB.SetMaxIdleConns(cfg.Mysql.MaxIdleConns)
 	sqlDB.SetMaxOpenConns(cfg.Mysql.MaxOpenConns)
 	sqlDB.SetConnMaxLifetime(time.Hour)
-	return db, nil
+	return gdb, nil
 }
 
 func createDatabase(dsn string) error {

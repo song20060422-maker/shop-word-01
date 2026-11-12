@@ -27,13 +27,27 @@ func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.
 	{
 		pub.GET("/health", func(c *gin.Context) { c.JSON(http.StatusOK, gin.H{"status": "ok", "module": "shop"}) })
 		pub.POST("/login", ag.Login)
-		pub.GET("/users", ag.Users)
+		// 账号列表：演示模式下供演示页选择账号；生产环境关闭，防止枚举账号
+		pub.GET("/users", func(c *gin.Context) {
+			if !cfg.Shop.DemoMode {
+				c.JSON(http.StatusForbidden, response.Fail(2002, "演示模式未开启，禁止查询账号列表"))
+				return
+			}
+			ag.Users(c)
+		})
 		pub.GET("/products", ag.Products)
 		// 模拟渠道：待支付订单查询、支付通知回调（靠签名鉴权，不需要登录态）
 		pub.GET("/pay/pending", ag.PendingOrders)
 		pub.POST("/pay/notify", ag.Notify)
 		pub.GET("/pay/channel", ag.ChannelState)
-		pub.POST("/jobs/close-expired", ag.CloseExpired)
+		// 超时关单测试钩子：仅演示模式可用（生产由定时任务触发）
+		pub.POST("/jobs/close-expired", func(c *gin.Context) {
+			if !cfg.Shop.DemoMode {
+				c.JSON(http.StatusForbidden, response.Fail(2002, "演示模式未开启，禁止手动触发关单"))
+				return
+			}
+			ag.CloseExpired(c)
+		})
 		// 演示数据重置：仅 shop.demo-mode=true 时可用
 		pub.POST("/demo/reset", func(c *gin.Context) {
 			if !cfg.Shop.DemoMode {
@@ -61,13 +75,16 @@ func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.
 	{
 		authed.GET("/me", ag.Me)
 
-		// 买家：下单、查询、取消、售前退款
-		authed.POST("/orders", ag.CreateOrder)
-		authed.GET("/orders", ag.MyOrders)
-		authed.GET("/orders/:orderNo", ag.OrderDetail)
-		authed.POST("/orders/:orderNo/cancel", ag.Cancel)
-		authed.POST("/orders/:orderNo/refund", ag.RefundApply)
-		authed.GET("/orders/:orderNo/refund", ag.MyRefund)
+		// 买家：下单、查询、取消、售前退款（契约规定买家区仅 buyer 角色可用）
+		buyer := authed.Group("", middleware.RequireRole(model.RoleBuyer))
+		{
+			buyer.POST("/orders", ag.CreateOrder)
+			buyer.GET("/orders", ag.MyOrders)
+			buyer.GET("/orders/:orderNo", ag.OrderDetail)
+			buyer.POST("/orders/:orderNo/cancel", ag.Cancel)
+			buyer.POST("/orders/:orderNo/refund", ag.RefundApply)
+			buyer.GET("/orders/:orderNo/refund", ag.MyRefund)
+		}
 
 		// 运营：上下架、核查、查询
 		ops := authed.Group("/ops", middleware.RequireRole(model.RoleOps))
@@ -106,5 +123,5 @@ func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.
 	}
 
 	// 契约新增路径（不与原型重名的部分）
-	InitCompatRouter(pub, authed, ca)
+	InitCompatRouter(pub, authed, ca, cfg)
 }

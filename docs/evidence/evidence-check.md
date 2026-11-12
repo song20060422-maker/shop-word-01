@@ -1,0 +1,58 @@
+# 证据覆盖清单（check_evidence.py 生成）
+
+- 项目根目录: `D:\Users\Lenovo\Desktop\shop_word\gin-vue-admin`
+- 证据目录: `D:\Users\Lenovo\Desktop\shop_word\gin-vue-admin\docs\evidence`
+- 扫描到证据/记录文件: 6 个
+
+- **R1-1** — PASS — 证据: docs/evidence/evidence-index.md
+- **R1-2** — PASS — 证据: docs/evidence/evidence-index.md
+- **R1-3** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **R1-4** — PASS — 证据: docs/evidence/evidence-index.md
+- **R2-1** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **R2-2** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **R2-3** — PASS — 证据: docs/evidence/evidence-index.md
+- **R3-1** — PASS — 证据: docs/evidence/evidence-index.md
+- **R3-2** — PASS — 证据: docs/evidence/evidence-index.md
+- **R3-3** — PASS — 证据: docs/evidence/evidence-index.md
+- **R3-4** — PASS — 证据: docs/evidence/evidence-index.md
+- **R4-1** — PASS — 证据: docs/evidence/evidence-index.md
+- **R4-2** — PASS — 证据: docs/evidence/evidence-index.md
+- **R4-3** — PASS — 证据: docs/evidence/evidence-index.md
+- **R5-1** — PASS — 证据: docs/evidence/evidence-index.md
+- **R5-2** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **R5-3** — PASS — 证据: docs/evidence/evidence-index.md
+- **R5-4** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **R6-1** — PASS — 证据: docs/evidence/evidence-index.md
+- **R6-2** — PASS — 证据: docs/evidence/evidence-index.md
+- **R6-3** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **R6-4** — PASS — 证据: docs/evidence/evidence-index.md
+- **R7-1** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **R7-2** — PASS — 证据: docs/evidence/evidence-index.md
+- **R7-3** — PASS — 证据: docs/evidence/evidence-index.md
+- **R8-1** — PASS — 证据: docs/evidence/evidence-index.md
+- **R8-2** — PASS — 证据: docs/evidence/evidence-index.md
+- **R8-3** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **S1** — PASS — 证据: (项目测试代码/文档); docs/evidence/evidence-index.md
+- **S2** — PASS — 证据: (项目测试代码/文档); docs/evidence/README.md; docs/evidence/acceptance-2026-11-12.log; docs/evidence/acceptance-20261112-fix.log; docs/evidence/acceptance-20261112-fix2.log（另有略）
+- **S3** — PASS — 证据: docs/evidence/evidence-index.md
+- **S4** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **S5** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **E1** — 人工核定项，脚本不判定
+- **E2** — 人工核定项，脚本不判定
+- **E3** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **E4** — 人工核定项，脚本不判定
+- **D1** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **D2** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **D3** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **B1** — PASS — 证据: (项目测试代码/文档); docs/evidence/README.md; docs/evidence/evidence-index.md
+- **B2** — PASS — 证据: docs/evidence/evidence-index.md
+- **B3** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **B4** — PASS — 证据: docs/evidence/evidence-index.md
+- **B5** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+- **B6** — PASS — 证据: docs/evidence/README.md; docs/evidence/evidence-index.md
+
+## 汇总
+- 自动判定项: 43，已覆盖 43，缺失 0
+- 缺失项: 无
+- E2（场景证据齐全）、E4（抽查一致性）为人工核定项，请结合验收报告阶段 4 第 13 步填写。
+- 注意：按文件名/关键词匹配存在误判可能，抽查原文后再写入验收报告。

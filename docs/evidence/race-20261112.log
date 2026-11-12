@@ -1,0 +1,21 @@
+# race 检测执行记录（审计 I-04 整改）
+# 执行时间: 2026-11-12 21:47 +0800
+# 环境: Docker Desktop (Windows 11) 内 golang:1.26.10 Linux 容器，CGO_ENABLED=1，go1.26.10 race runtime
+# 命令: go test -race -p 1 -count=1 -timeout 40m ./shop/... （模块 github.com/flipped-aurora/gin-vue-admin/server）
+# 数据库: SHOP_TEST_DSN=root:root@tcp(host.docker.internal:3307)/shop_test_race（宿主机 MySQL 3307）
+# 结论: 全部测试包 ok，DATA RACE 0，FAIL 0（原始输出见下方）
+
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/api	6.882s
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/config	1.016s
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/db	1.184s
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/initialize	1.207s
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/middleware	1.026s
+?   	github.com/flipped-aurora/gin-vue-admin/server/shop/migrations	[no test files]
+?   	github.com/flipped-aurora/gin-vue-admin/server/shop/model	[no test files]
+?   	github.com/flipped-aurora/gin-vue-admin/server/shop/model/request	[no test files]
+?   	github.com/flipped-aurora/gin-vue-admin/server/shop/model/response	[no test files]
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/router	23.008s
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/service	33.323s
+ok  	github.com/flipped-aurora/gin-vue-admin/server/shop/utils	1.034s
+?   	github.com/flipped-aurora/gin-vue-admin/server/shop/web	[no test files]
+EXIT_CODE=

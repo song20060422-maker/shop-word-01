@@ -21,6 +21,13 @@ import time
 import urllib.error
 import urllib.request
 
+# I-24：GBK 控制台下中文输出会触发 UnicodeEncodeError，
+# 这里强制标准流切到 UTF-8（不再依赖调用方设置 PYTHONIOENCODING）。
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 SHOP_DIR = os.path.dirname(HERE)
 SERVER_DIR = os.path.dirname(SHOP_DIR)
@@ -32,9 +39,15 @@ SUITES = ["normal", "stock", "refund", "late", "races"]
 def read_base_url() -> str:
     """从 config.yaml 的 shop 段解析端口，默认 8099。"""
     port = 8099
+    in_shop = False
     try:
         for line in open(CONFIG_YAML, encoding="utf-8"):
             low = line.strip()
+            if low and not low.startswith("#") and not low.startswith(" "):
+                in_shop = low.startswith("shop:")
+                continue
+            if not in_shop:
+                continue
             if low.startswith("addr:") or low.startswith("http-port:"):
                 port = int(low.split(":")[1].strip().strip('"'))
     except Exception:
@@ -120,9 +133,13 @@ def main() -> int:
             failed.append(suite)
             continue
         print("\n== 套件 %s（已重置演示数据）==" % suite)
+        # I-24：子进程（检查者验收脚本）输出强制 UTF-8，
+        # 无论控制台代码页是否 GBK，汇总统计都能正确解析。
+        child_env = dict(os.environ, PYTHONIOENCODING="utf-8")
         r = subprocess.run([sys.executable, script, "--base-url", base,
                             "--config", cfg, "--suites", suite],
-                           capture_output=True, text=True, encoding="utf-8", errors="replace")
+                           capture_output=True, text=True, encoding="utf-8", errors="replace",
+                           env=child_env)
         out = r.stdout
         print(out.strip())
         line = next((l for l in out.splitlines() if l.startswith("结果")), "")

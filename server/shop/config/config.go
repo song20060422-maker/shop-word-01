@@ -17,10 +17,10 @@ type System struct {
 
 // Mysql 数据库配置
 type Mysql struct {
-	DSN         string `yaml:"dsn"`
-	MaxIdleConns int   `yaml:"max-idle-conns"`
-	MaxOpenConns int   `yaml:"max-open-conns"`
-	LogMode     bool   `yaml:"log-mode"`
+	DSN          string `yaml:"dsn"`
+	MaxIdleConns int    `yaml:"max-idle-conns"`
+	MaxOpenConns int    `yaml:"max-open-conns"`
+	LogMode      bool   `yaml:"log-mode"`
 }
 
 // Jwt 令牌配置

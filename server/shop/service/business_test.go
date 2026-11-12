@@ -229,10 +229,11 @@ func TestNotifyRules(t *testing.T) {
 	}
 
 	// 有效期外到达 → 异常收款，不恢复订单/库存
+	// 注：此处 o2/o3/o4 三笔待付款单均已超时，清扫器应一并关闭（正确行为，原断言 1 有误）
 	o4, _ := g.OrderService.Create(b1, pid, 1)
 	clock.Advance(11 * time.Minute)
-	if n, err := g.OrderService.CloseExpired(); err != nil || n != 1 {
-		t.Fatalf("清扫器应关闭超时订单: %d %v", n, err)
+	if n, err := g.OrderService.CloseExpired(); err != nil || n != 3 {
+		t.Fatalf("清扫器应关闭全部超时订单: %d %v", n, err)
 	}
 	sign4 := utils.PaySign(testCfg.Shop.PayNotifySecret, o4.OrderNo, "TXN-5", o4.AmountCents)
 	res, err = g.PaymentService.Notify(o4.OrderNo, "TXN-5", o4.AmountCents, sign4, "{}")
