@@ -37,6 +37,7 @@
 | 30 | 2026-11-12 21:31 | 开发 Agent（batch3 后整改会话） | 审计 I-12：推送触发 shop-ci 首次实际运行（run #1 @e067a24）；gofmt/vet/build/test/覆盖率/CI race 全部 success，冒烟步骤因 `go run .` 在 CI 全量编译超时失败 → 整改冒烟步骤为预编译二进制+240s 等待+失败打印日志 | .github/workflows/shop-ci.yml | T9 |
 | 31 | 2026-11-12 21:22 | 开发 Agent（batch3 后整改会话） | 审计 I-17：dev_log §4 提交清单补齐 24f694f~e067a24 共 11 条；`docs/evidence/sessions/export_sessions.ps1` 将 events.md 26 条事件导出为结构化 JSONL（UTF-8），产物 `sessions/events-20261112.jsonl` | dev_log.md、sessions/events-20261112.jsonl | T10 |
 | 32 | 2026-11-12 21:55 | 开发 Agent（batch3 后整改会话） | 本会话按需实际加载 `.agents` v4.0 编号文件集（00/03/05/09），README 登记加载记录 | .agents/README.md | T10 |
+| 33 | 2026-11-12 22:15 | 开发 Agent（batch3 后整改会话） | 三角色 Agent 任务书入库：从 shop_word/提示词/ 复制 `agent-dev.md`（v3.0 全文，原件保留）与 `agent-acceptance.md` 到 `.agents/`，新增 `agent-test.md`（本会话独立测试实际下发任务书原文+执行记录）；README 增设"Agent 会话任务书（三角色）"章节登记三文件与实际使用记录（对应共同要求：Agent 指令版本与使用记录、三会话独立性） | .agents/agent-*.md、.agents/README.md | T10 |
 
 ## 待补充的学生事件
 
