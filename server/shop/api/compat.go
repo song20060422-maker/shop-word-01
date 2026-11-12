@@ -453,6 +453,11 @@ func (a *CompatApi) Products(c *gin.Context) {
 // CreateOrder POST /api/orders -> {order_id, order_no, amount, status, expire_at}
 func (a *CompatApi) CreateOrder(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
+	// 兼容层委派路径绕过了路由组上的 RequireRole，必须在此复核角色（I-02 越权防护）
+	if claims.Role != model.RoleBuyer {
+		a.failJSON(c, service.NewBizError(2002, "当前角色无权执行该操作"))
+		return
+	}
 	body := bindAny(c)
 	ref := strOf(body, "product_id", "productId", "sku")
 	if ref == "" {
@@ -532,6 +537,11 @@ func (a *CompatApi) OrderDetail(c *gin.Context) {
 // CancelOrder POST /api/orders/{id}/cancel -> 待付款可取消（重复取消 4xx）
 func (a *CompatApi) CancelOrder(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
+	// 兼容层委派路径绕过了路由组上的 RequireRole，必须在此复核角色（I-02 越权防护）
+	if claims.Role != model.RoleBuyer {
+		a.failJSON(c, service.NewBizError(2002, "当前角色无权执行该操作"))
+		return
+	}
 	o, err := a.s.OrderService.FindByRef(c.Param("orderNo"))
 	if err != nil {
 		a.failJSON(c, err)
@@ -549,6 +559,11 @@ func (a *CompatApi) CancelOrder(c *gin.Context) {
 // RefundApply POST /api/orders/{id}/refund-apply -> {refund_id}（仅 TO_SHIP 可申请）
 func (a *CompatApi) RefundApply(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
+	// 兼容层委派/直接注册路径均绕过 RequireRole，必须在此复核角色（I-02 越权防护）
+	if claims.Role != model.RoleBuyer {
+		a.failJSON(c, service.NewBizError(2002, "当前角色无权执行该操作"))
+		return
+	}
 	o, err := a.s.OrderService.FindByRef(c.Param("orderNo"))
 	if err != nil {
 		a.failJSON(c, err)
