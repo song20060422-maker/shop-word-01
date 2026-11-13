@@ -3,6 +3,8 @@
 system:
     addr: ":8099"
     mode: release
+    # 后台独立页（/ops /warehouse /cs）经本服务 /gva/* 反代调用 GVA 管理端（compose 服务名 admin）
+    admin-target: "http://admin:8099"
 mysql:
     dsn: "root:root@tcp(mysql:3306)/gva?charset=utf8mb4&parseTime=True&loc=Local"
     max-idle-conns: 5
