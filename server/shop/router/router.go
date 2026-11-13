@@ -64,7 +64,8 @@ func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.
 	}
 
 	// 内置页面（随服务发布，无需前端构建）：
-	//   /shop      买家端 + 模拟支付渠道页
+	//   /          集成版全功能页：买家 / 模拟支付渠道 / 仓库 / 客服 / 运营 五个页签同页切换
+	//   /shop      买家端 + 模拟支付渠道页（独立页）
 	//   /ops /warehouse /cs  后台管理独立页（SHOP·OS 原型深色风格），
 	//       页面经本服务 /gva/* 反向代理调用 GVA 管理端接口（gva 登录 + Casbin）
 	// 运营/仓库/客服后台同时仍由 GVA 管理端（Vue 三页）提供，双入口并存。
@@ -75,6 +76,8 @@ func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.
 				err  error
 			)
 			switch name {
+			case "all":
+				data, err = web.Index()
 			case "buyer":
 				data, err = web.Buyer()
 			case "ops":
@@ -93,6 +96,10 @@ func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.
 			c.Data(http.StatusOK, "text/html; charset=utf-8", data)
 		}
 	}
+	// 根路径：集成版全功能页（买家/渠道/仓库/客服/运营 五页签同页），
+	// 适合"一个页面看全部"；独立页 /shop /ops /warehouse /cs 同时保留。
+	group.GET("/", page("all"))
+	group.GET("/index.html", page("all"))
 	group.GET("/shop", page("buyer"))
 	group.GET("/shop/", page("buyer"))
 	group.GET("/ops", page("ops"))

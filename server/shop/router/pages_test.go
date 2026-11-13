@@ -29,6 +29,8 @@ func newServerWithCfg(t *testing.T, cfg config.Config) *gin.Engine {
 func TestAdminPagesServed(t *testing.T) {
 	r, _ := newServer(t, true)
 	cases := []struct{ path, marker string }{
+		{"/", "data-tab=\"warehouse\""},
+		{"/index.html", "data-tab=\"ops\""},
 		{"/shop", "买家端"},
 		{"/shop/", "买家端"},
 		{"/ops", "运营核查"},
