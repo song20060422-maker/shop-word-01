@@ -58,9 +58,10 @@ func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.
 		})
 	}
 
-	// 内置原型页面（买家/渠道/仓库/客服/运营），随服务发布，无需前端构建
+	// 内置买家端页面（买家/模拟支付渠道），随服务发布，无需前端构建；
+	// 运营/仓库/客服后台页面由 GVA 管理端提供（走 gva 登录与 Casbin）。
 	page := func(c *gin.Context) {
-		data, err := web.Index()
+		data, err := web.Buyer()
 		if err != nil {
 			c.String(http.StatusInternalServerError, "页面加载失败")
 			return

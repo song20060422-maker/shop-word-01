@@ -8,15 +8,41 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/flipped-aurora/gin-vue-admin/server/global"
+	shopconfig "github.com/flipped-aurora/gin-vue-admin/server/shop/config"
+	shopdb "github.com/flipped-aurora/gin-vue-admin/server/shop/db"
 )
 
+// 共享测试库（shop_test）中可能残留其他包或历史运行的数据，
+// Boot 依赖迁移+种子+密码补齐，测试前先按 FK 安全顺序清空业务表。
+func resetTables(t *testing.T, dsn string) {
+	t.Helper()
+	cfg := shopconfig.Default()
+	cfg.Mysql.DSN = dsn
+	db, err := shopdb.Gorm(cfg)
+	if err != nil {
+		t.Fatalf("复位连接失败: %v", err)
+	}
+	for _, tbl := range []string{
+		"sessions", "abnormal_payments", "payments", "payment_notices", "refunds",
+		"shipments", "inventory_ledger", "operation_logs", "orders", "products", "users",
+	} {
+		if err := db.Exec("DELETE FROM " + tbl).Error; err != nil {
+			t.Fatalf("复位 %s 失败: %v", tbl, err)
+		}
+	}
+	if sqlDB, err := db.DB(); err == nil {
+		_ = sqlDB.Close()
+	}
+}
+
 // Boot 测试：从 viper 读取 shop.* 配置段，连库 -> 迁移 -> 种子 -> 装配 ServiceGroup。
-// 数据库可用 SHOP_TEST_DSN 覆盖（独立库 shop_test_boot）。
+// 数据库可用 SHOP_TEST_DSN 覆盖（默认 shop_test，须 -p 1 串行执行）。
 func TestBoot(t *testing.T) {
 	dsn := os.Getenv("SHOP_TEST_DSN")
 	if dsn == "" {
-		dsn = "root:root@tcp(127.0.0.1:3307)/shop_test_boot?charset=utf8mb4&parseTime=True&loc=Local"
+		dsn = "root:root@tcp(127.0.0.1:3307)/shop_test?charset=utf8mb4&parseTime=True&loc=Local"
 	}
+	resetTables(t, dsn)
 	vp := viper.New()
 	vp.Set("shop.mysql-dsn", dsn)
 	vp.Set("shop.jwt-secret", "boot-secret")

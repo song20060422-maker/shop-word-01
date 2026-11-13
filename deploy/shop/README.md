@@ -1,12 +1,17 @@
 # Shop 部署与冒烟（题目 01）
 
-## 1. 组成
+## 1. 组成与架构（2026-11-13 拆分后）
 
 | 组件 | 说明 |
 | --- | --- |
-| `server/Dockerfile.shop` | Shop 单服务镜像（多阶段构建，静态编译，内置健康检查） |
-| `server/config.shop-docker.yaml` | 容器内配置：MySQL/Redis 用服务名寻址，业务配置段 `shop.*` |
-| `deploy/shop/docker-compose.yaml` | MySQL 8 + Redis 7 + Shop 服务，端口 18099 / 13307 / 16379 |
+| `server/Dockerfile.shop` | 买家端专用镜像：`server/cmd/shop`（买家 + 模拟支付渠道，含全部契约路径），多阶段构建，静态编译，内置健康检查 |
+| `server/config.shop-docker.yaml` | 买家端容器配置（独立服务格式），连接 gva 库 |
+| `deploy/shop/docker-compose.yaml` | MySQL 8 + Redis 7 + 买家端服务，端口 18099 / 13307 / 16379 |
+| `deploy/shop/gva-admin-shop.sql` | GVA 管理端商城后台（运营/仓库/客服）菜单 / 接口 / Casbin 授权初始化（幂等） |
+
+数据库约定：**业务表统一存放在 gva 库**（gva 框架表 + shop 业务 11 张表共用一个库），不再单独建 shop 库。
+架构拆分：买家端 + 模拟支付渠道 = 独立 Gin 服务（`server/cmd/shop`，本地 :8090 / 容器 :8099）；
+运营 / 仓库 / 客服后台 = GVA 管理端（gva 登录 + Casbin，接口 `/shop/**`，页面 `web/src/view/shop/**`）。
 
 ## 2. 启动
 
@@ -17,7 +22,8 @@ docker compose -f deploy/shop/docker-compose.yaml up -d --build
 docker compose -f deploy/shop/docker-compose.yaml ps
 ```
 
-服务启动时自动执行 `shop/migrations/*.sql`（建表 + 幂等种子），无需手工导库。
+买家端服务启动时自动执行 `shop/migrations/*.sql`（建表 + 幂等种子），无需手工导库；
+GVA 管理端如需商城后台页面，执行 `deploy/shop/gva-admin-shop.sql` 并重启 gva 服务端。
 
 ## 3. 冒烟
 

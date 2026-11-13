@@ -22,7 +22,7 @@ import (
 
 // 说明：本文件直测被契约兼容层委派遮蔽的原型 handler（同一路径已由 CompatApi 接管），
 // 与 router 集成测试互补，保证原型实现同样被覆盖。
-// 数据库可用 SHOP_TEST_DSN 覆盖（独立库 shop_test_api）。
+// 数据库可用 SHOP_TEST_DSN 覆盖（默认 shop_test，须 -p 1 串行执行）。
 
 var testDB *gorm.DB
 var testCfg config.Config
@@ -30,7 +30,7 @@ var testCfg config.Config
 func TestMain(m *testing.M) {
 	dsn := os.Getenv("SHOP_TEST_DSN")
 	if dsn == "" {
-		dsn = "root:root@tcp(127.0.0.1:3307)/shop_test_api?charset=utf8mb4&parseTime=True&loc=Local"
+		dsn = "root:root@tcp(127.0.0.1:3307)/shop_test?charset=utf8mb4&parseTime=True&loc=Local"
 	}
 	testCfg = config.Default()
 	testCfg.Mysql.DSN = dsn
@@ -53,6 +53,8 @@ func TestMain(m *testing.M) {
 func resetTables(t *testing.T) {
 	t.Helper()
 	tables := []string{
+		// sessions 先清：fk_sessions_user 引用 users（共享测试库须防跨包残留）
+		"sessions",
 		"abnormal_payments", "payments", "payment_notices", "refunds", "shipments",
 		"inventory_ledger", "operation_logs", "orders", "products", "users",
 	}

@@ -292,7 +292,7 @@ mcp:
 
 shop:
     mode: debug
-    mysql-dsn: "root:root@tcp(127.0.0.1:3307)/shop?charset=utf8mb4&parseTime=True&loc=Local"
+    mysql-dsn: "root:root@tcp(127.0.0.1:3307)/gva?charset=utf8mb4&parseTime=True&loc=Local"
     max-open-conns: 50
     order-timeout-minutes: 10
     jwt-secret: "shop-gva-dev-secret"

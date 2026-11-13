@@ -59,6 +59,13 @@ type ProductUpdate struct {
 	PriceCents *int64 `json:"priceCents"`
 }
 
+// AdminProductUpdate GVA 管理端商品维护入参（按 URL 主键寻址）
+type AdminProductUpdate struct {
+	OnSale     *bool  `json:"onSale"`
+	PriceCents *int64 `json:"priceCents"`
+	Available  *int   `json:"available"`
+}
+
 // ChannelMode 模拟渠道退款模式（演示用：首次失败可切换）
 type ChannelMode struct {
 	RefundMode string `json:"refundMode" binding:"required"` // success | fail

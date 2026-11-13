@@ -25,7 +25,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: shop_test_service
+          MYSQL_DATABASE: shop_test
         ports:
           - 3307:3306
         options: >-
@@ -76,7 +76,8 @@ jobs:
         env:
           SHOP_TEST_DSN: ""
         run: |
-          go test ./shop/... -count=1 -coverprofile=coverage.out -coverpkg=./shop/...
+          # 各测试包共用 shop_test 单一测试库，须 -p 1 串行执行避免互相清表
+          go test -p 1 ./shop/... -count=1 -coverprofile=coverage.out -coverpkg=./shop/...
 
       - name: 覆盖率阈值（≥85%）
         run: |
@@ -87,29 +88,36 @@ jobs:
 
       - name: 并发路径 race 检测
         run: |
-          go test -race ./shop/service ./shop/router -count=1 \
+          go test -race -p 1 ./shop/service ./shop/router -count=1 \
             -run 'Concurrent|Race|Notify|Refund|Ship|LatePayment'
 
-      - name: 冒烟（启动服务 + 健康检查 + 登录 + 下单）
+      - name: 冒烟（买家端独立服务 + GVA 管理端）
         run: |
-          # 服务端启动依赖 gva（gva 框架）与 shop（业务库）两个数据库，先创建
+          # 业务表统一在 gva 库（gva 框架表 + shop 业务表），先确保库存在
           cid=$(docker ps --format '{{.Names}}' | grep -i mysql | head -n1)
-          docker exec "$cid" mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS gva DEFAULT CHARACTER SET utf8mb4; CREATE DATABASE IF NOT EXISTS shop DEFAULT CHARACTER SET utf8mb4;"
-          go build -o shop-server .
-          ./shop-server > server.log 2>&1 &
+          docker exec "$cid" mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS gva DEFAULT CHARACTER SET utf8mb4;"
+          go build -o shop-standalone ./cmd/shop
+          go build -o gva-server .
+          # 买家端独立 Gin 服务（:8090）
+          SHOP_ADDR=":8090" SHOP_DSN="root:root@tcp(127.0.0.1:3307)/gva?charset=utf8mb4&parseTime=True&loc=Local" \
+            ./shop-standalone > shop.log 2>&1 &
+          # GVA 管理端（:8099，挂 /shop/** 后台接口）
+          ./gva-server > server.log 2>&1 &
           ok=0
           for i in $(seq 1 120); do
-            if curl -fsS http://127.0.0.1:8099/api/health > /dev/null; then ok=1; break; fi
+            if curl -fsS http://127.0.0.1:8090/api/health > /dev/null && curl -fsS http://127.0.0.1:8099/health > /dev/null; then ok=1; break; fi
             sleep 2
           done
           if [ "$ok" != "1" ]; then
-            echo "服务 240s 内未就绪，server.log 尾部："
+            echo "服务 240s 内未就绪，shop.log/server.log 尾部："
+            tail -n 60 shop.log || true
             tail -n 80 server.log
             exit 7
           fi
-          curl -fsS http://127.0.0.1:8099/api/health
-          bash ./scripts/ci-smoke.sh
-          grep -i "shop 业务路由注册完成" server.log
+          curl -fsS http://127.0.0.1:8090/api/health
+          curl -fsS http://127.0.0.1:8099/health
+          BASE=http://127.0.0.1:8090 bash ./scripts/ci-smoke.sh
+          grep -i "shop 后台管理路由注册完成" server.log
 
       - name: 上传测试产物
         if: always()

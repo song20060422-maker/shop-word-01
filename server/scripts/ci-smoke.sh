@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Shop 业务冒烟脚本（CI 用）：登录 -> 取商品 -> 下单 -> 查询订单 -> 支付通知。
+# 2026-11-13 拆分后买家端/契约路径挂在独立 Gin 服务（server/cmd/shop，默认 :8090）。
 # 依赖 curl + python3（解析 JSON）。退出码非 0 即冒烟失败。
 set -euo pipefail
 
-BASE="${BASE:-http://127.0.0.1:8099}"
+BASE="${BASE:-http://127.0.0.1:8090}"
 PASS="${SHOP_DEMO_PASSWORD:-shop123}"
 
 require() {

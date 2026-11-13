@@ -9,6 +9,9 @@ import (
 	"testing/fstest"
 
 	driver "github.com/go-sql-driver/mysql"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
 	"github.com/flipped-aurora/gin-vue-admin/server/shop/migrations"
@@ -37,7 +40,7 @@ func testConfig(t *testing.T) config.Config {
 	if dsn := os.Getenv("SHOP_TEST_DSN"); dsn != "" {
 		cfg.Mysql.DSN = dsn
 	} else {
-		cfg.Mysql.DSN = dsnOnTestHost("shop_test_db")
+		cfg.Mysql.DSN = dsnOnTestHost("shop_test")
 	}
 	cfg.Mysql.MaxIdleConns = 2
 	cfg.Mysql.MaxOpenConns = 4
@@ -46,12 +49,27 @@ func testConfig(t *testing.T) config.Config {
 
 func TestGormCreateDatabaseAndMigrate(t *testing.T) {
 	cfg := testConfig(t)
-	// 库不存在时自动创建（覆盖 createDatabase 分支）
-	cfg.Mysql.DSN = dsnOnTestHost("shop_test_db_autocreate")
+	// 库不存在时自动创建（覆盖 createDatabase 分支）。
+	// 使用一次性临时库名，测试结束后 DROP，保持 MySQL 实例整洁。
+	cfg.Mysql.DSN = dsnOnTestHost("shop_test_autocreate_tmp")
 	gdb, err := Gorm(cfg)
 	if err != nil {
 		t.Fatalf("自动建库连接失败: %v", err)
 	}
+	t.Cleanup(func() {
+		parsed, perr := driver.ParseDSN(cfg.Mysql.DSN)
+		if perr != nil {
+			return
+		}
+		parsed.DBName = ""
+		boot, berr := gorm.Open(mysql.Open(parsed.FormatDSN()), &gorm.Config{Logger: logger.Default.LogMode(logger.Silent)})
+		if berr == nil {
+			_ = boot.Exec("DROP DATABASE IF EXISTS `shop_test_autocreate_tmp`").Error
+			if conn, cerr := boot.DB(); cerr == nil {
+				_ = conn.Close()
+			}
+		}
+	})
 	sqlDB, err := gdb.DB()
 	if err != nil {
 		t.Fatal(err)
@@ -68,7 +86,7 @@ func TestGormCreateDatabaseAndMigrate(t *testing.T) {
 		t.Fatal("非法 SQL 应报错")
 	}
 	// 正常迁移与种子补齐
-	cfg.Mysql.DSN = dsnOnTestHost("shop_test_db")
+	cfg.Mysql.DSN = dsnOnTestHost("shop_test")
 	gdb2, err := Gorm(cfg)
 	if err != nil {
 		t.Fatalf("连接测试库失败: %v", err)

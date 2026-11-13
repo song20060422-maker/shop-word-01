@@ -14,7 +14,8 @@ import (
 )
 
 // 说明：service 层测试使用真实 MySQL（本机 3307），每个用例前清空业务数据并重放迁移/种子。
-// 数据库可用 SHOP_TEST_DSN 覆盖，默认库名 shop_test_service（各测试包使用独立库，避免相互干扰）。
+// 数据库可用 SHOP_TEST_DSN 覆盖，默认库名 shop_test（全项目唯一测试库；
+// 因各测试包共用同一库，多包并发跑会互相清表，必须使用 go test -p 1 串行执行）。
 
 var testDB *gorm.DB
 var testCfg config.Config
@@ -22,7 +23,7 @@ var testCfg config.Config
 func TestMain(m *testing.M) {
 	dsn := os.Getenv("SHOP_TEST_DSN")
 	if dsn == "" {
-		dsn = "root:root@tcp(127.0.0.1:3307)/shop_test_service?charset=utf8mb4&parseTime=True&loc=Local"
+		dsn = "root:root@tcp(127.0.0.1:3307)/shop_test?charset=utf8mb4&parseTime=True&loc=Local"
 	}
 	testCfg = config.Default()
 	testCfg.Mysql.DSN = dsn
@@ -50,6 +51,9 @@ func (c *fakeClock) Advance(d time.Duration) { c.t = c.t.Add(d) }
 func resetDB(t *testing.T) {
 	t.Helper()
 	tables := []string{
+		// sessions 须最先清理：fk_sessions_user 引用 users，且共享库中其他包的
+		// 登录测试会留下会话行，先删才能保证 users 可清。
+		"sessions",
 		"abnormal_payments", "payments", "payment_notices", "refunds", "shipments",
 		"inventory_ledger", "operation_logs", "orders", "products", "users",
 	}

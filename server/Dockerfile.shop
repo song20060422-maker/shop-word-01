@@ -1,4 +1,5 @@
-# Shop 服务专用镜像（只服务 server/shop 业务，不构建管理端与前端）
+# Shop 买家端专用镜像（只服务 server/cmd/shop 买家端 + 模拟支付渠道，
+# 不构建 GVA 管理端与前端；运营/仓库/客服后台由 GVA 管理端另行部署）
 FROM golang:1.26.10-alpine AS builder
 
 WORKDIR /src
@@ -9,7 +10,7 @@ COPY go.mod go.sum ./
 RUN go mod download
 
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/shop-server .
+RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/shop-server ./cmd/shop
 
 FROM alpine:3.20
 

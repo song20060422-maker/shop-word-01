@@ -14,16 +14,20 @@ AIGC:
 > 载体：`gin-vue-admin`，业务代码全部位于 `server/shop/`（独立子模块，不侵入 GVA 原有登录/Casbin 体系）。
 > 技术栈：Go + Gin + GORM + MySQL 8 InnoDB；框架分层 model / service / api / router / middleware / initialize / migrations / web。
 
-## 1. 启动与入口
+## 1. 启动与入口（2026-11-13 架构拆分后）
 
 | 项目 | 内容 |
 | --- | --- |
-| 启动 | `cd server && go run .`（默认端口 8099） |
-| 业务页面 | `http://127.0.0.1:8099/shop`（单页应用，5 个标签页：买家 / 模拟支付渠道 / 仓库 / 客服 / 运营） |
-| 健康检查 | `GET /api/health` |
-| 数据库 | `config.yaml` 中 `shop.mysql-dsn`，服务启动时自动执行 `migrations/001_init.sql`（表不存在才建）与 `002_seed.sql`（种子数据幂等写入） |
-| 演示账号 | 运营 `ops1`、仓库 `wh1`、客服 `cs1`、买家 `buyer1~3`，口令 `shop123`（`shop.demo-password`） |
-| 演示数据重置 | `POST /api/demo/reset`（仅 `shop.demo-mode: true` 时开放） |
+| 买家端独立服务 | `cd server && go run ./cmd/shop -c config.shop.yaml`（默认端口 8090，独立 Gin 框架） |
+| 买家端页面 | `http://127.0.0.1:8090/shop`（买家 + 模拟支付渠道两个标签页） |
+| 健康检查 | `GET http://127.0.0.1:8090/api/health` |
+| GVA 管理端 | `cd server && go run .`（8099）+ `cd web && npm run dev`；商城后台页面：菜单「商城管理 → 运营核查 / 仓库发货 / 客服退款」，接口 `/shop/**`（走 gva 登录 + Casbin） |
+| 数据库 | **统一使用 gva 库**（gva 框架表 + shop 业务 11 张表）：买家端 `config.shop.yaml`，管理端 `config.yaml`；服务启动时自动执行 `migrations/001_init.sql`（表不存在才建）与 `002_seed.sql`（种子幂等写入） |
+| 后台初始化 | `deploy/shop/gva-admin-shop.sql`：商城后台菜单 / 接口 / Casbin 授权（幂等，执行后重启 gva 服务端） |
+| 演示账号 | 买家 `buyer1~3`，口令 `shop123`（买家端登录）；后台管理使用 GVA 管理员账号 |
+| 演示数据重置 | `POST http://127.0.0.1:8090/api/demo/reset`（仅 `shop.demo-mode: true` 时开放） |
+
+> 测试库说明：全项目共用单一 `shop_test` 测试库，`go test ./shop/...` 必须加 `-p 1` 串行执行（各包测试会清表）。
 
 预置商品：`SKU-A` 单价 10000 分、可售 5 件；`SKU-B` 单价 5000 分、可售 3 件。
 
@@ -116,5 +120,5 @@ python scripts\run_acceptance.py --no-build --no-start   # 服务已在运行
 2. **幂等由数据库兜底**：支付通知幂等靠 `payments` 双唯一键，退款靠 `refunds.order_no` 唯一，发货靠 `shipments.order_no` 唯一，而非应用层锁。
 3. **库存守恒可审计**：每次可售数量变动都落 `inventory_ledger`（类型 `occupy/release/restore/ship_out` + 变动后数量），运营核查时可用流水复算。
 4. **异常只增不删**：迟到支付、金额不符、验签失败均保留原始通知记录，客服处理后追加处理记录，订单状态不会被"改成正常"。
-5. **与 GVA 解耦**：业务配置独立于 `shop.*` 配置段，路由在 `initialize/router_biz.go` 扩展点挂载，既有 GVA 登录/Casbin 不受影响。
+5. **与 GVA 解耦**：业务配置独立于 `shop.*` 配置段。2026-11-13 起进一步拆分：买家端与模拟支付渠道独立为 Gin 服务（`server/cmd/shop`），GVA 管理端只挂载后台管理接口（`shop/router/admin.go`，走 gva JWT + Casbin），两类服务共用 service 层与 gva 库。
 *（内容由AI生成，仅供参考）*

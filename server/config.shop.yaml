@@ -1,0 +1,22 @@
+# Shop 买家端独立 Gin 服务配置（非后台管理页面）
+# 启动：cd server && go run ./cmd/shop -c config.shop.yaml
+# 环境变量覆盖：SHOP_DSN / SHOP_ADDR / SHOP_MODE / SHOP_JWT_SECRET / SHOP_PAY_SECRET
+system:
+    addr: ":8090"
+    mode: debug
+mysql:
+    # 业务表统一放在 gva 库（gva 框架表 + shop 业务 11 张表）
+    dsn: "root:root@tcp(127.0.0.1:3307)/gva?charset=utf8mb4&parseTime=True&loc=Local"
+    max-idle-conns: 5
+    max-open-conns: 20
+    log-mode: false
+jwt:
+    secret: shop-gva-dev-secret
+    expire-hours: 12
+shop:
+    order-timeout-minutes: 10
+    pay-notify-secret: channel-shared-secret
+    demo-password: shop123
+    demo-mode: true
+channel:
+    refund-mode: success

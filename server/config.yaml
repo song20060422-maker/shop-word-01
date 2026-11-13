@@ -25,7 +25,9 @@ captcha:
     key-long: 6
     img-width: 240
     img-height: 80
-    open-captcha: 0
+    # 开启防爆次数：失败 N 次后才强制验证码；0 表示每次都要验证码。
+    # 本地演示/联调设为较大值，便于脚本登录；生产环境建议改回 0。
+    open-captcha: 1000
     open-captcha-timeout: 3600
 cloudflare-r2:
     bucket: xxxx0bucket
@@ -225,7 +227,7 @@ shop:
     jwt-secret: shop-gva-dev-secret
     max-open-conns: 50
     mode: debug
-    mysql-dsn: root:root@tcp(127.0.0.1:3307)/shop?charset=utf8mb4&parseTime=True&loc=Local
+    mysql-dsn: root:root@tcp(127.0.0.1:3307)/gva?charset=utf8mb4&parseTime=True&loc=Local
     order-timeout-minutes: 10
     pay-notify-secret: channel-shared-secret
     refund-mode: success
