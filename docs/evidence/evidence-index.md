@@ -77,4 +77,6 @@
 | N11 | CI run #15（**success**） | push 7e3197c（docs 提交）触发，同上工作流全部步骤通过 |
 | N12 | 约束入口 AGENTS.md | `AGENTS.md`（新建，未改动 `AGENT.MD`）：会话必读顺序、任务→`00~09` 映射、硬性红线、三角色独立会话、加载留痕、冲突裁决、当前架构事实；`.agents/README.md` 加载记录同步补行 |
 | N13 | CI run #16 / #17（均 **success**） | #16 @29b49ff（run #15 留证文档）、#17 @b924756（新增 AGENTS.md 与加载记录） |
+| N14 | 后台三页独立化（c9ff4c2/46b124c/852e4ce） | `server/shop/web/ops|warehouse|cs.html` + `/gva/*` 反向代理；镜像 `shop-buyer/shop-admin:852e4ce` 容器冒烟（18099 四页面 200、/gva 登录与 ops/warehouse/cs 三接口 code=0） |
+| N15 | CI run #19（**success**） | push 852e4ce 触发，全部步骤通过 |
 

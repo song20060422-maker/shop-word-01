@@ -71,6 +71,9 @@
 | `5e4529b` | [test][v0.2.0][T11] 审计 I-26：补 adminapi 测试（0→81.4%）与 api 契约全链路 HTTP 测试（54.1%→81.3%）；覆盖率双口径复测（分包 82.8% / 跨包并集 88.7%） |
 | `2ddb551` | [deploy][v0.2.0][T11] 审计 I-25：双服务镜像重建部署——Dockerfile.gva + config.gva-docker.yaml，compose 扩为 shop-buyer(18099)+shop-admin(18098)+admin-seed 种子任务（实测冒烟通过） |
 | 本提交 | [docs][v0.2.0][T11] 审计 I-25~I-28 整改闭环：DELIVERY.md/.agents05 覆盖率改真实复算值；npm run build 留证（I-27）；51/51 验收复跑 + 独立测试报告（I-28）；events #34~#40；CI run #14 @2ddb551 结论留证 |
+| `c9ff4c2` | [feat][v0.2.0][T11] 后台管理三页独立化：shop/web/ops|warehouse|cs.html（原型深色风）随买家端 :8090 托管，/gva/* 反向代理调 GVA adminapi（JWT+Casbin 不变），GVA Vue 三页保留双入口 |
+| `46b124c` | [fix][v0.2.0][T11] 外链菜单点击无反应修复：gva 判外链看菜单 name 而非 path，种子 SQL 改 name+path 同置 URL（幂等） |
+| `852e4ce` | [deploy][v0.2.0][T11] 容器配置补 admin-target，镜像重建 shop-buyer/shop-admin:852e4ce 并冒烟（四页面 200 + /gva 反代三接口 code=0），CI run #19 success |
 
 > main 分支保留基线快照（`9dd5040`），整改全部落在 `dev/01-shop`；推送后对 main 发起 PR，由 CI 复核后再合并。
 
