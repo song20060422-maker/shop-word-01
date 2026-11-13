@@ -1,0 +1,30 @@
+# GVA 管理端镜像（运营/仓库/客服后台 API：gva 登录 + Casbin + /shop/** 后台接口）。
+# 买家端由 Dockerfile.shop 单独构建；两服务共用 gva 库。
+FROM golang:1.26.10-alpine AS builder
+
+WORKDIR /src
+
+# 依赖层缓存（国内网络走 goproxy）
+ENV GOPROXY=https://goproxy.cn,direct
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+RUN CGO_ENABLED=0 GOOS=linux go build -trimpath -ldflags="-s -w" -o /out/gva-server .
+
+FROM alpine:3.20
+
+RUN apk add --no-cache tzdata curl \
+    && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo "Asia/Shanghai" > /etc/timezone
+
+WORKDIR /app
+COPY --from=builder /out/gva-server /app/server
+COPY --from=builder /src/config.gva-docker.yaml /app/config.gva-docker.yaml
+COPY --from=builder /src/resource /app/resource
+
+EXPOSE 8099
+HEALTHCHECK --interval=10s --timeout=5s --retries=12 \
+    CMD curl -fsS http://127.0.0.1:8099/health || exit 1
+
+ENTRYPOINT ["/app/server", "-c", "/app/config.gva-docker.yaml"]

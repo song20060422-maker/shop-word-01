@@ -1,8 +1,11 @@
 version: "3.8"
 
-# Shop 商城小型交易系统 · 一键落地（MySQL 8 + Redis 7 + Shop 服务）
+# Shop 商城小型交易系统 · 一键落地（MySQL 8 + Redis 7 + 买家端独立服务 + GVA 管理端）
+# 2026-11-13 拆分后双服务：
+#   - 买家端 + 模拟支付渠道（server/cmd/shop）-> http://127.0.0.1:18099/shop
+#   - GVA 管理端（运营/仓库/客服后台 API，gva 登录 + Casbin）-> http://127.0.0.1:18098
 # 启动：docker compose -f deploy/shop/docker-compose.yaml up -d --build
-# 冒烟：curl -fsS http://127.0.0.1:18099/api/health
+# 冒烟：curl -fsS http://127.0.0.1:18099/api/health && curl -fsS http://127.0.0.1:18098/health
 # 版本标识：SHOP_VERSION 由构建时注入镜像 tag（见 deploy/shop/README.md）
 
 services:
@@ -41,8 +44,8 @@ services:
     build:
       context: ../../server
       dockerfile: Dockerfile.shop
-    image: shop-server:${SHOP_VERSION:-dev}
-    container_name: shop-server
+    image: shop-buyer:${SHOP_VERSION:-dev}
+    container_name: shop-buyer
     restart: always
     environment:
       TZ: Asia/Shanghai
@@ -58,6 +61,44 @@ services:
       interval: 10s
       timeout: 5s
       retries: 6
+
+  # GVA 管理端：运营/仓库/客服后台（gva JWT + Casbin + /shop/** 后台接口）。
+  # 首次启动自动初始化 gva 框架表与 admin 种子；商城后台菜单/接口由 admin-seed 注入。
+  admin:
+    build:
+      context: ../../server
+      dockerfile: Dockerfile.gva
+    image: shop-admin:${SHOP_VERSION:-dev}
+    container_name: shop-admin
+    restart: always
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - "18098:8099"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8099/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  # 一次性任务：注入 gva 框架种子 + 商城后台菜单/接口/Casbin 授权（幂等，可重复执行）
+  admin-seed:
+    image: mysql:8.0
+    container_name: shop-admin-seed
+    depends_on:
+      admin:
+        condition: service_healthy
+    volumes:
+      - ./gva-admin-shop.sql:/seed/gva-admin-shop.sql:ro
+      - ./gva-framework-seed.sql:/seed/gva-framework-seed.sql:ro
+      - ./admin-seed.sh:/seed/admin-seed.sh:ro
+    entrypoint: ["sh", "/seed/admin-seed.sh"]
+    restart: "no"
 
 volumes:
   shop-mysql:
