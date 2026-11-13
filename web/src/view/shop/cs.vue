@@ -90,11 +90,22 @@ const load = async () => {
   abnormals.value = a || []
   notices.value = (n || []).slice(0, 50)
 }
+// 客服同意/拒绝、异常处理都必须写明原因：取消返回空串（不提交），空白原因就地拦下
+const askReason = async (title, tip, def) => {
+  try {
+    const { value } = await ElMessageBox.prompt(title, tip, {
+      inputValue: def,
+      inputValidator: (v) => (v && String(v).trim() ? true : '必须填写原因')
+    })
+    return String(value || '').trim()
+  } catch {
+    return ''
+  }
+}
 const audit = async (row, approve) => {
-  const { value } = await ElMessageBox.prompt(approve ? '同意备注：' : '拒绝原因：', '退款审核', {
-    inputValue: approve ? '同意整单退款' : '发货在即，不同意退款'
-  })
-  await csRefundAudit({ orderNo: row.orderNo, approve, reason: value })
+  const reason = await askReason(approve ? '审核意见（必填）：' : '拒绝原因（必填）：', '退款审核', approve ? '同意整单退款' : '发货在即，不同意退款')
+  if (!reason) return
+  await csRefundAudit({ orderNo: row.orderNo, approve, reason })
   ElMessage.success('审核完成')
   await load()
 }
@@ -104,10 +115,9 @@ const retry = async (row) => {
   await load()
 }
 const handleAbn = async (row) => {
-  const { value } = await ElMessageBox.prompt('处理备注：', '异常收款处理', {
-    inputValue: '核实为订单关闭后到达的支付，发起退款'
-  })
-  await csHandleAbnormal({ channelTxnId: row.channelTxnId, reason: value })
+  const reason = await askReason('处理备注（必填）：', '异常收款处理', '核实为订单关闭后到达的支付，发起退款')
+  if (!reason) return
+  await csHandleAbnormal({ channelTxnId: row.channelTxnId, reason })
   ElMessage.success('处理完成')
   await load()
 }

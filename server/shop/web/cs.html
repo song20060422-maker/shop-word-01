@@ -200,8 +200,11 @@ async function loadRefunds(){
   }catch(e){}
 }
 async function audit(orderNo,approve){
-  const reason=approve?(prompt('审核意见（可选）')||'同意退款'):(prompt('拒绝原因')||'不符合退款条件');
-  if(approve===false&&reason===null)return;
+  // 取消（null）必须中止，不能被默认原因兜底成"已审核"；原因必填（后端同时强校验）
+  const input=prompt(approve?'审核意见（必填，将记入处理记录）':'拒绝原因（必填）',approve?'同意整单退款':'发货在即，不同意退款');
+  if(input===null)return;
+  const reason=String(input).trim();
+  if(!reason){toast('必须填写审核原因','warn');return}
   try{const rf=await api('/shop/cs/refunds/audit',{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({orderNo,approve,reason})});
     if(rf&&rf.channelStatus==='failed')toast('审核已生效，但渠道退款失败，可重试','warn');
@@ -230,8 +233,10 @@ async function loadAbnormals(){
   }catch(e){}
 }
 async function handleAbn(txn){
-  const reason=prompt('核实说明（将作为退款原因）');
-  if(!reason)return;
+  const input=prompt('核实说明（必填，将作为退款原因）','核实为订单关闭后到达的支付，发起退款');
+  if(input===null)return;
+  const reason=String(input).trim();
+  if(!reason){toast('必须填写核实说明','warn');return}
   try{await api('/shop/cs/abnormals/handle',{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({channelTxnId:txn,reason})});
     toast('已发起退款','ok');refresh();
