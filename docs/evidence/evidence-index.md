@@ -85,4 +85,5 @@
 | N19 | 覆盖率（跨包并集 88.4%） | `docs/evidence/coverage-skill-20261113.out`（标准单命令 `-p 1 -coverpkg=./shop/...`，`go tool cover -func` total 行可复核） |
 | N20 | 本轮缺口补全 | 数量越界拒绝（1004）、客服处理强制原因（1005）、`router/pages_test.go` 覆盖四页面与 `/gva` 反代；单测 `branch_test.go` / `business_test.go` 同步加固 |
 | N21 | CI run #21（**success**） | push 96f35bb（fix 8bc0e1d + test 84e3171 + docs）触发，全部步骤通过 |
+| N22 | 容器重建 7309737 冒烟 | `shop-buyer`(18099)/`shop-admin`(18098) 均 healthy；18099 四页面 200 且 `/cs` 含"必须填写审核原因"、`quantity=0`→409、空原因审核→`code=7 客服处理必须填写原因`、带原因审核 approved+success、`ops/summary` 收款 10000/退款 10000 对账一致；UTF-8 请求体中文原因落库正常 |
 
