@@ -87,4 +87,5 @@
 | N21 | CI run #21（**success**） | push 96f35bb（fix 8bc0e1d + test 84e3171 + docs）触发，全部步骤通过 |
 | N22 | 容器重建 7309737 冒烟 | `shop-buyer`(18099)/`shop-admin`(18098) 均 healthy；18099 四页面 200 且 `/cs` 含"必须填写审核原因"、`quantity=0`→409、空原因审核→`code=7 客服处理必须填写原因`、带原因审核 approved+success、`ops/summary` 收款 10000/退款 10000 对账一致；UTF-8 请求体中文原因落库正常 |
 | N23 | CI run #23/#24（均 **success**） | #23 @7309737（客服审核交互修复）、#24 @330923a（容器重建留证） |
+| N24 | 集成版全功能页恢复（86e3144） | `/` 与 `/index.html` 输出五页签集成页；独立页 `/shop` `/ops` `/warehouse` `/cs` 保留；镜像 `86e3144` 容器冒烟：五入口 200、根路径含五页签、容器内 products/ops.summary/orders/ledger 均 200 |
 
