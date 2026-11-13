@@ -80,4 +80,8 @@
 | N14 | 后台三页独立化（c9ff4c2/46b124c/852e4ce） | `server/shop/web/ops|warehouse|cs.html` + `/gva/*` 反向代理；镜像 `shop-buyer/shop-admin:852e4ce` 容器冒烟（18099 四页面 200、/gva 登录与 ops/warehouse/cs 三接口 code=0） |
 | N15 | CI run #19（**success**） | push 852e4ce 触发，全部步骤通过 |
 | N16 | CI run #20（**success**） | push 2d7cd0e（事件/提交清单/证据索引登记）触发，全部步骤通过；dev/01-shop HEAD=2d7cd0e |
+| N17 | Skill 业务验收（shop-trade-check） | `docs/evidence/skill-check-20261113.log`：五组场景 **51/51 通过**，退出码 0（配置 `server/shop/docs/acceptance-skill-config.json`） |
+| N18 | Skill 交付验收（shop-trade-acceptance） | `docs/evidence/acceptance-report-skill-20261113.md`：业务规则 32 条逐项 PASS、S1–S5 全通过、证据核对 **43/43 无缺失** |
+| N19 | 覆盖率（跨包并集 88.4%） | `docs/evidence/coverage-skill-20261113.out`（标准单命令 `-p 1 -coverpkg=./shop/...`，`go tool cover -func` total 行可复核） |
+| N20 | 本轮缺口补全 | 数量越界拒绝（1004）、客服处理强制原因（1005）、`router/pages_test.go` 覆盖四页面与 `/gva` 反代；单测 `branch_test.go` / `business_test.go` 同步加固 |
 

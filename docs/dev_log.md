@@ -74,6 +74,7 @@
 | `c9ff4c2` | [feat][v0.2.0][T11] 后台管理三页独立化：shop/web/ops|warehouse|cs.html（原型深色风）随买家端 :8090 托管，/gva/* 反向代理调 GVA adminapi（JWT+Casbin 不变），GVA Vue 三页保留双入口 |
 | `46b124c` | [fix][v0.2.0][T11] 外链菜单点击无反应修复：gva 判外链看菜单 name 而非 path，种子 SQL 改 name+path 同置 URL（幂等） |
 | `852e4ce` | [deploy][v0.2.0][T11] 容器配置补 admin-target，镜像重建 shop-buyer/shop-admin:852e4ce 并冒烟（四页面 200 + /gva 反代三接口 code=0），CI run #19 success |
+| 本提交 | [fix][v0.2.0][T11] Skill 验收缺口补全：数量越界（显式 0）不再兜底、客服审核/异常处理强制写明原因（1005 + 日志留痕）、补契约账号别名；新增 pages_test 覆盖页面与 /gva 反代；五组场景 51/51、证据 43/43、覆盖率 88.4%，报告见 `docs/evidence/acceptance-report-skill-20261113.md` |
 
 > main 分支保留基线快照（`9dd5040`），整改全部落在 `dev/01-shop`；推送后对 main 发起 PR，由 CI 复核后再合并。
 

@@ -1,0 +1,30 @@
+{
+  "base_url": "http://127.0.0.1:8090",
+  "channel_secret": "channel-shared-secret",
+  "signature_header": "X-Channel-Signature",
+  "product_id": 1,
+  "password": "shop123",
+  "accounts": ["buyer1", "buyer2", "buyer3", "ops", "warehouse", "cs"],
+  "paths": {
+    "login": "/api/login",
+    "products": "/api/products",
+    "ops_product_update": "/api/ops/products/{id}",
+    "ops_summary": "/api/ops/summary",
+    "ops_payments": "/api/ops/payments",
+    "order_create": "/api/orders",
+    "order_get": "/api/orders/{id}",
+    "order_cancel": "/api/orders/{id}/cancel",
+    "refund_apply": "/api/orders/{id}/refund-apply",
+    "pay_channel": "/api/pay/channel-pay",
+    "pay_notify": "/api/pay/notify",
+    "channel_mode": "/api/pay/channel-mode",
+    "warehouse_list": "/api/warehouse/orders",
+    "ship": "/api/warehouse/orders/{id}/ship",
+    "cs_refunds": "/api/cs/refunds",
+    "cs_refund_decide": "/api/cs/refunds/{id}/decide",
+    "cs_refund_retry": "/api/cs/refunds/{id}/retry",
+    "cs_exceptions": "/api/cs/payment-exceptions",
+    "cs_exception_refund": "/api/cs/payment-exceptions/{id}/refund",
+    "test_expire": "/api/test/expire-orders"
+  }
+}
