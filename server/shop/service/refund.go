@@ -97,9 +97,14 @@ func (s RefundService) Apply(buyerID uint64, orderNo, reason string) (model.Refu
 }
 
 // Audit 客服审核：同意则调用渠道退款，拒绝则订单回到可发货状态。
+// 题面要求客服同意/拒绝都必须写明原因，空原因直接拒绝，保证处理记录可追溯。
 func (s RefundService) Audit(csID uint64, orderNo string, approve bool, reason string) (model.Refund, error) {
 	now := s.deps.Now()
 	orderNo = strings.TrimSpace(orderNo)
+	reason = strings.TrimSpace(reason)
+	if reason == "" {
+		return model.Refund{}, ErrReasonRequired
+	}
 	var refund model.Refund
 	err := s.deps.DB.Transaction(func(tx *gorm.DB) error {
 		if err := tx.Where("order_no = ?", orderNo).First(&refund).Error; err != nil {
@@ -136,7 +141,7 @@ func (s RefundService) Audit(csID uint64, orderNo string, approve bool, reason s
 			}
 			return logOp(tx, &orderNo, &csID, model.RoleCS, "refund_reject", "客服拒绝退款："+reason)
 		}
-		return logOp(tx, &orderNo, &csID, model.RoleCS, "refund_approve", "客服同意退款，转渠道处理")
+		return logOp(tx, &orderNo, &csID, model.RoleCS, "refund_approve", "客服同意退款："+reason)
 	})
 	if err != nil {
 		return model.Refund{}, err
@@ -155,6 +160,10 @@ func (s RefundService) Audit(csID uint64, orderNo string, approve bool, reason s
 func (s RefundService) HandleAbnormal(csID uint64, txnID, reason string) (model.Refund, error) {
 	now := s.deps.Now()
 	txnID = strings.TrimSpace(txnID)
+	reason = strings.TrimSpace(reason)
+	if reason == "" {
+		return model.Refund{}, ErrReasonRequired
+	}
 	var refund model.Refund
 	var abnormalID uint64
 	ok := false

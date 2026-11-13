@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
 
@@ -54,10 +55,15 @@ func TestCompatErrorBranches(t *testing.T) {
 	if w.Code < 400 {
 		t.Fatalf("未知商品应拒绝: %d", w.Code)
 	}
-	// 契约层缺省数量按 1 件处理
+	// 显式数量 0 属越界（题面：每单 1-2 件），必须拒绝而不是兜底成 1 件
 	w = invoke(t, "POST", "/api/orders", `{"product_id":"SKU-A","quantity":0}`, buyer, a.CreateOrder)
+	if w.Code < 400 {
+		t.Fatalf("数量 0 应拒绝: %d %s", w.Code, w.Body.String())
+	}
+	// 完全未传数量字段时按 1 件处理
+	w = invoke(t, "POST", "/api/orders", `{"product_id":"SKU-A"}`, buyer, a.CreateOrder)
 	if w.Code != 200 {
-		t.Fatalf("缺省数量应按 1 件下单: %d %s", w.Code, w.Body.String())
+		t.Fatalf("未传数量应按 1 件下单: %d %s", w.Code, w.Body.String())
 	}
 	w = invoke(t, "POST", "/api/orders", `{"product_id":"SKU-A","quantity":3}`, buyer, a.CreateOrder)
 	if w.Code < 400 {
@@ -228,6 +234,11 @@ func TestPrototypeErrorBranches(t *testing.T) {
 	w = invoke(t, "POST", "/api/cs/refunds/audit", `{"orderNo":"SO-NOPE","approve":true}`, cs, StaffApi{g}.RefundAudit)
 	if w.Code < 400 {
 		t.Fatalf("未知订单审核应拒绝: %d", w.Code)
+	}
+	// 客服同意/拒绝必须写明原因（题面要求，空原因不得通过审核）
+	w = invoke(t, "POST", "/api/cs/refunds/audit", `{"orderNo":"SO-NOPE","approve":true,"reason":"   "}`, cs, StaffApi{g}.RefundAudit)
+	if w.Code != 409 || !strings.Contains(w.Body.String(), "必须填写原因") {
+		t.Fatalf("空原因审核应被拒: %d %s", w.Code, w.Body.String())
 	}
 	w = invoke(t, "POST", "/api/cs/refunds/retry", `{bad json`, cs, StaffApi{g}.RefundRetry)
 	if w.Code < 400 {

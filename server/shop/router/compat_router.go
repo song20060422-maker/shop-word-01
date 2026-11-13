@@ -38,6 +38,7 @@ func InitCompatRouter(pub, authed *gin.RouterGroup, ca *api.CompatApi, cfg confi
 	authed.POST("/orders/:orderNo/refund-apply", ca.RefundApply)
 
 	// 运营：按 SKU/主键覆盖商品（含直接覆盖 available）、支付记录查询
+	// （/api/ops/summary 已在 router.go 注册原型路由，由 api.CompatApi.AuthGuard 委派给 OpsSummary）
 	ops := authed.Group("/ops", middleware.RequireRole(model.RoleOps))
 	ops.PATCH("/products/:id", ca.OpsProductUpdate)
 	ops.GET("/payments", ca.OpsPayments)
@@ -48,6 +49,7 @@ func InitCompatRouter(pub, authed *gin.RouterGroup, ca *api.CompatApi, cfg confi
 	wh.POST("/orders/:orderNo/ship", ca.WarehouseShip)
 
 	// 客服：退款审核（按退款单号）、退款重试、异常支付与异常退款
+	// （/api/cs/refunds 已在 router.go 注册原型路由，由 api.CompatApi.AuthGuard 委派给 CSRefunds）
 	cs := authed.Group("/cs", middleware.RequireRole(model.RoleCS))
 	cs.GET("/payment-exceptions", ca.CSExceptions)
 	cs.POST("/payment-exceptions/:id/refund", ca.CSExceptionRefund)

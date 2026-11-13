@@ -610,6 +610,13 @@ func TestOrderErrorsAndHelpers(t *testing.T) {
 	if _, err := g.RefundService.Audit(buyerID(t, "cs1"), "SO-NOPE", true, "x"); !errors.Is(err, ErrRefundNotFound) {
 		t.Fatalf("未知退款审核应报错: %v", err)
 	}
+	// 客服审核/异常处理必须写明原因（空或纯空白一律拒绝）
+	if _, err := g.RefundService.Audit(buyerID(t, "cs1"), "SO-NOPE", true, "   "); !errors.Is(err, ErrReasonRequired) {
+		t.Fatalf("空原因审核应报错: %v", err)
+	}
+	if _, err := g.RefundService.HandleAbnormal(buyerID(t, "cs1"), "TXN-NOPE", ""); !errors.Is(err, ErrReasonRequired) {
+		t.Fatalf("空原因异常处理应报错: %v", err)
+	}
 	if _, err := g.RefundService.Retry(buyerID(t, "cs1"), "RF-NOPE"); !errors.Is(err, ErrRefundNotFound) {
 		t.Fatalf("未知退款重试应报错: %v", err)
 	}

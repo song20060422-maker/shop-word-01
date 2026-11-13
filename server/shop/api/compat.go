@@ -464,8 +464,22 @@ func (a *CompatApi) CreateOrder(c *gin.Context) {
 		a.failJSON(c, service.NewBizError(1000, "product_id 不能为空"))
 		return
 	}
+	// 数量：缺省 1 件；显式传入时必须是 1~2 的整数（题面：每单 1-2 件），
+	// 0 / 负数 / 超过 2 一律拒绝，不能静默兜底成 1 件。
 	qty := 1
-	if n, ok := intOf(body, "quantity", "qty"); ok && n > 0 {
+	if _, hasQty := body["quantity"]; hasQty {
+		n, ok := intOf(body, "quantity")
+		if !ok || n < 1 || n > 2 {
+			a.failJSON(c, service.ErrQtyInvalid)
+			return
+		}
+		qty = int(n)
+	} else if _, hasQty := body["qty"]; hasQty {
+		n, ok := intOf(body, "qty")
+		if !ok || n < 1 || n > 2 {
+			a.failJSON(c, service.ErrQtyInvalid)
+			return
+		}
 		qty = int(n)
 	}
 	p, err := a.resolveProduct(ref)

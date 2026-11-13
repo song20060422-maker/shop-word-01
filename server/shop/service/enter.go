@@ -71,6 +71,7 @@ var (
 	ErrProductOffSale    = NewBizError(1002, "商品已下架，无法购买")
 	ErrInsufficientStock = NewBizError(1003, "可售数量不足")
 	ErrQtyInvalid        = NewBizError(1004, "购买数量只能为 1～2 件")
+	ErrReasonRequired    = NewBizError(1005, "客服处理必须填写原因")
 
 	ErrOrderNotFound   = NewBizError(2001, "订单不存在")
 	ErrForbidden       = NewBizError(2002, "无权访问他人订单")
