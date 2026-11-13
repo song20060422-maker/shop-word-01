@@ -75,4 +75,6 @@
 | N9 | CI run #14（**success**） | push 2ddb551 触发，https://github.com/song20060422-maker/shop-word-01/actions/runs/43355394482 ；步骤明细 `docs/evidence/ci-run14.md` + `ci-run14-jobs.json`（含双服务冒烟与覆盖率阈值步骤） |
 | N10 | 事件登记 | docs/events.md #34~#40；docs/dev_log.md §4 提交清单增补 8b0d468/5e4529b/2ddb551/本提交 |
 | N11 | CI run #15（**success**） | push 7e3197c（docs 提交）触发，同上工作流全部步骤通过 |
+| N12 | 约束入口 AGENTS.md | `AGENTS.md`（新建，未改动 `AGENT.MD`）：会话必读顺序、任务→`00~09` 映射、硬性红线、三角色独立会话、加载留痕、冲突裁决、当前架构事实；`.agents/README.md` 加载记录同步补行 |
+| N13 | CI run #16 / #17（均 **success**） | #16 @29b49ff（run #15 留证文档）、#17 @b924756（新增 AGENTS.md 与加载记录） |
 
