@@ -13,6 +13,9 @@ import (
 type System struct {
 	Addr string `yaml:"addr"`
 	Mode string `yaml:"mode"` // debug | release | test
+	// AdminTarget GVA 管理端基地址：内置后台独立页面（/ops /warehouse /cs）通过
+	// 本服务的 /gva/* 反向代理访问管理端接口（base/login 与 /shop/**），避免跨域。
+	AdminTarget string `yaml:"admin-target"`
 }
 
 // Mysql 数据库配置
@@ -54,7 +57,7 @@ type Config struct {
 // Default 返回可立即运行的默认配置（本地 shop-mysql:3307）。
 func Default() Config {
 	return Config{
-		System: System{Addr: ":8090", Mode: "debug"},
+		System: System{Addr: ":8090", Mode: "debug", AdminTarget: "http://127.0.0.1:8099"},
 		Mysql: Mysql{
 			DSN:          "root:root@tcp(127.0.0.1:3307)/shop?charset=utf8mb4&parseTime=True&loc=Local",
 			MaxIdleConns: 5,
@@ -87,6 +90,9 @@ func Load(path string) (Config, error) {
 	}
 	if v := os.Getenv("SHOP_MODE"); v != "" {
 		cfg.System.Mode = v
+	}
+	if v := os.Getenv("SHOP_ADMIN_TARGET"); v != "" {
+		cfg.System.AdminTarget = v
 	}
 	if v := os.Getenv("SHOP_JWT_SECRET"); v != "" {
 		cfg.Jwt.Secret = v

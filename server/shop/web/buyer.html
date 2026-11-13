@@ -50,7 +50,7 @@
 <body>
 <header>
   <h1>Shop 商城 · 买家端</h1>
-  <span class="sub">独立 Gin 服务 / MySQL 持久化 / 模拟支付渠道（运营、仓库、客服请使用 GVA 管理端）</span>
+  <span class="sub">独立 Gin 服务 / MySQL 持久化 / 模拟支付渠道（后台管理见右侧独立页面链接）</span>
   <div class="login">
     <span id="who" style="color:#9ca3af">未登录</span>
     <select id="acc"></select>
@@ -62,6 +62,12 @@
 <nav id="nav">
   <button data-tab="buyer" class="on">买家</button>
   <button data-tab="channel">模拟支付渠道</button>
+</nav>
+<nav id="adminNav" style="border-bottom:1px solid #e3e8f0;padding:6px 16px;display:flex;gap:14px;font-size:12.5px">
+  <span style="color:#9ca3af">后台管理（独立页）：</span>
+  <a href="/ops" target="_blank" style="color:#2563eb;text-decoration:none">运营核查</a>
+  <a href="/warehouse" target="_blank" style="color:#2563eb;text-decoration:none">仓库发货</a>
+  <a href="/cs" target="_blank" style="color:#2563eb;text-decoration:none">客服退款</a>
 </nav>
 <main>
   <div class="toast" id="toast"></div>

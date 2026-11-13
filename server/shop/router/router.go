@@ -2,7 +2,12 @@
 package router
 
 import (
+	"errors"
+	"log"
 	"net/http"
+	"net/http/httputil"
+	"net/url"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -58,18 +63,65 @@ func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.
 		})
 	}
 
-	// 内置买家端页面（买家/模拟支付渠道），随服务发布，无需前端构建；
-	// 运营/仓库/客服后台页面由 GVA 管理端提供（走 gva 登录与 Casbin）。
-	page := func(c *gin.Context) {
-		data, err := web.Buyer()
-		if err != nil {
-			c.String(http.StatusInternalServerError, "页面加载失败")
-			return
+	// 内置页面（随服务发布，无需前端构建）：
+	//   /shop      买家端 + 模拟支付渠道页
+	//   /ops /warehouse /cs  后台管理独立页（SHOP·OS 原型深色风格），
+	//       页面经本服务 /gva/* 反向代理调用 GVA 管理端接口（gva 登录 + Casbin）
+	// 运营/仓库/客服后台同时仍由 GVA 管理端（Vue 三页）提供，双入口并存。
+	page := func(name string) gin.HandlerFunc {
+		return func(c *gin.Context) {
+			var (
+				data []byte
+				err  error
+			)
+			switch name {
+			case "buyer":
+				data, err = web.Buyer()
+			case "ops":
+				data, err = web.Ops()
+			case "warehouse":
+				data, err = web.Warehouse()
+			case "cs":
+				data, err = web.CS()
+			default:
+				err = errors.New("未知页面")
+			}
+			if err != nil {
+				c.String(http.StatusInternalServerError, "页面加载失败")
+				return
+			}
+			c.Data(http.StatusOK, "text/html; charset=utf-8", data)
 		}
-		c.Data(http.StatusOK, "text/html; charset=utf-8", data)
 	}
-	group.GET("/shop", page)
-	group.GET("/shop/", page)
+	group.GET("/shop", page("buyer"))
+	group.GET("/shop/", page("buyer"))
+	group.GET("/ops", page("ops"))
+	group.GET("/ops/", page("ops"))
+	group.GET("/warehouse", page("warehouse"))
+	group.GET("/warehouse/", page("warehouse"))
+	group.GET("/cs", page("cs"))
+	group.GET("/cs/", page("cs"))
+
+	// /gva/* 反向代理到 GVA 管理端：后台独立页面同源调用 /gva/base/login、
+	// /gva/shop/** 等，浏览器无跨域；目标地址取 system.admin-target。
+	adminURL, err := url.Parse(cfg.System.AdminTarget)
+	if err != nil || adminURL.Scheme == "" || adminURL.Host == "" {
+		log.Printf("shop: system.admin-target 非法 %q，/gva 反向代理未启用", cfg.System.AdminTarget)
+	} else {
+		// 剥掉 /gva 前缀再转发：/gva/base/login -> {admin-target}/base/login
+		proxy := &httputil.ReverseProxy{Director: func(req *http.Request) {
+			req.URL.Scheme = adminURL.Scheme
+			req.URL.Host = adminURL.Host
+			req.URL.Path = strings.TrimPrefix(req.URL.Path, "/gva")
+			if req.URL.Path == "" {
+				req.URL.Path = "/"
+			}
+			req.Host = adminURL.Host
+		}}
+		group.Any("/gva/*path", func(c *gin.Context) {
+			proxy.ServeHTTP(c.Writer, c.Request)
+		})
+	}
 
 	// AuthGuard 必须在 JWT 之后执行：委派契约实现时需要 claims 判断越权
 	authed := group.Group("/api", middleware.JWT(cfg.Jwt.Secret, now), ca.AuthGuard())
