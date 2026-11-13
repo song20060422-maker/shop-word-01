@@ -321,5 +321,29 @@ func TestContractLateAndRefundFlows(t *testing.T) {
 	extStatus(t, extDo(t, r, "POST", "/api/pay/notify", unknownBody, "", map[string]string{
 		"X-Channel-Signature": extSign(extCfg.Shop.PayNotifySecret, []byte(unknownBody)),
 	}), http.StatusBadRequest, "未知订单通知被拒")
+
+	// 4. 内置演示页通道：camelCase 字段 + 请求体 sign（HMAC "订单号|交易号|金额(分)"）
+	//    回归：曾只识别 channel_txn_no 与 X-Channel-Signature 头，页面点"发送成功通知"报"参数不合法"。
+	rr = extDo(t, r, "POST", "/api/orders", `{"product_id":"SKU-A","quantity":1}`, buyer, nil)
+	extStatus(t, rr, http.StatusOK, "演示页下单")
+	demoRes := extJSON(t, rr)
+	demoOrder, _ := demoRes["order_no"].(string)
+	demoAmount := int64(0)
+	if f, ok := demoRes["amount"].(float64); ok {
+		demoAmount = int64(f)
+	}
+	demoTxn := "TXN-DEMO-" + demoOrder
+	demoSign := extPayBodySign(extCfg.Shop.PayNotifySecret, demoOrder, demoTxn, demoAmount)
+	demoBody := `{"orderNo":"` + demoOrder + `","channelTxnId":"` + demoTxn + `","amountCents":` + jsonNum(demoAmount) + `,"sign":"` + demoSign + `"}`
+	extStatus(t, extDo(t, r, "POST", "/api/pay/notify", demoBody, "", nil), http.StatusOK, "演示页通道通知")
+	// 签名错误同样被拒：放宽字段别名不应弱化验签
+	badDemo := `{"orderNo":"` + demoOrder + `","channelTxnId":"TXN-DEMO-BAD","amountCents":` + jsonNum(demoAmount) + `,"sign":"deadbeef"}`
+	extStatus(t, extDo(t, r, "POST", "/api/pay/notify", badDemo, "", nil), http.StatusBadRequest, "演示页签名错误被拒")
+
 	_ = amount
+}
+
+// extPayBodySign 演示页通道签名：HMAC-SHA256("订单号|交易号|金额(分)")。
+func extPayBodySign(secret, orderNo, txn string, amount int64) string {
+	return extSign(secret, []byte(orderNo+"|"+txn+"|"+jsonNum(amount)))
 }

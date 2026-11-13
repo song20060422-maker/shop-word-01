@@ -826,20 +826,29 @@ func (a *CompatApi) PayNotify(c *gin.Context) {
 		_ = json.Unmarshal(raw, &body)
 	}
 	orderNo := strOf(body, "order_no", "orderNo")
-	txnID := strOf(body, "channel_txn_no", "channelTxnNo")
+	txnID := strOf(body, "channel_txn_no", "channelTxnNo", "channelTxnId", "channel_txn_id")
 	amount, _ := intOf(body, "amount", "amount_cents", "amountCents")
 	sig := strings.TrimSpace(c.GetHeader("X-Channel-Signature"))
+	bodySign := strings.TrimSpace(strOf(body, "sign", "signature"))
 
 	secret := a.cfg.Shop.PayNotifySecret
 	sign := "invalid-signature"
-	if sig != "" {
+	switch {
+	case sig != "":
+		// 契约通道：X-Channel-Signature = HMAC-SHA256(原始请求体)
 		expect := hmacHex(secret, raw)
 		if hmac.Equal([]byte(strings.ToLower(expect)), []byte(strings.ToLower(sig))) {
 			// 验签通过：交给 service 按同一算法复核（内部使用同一密钥与字段顺序）
 			sign = utils.PaySign(secret, orderNo, txnID, amount)
 		}
-	} else if expect := hmacHex(secret, raw); expect != "" {
-		// 未带签名头：传非法值，走"验签失败"分支并留痕
+	case bodySign != "":
+		// 内置演示页通道：请求体 sign = HMAC-SHA256("订单号|交易号|金额(分)")，
+		// 与原生 /api/pay/notify 语义一致，避免演示页只能拿到"参数不合法"。
+		if expect := utils.PaySign(secret, orderNo, txnID, amount); hmac.Equal([]byte(strings.ToLower(expect)), []byte(strings.ToLower(bodySign))) {
+			sign = expect
+		}
+	default:
+		// 既无签名头也无 body 签名：走"验签失败"分支并留痕
 		sign = "invalid-signature"
 	}
 
