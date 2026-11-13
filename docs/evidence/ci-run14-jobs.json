@@ -1,0 +1,169 @@
+﻿{
+    "total_count":  1,
+    "jobs":  [
+                 {
+                     "id":  131656112607,
+                     "run_id":  43355394482,
+                     "workflow_name":  "shop-ci",
+                     "head_branch":  "dev/01-shop",
+                     "run_url":  "https://api.github.com/repos/song20060422-maker/shop-word-01/actions/runs/43355394482",
+                     "run_attempt":  1,
+                     "node_id":  "CR_kwDOVr6kcM8AAAAep1DZ3w",
+                     "head_sha":  "2ddb551f3057425137d4c4661ac0b3a67e503a4c",
+                     "url":  "https://api.github.com/repos/song20060422-maker/shop-word-01/actions/jobs/131656112607",
+                     "html_url":  "https://github.com/song20060422-maker/shop-word-01/actions/runs/43355394482/job/131656112607",
+                     "status":  "completed",
+                     "conclusion":  "success",
+                     "created_at":  "2026-11-13T02:54:53Z",
+                     "started_at":  "2026-11-13T02:54:55Z",
+                     "completed_at":  "2026-11-13T03:00:21Z",
+                     "name":  "质量门禁（gofmt / vet / build / test / 覆盖率 / race）",
+                     "steps":  [
+                                   {
+                                       "name":  "Set up job",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  1,
+                                       "started_at":  "2026-11-13T02:54:56Z",
+                                       "completed_at":  "2026-11-13T02:54:57Z"
+                                   },
+                                   {
+                                       "name":  "Initialize containers",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  2,
+                                       "started_at":  "2026-11-13T02:54:57Z",
+                                       "completed_at":  "2026-11-13T02:55:27Z"
+                                   },
+                                   {
+                                       "name":  "检出代码",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  3,
+                                       "started_at":  "2026-11-13T02:55:27Z",
+                                       "completed_at":  "2026-11-13T02:55:28Z"
+                                   },
+                                   {
+                                       "name":  "安装 Go",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  4,
+                                       "started_at":  "2026-11-13T02:55:28Z",
+                                       "completed_at":  "2026-11-13T02:55:31Z"
+                                   },
+                                   {
+                                       "name":  "依赖下载",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  5,
+                                       "started_at":  "2026-11-13T02:55:31Z",
+                                       "completed_at":  "2026-11-13T02:55:42Z"
+                                   },
+                                   {
+                                       "name":  "gofmt 格式检查（自研代码）",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  6,
+                                       "started_at":  "2026-11-13T02:55:42Z",
+                                       "completed_at":  "2026-11-13T02:55:42Z"
+                                   },
+                                   {
+                                       "name":  "go vet（自研代码）",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  7,
+                                       "started_at":  "2026-11-13T02:55:42Z",
+                                       "completed_at":  "2026-11-13T02:56:41Z"
+                                   },
+                                   {
+                                       "name":  "编译全仓",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  8,
+                                       "started_at":  "2026-11-13T02:56:41Z",
+                                       "completed_at":  "2026-11-13T02:57:22Z"
+                                   },
+                                   {
+                                       "name":  "单元测试 + 集成测试 + 覆盖率",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  9,
+                                       "started_at":  "2026-11-13T02:57:22Z",
+                                       "completed_at":  "2026-11-13T02:57:48Z"
+                                   },
+                                   {
+                                       "name":  "覆盖率阈值（≥85%）",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  10,
+                                       "started_at":  "2026-11-13T02:57:48Z",
+                                       "completed_at":  "2026-11-13T02:57:49Z"
+                                   },
+                                   {
+                                       "name":  "并发路径 race 检测",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  11,
+                                       "started_at":  "2026-11-13T02:57:49Z",
+                                       "completed_at":  "2026-11-13T03:00:00Z"
+                                   },
+                                   {
+                                       "name":  "冒烟（买家端独立服务 + GVA 管理端）",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  12,
+                                       "started_at":  "2026-11-13T03:00:00Z",
+                                       "completed_at":  "2026-11-13T03:00:07Z"
+                                   },
+                                   {
+                                       "name":  "上传测试产物",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  13,
+                                       "started_at":  "2026-11-13T03:00:07Z",
+                                       "completed_at":  "2026-11-13T03:00:08Z"
+                                   },
+                                   {
+                                       "name":  "Post 安装 Go",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  24,
+                                       "started_at":  "2026-11-13T03:00:08Z",
+                                       "completed_at":  "2026-11-13T03:00:18Z"
+                                   },
+                                   {
+                                       "name":  "Post 检出代码",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  25,
+                                       "started_at":  "2026-11-13T03:00:18Z",
+                                       "completed_at":  "2026-11-13T03:00:18Z"
+                                   },
+                                   {
+                                       "name":  "Stop containers",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  26,
+                                       "started_at":  "2026-11-13T03:00:18Z",
+                                       "completed_at":  "2026-11-13T03:00:18Z"
+                                   },
+                                   {
+                                       "name":  "Complete job",
+                                       "status":  "completed",
+                                       "conclusion":  "success",
+                                       "number":  27,
+                                       "started_at":  "2026-11-13T03:00:18Z",
+                                       "completed_at":  "2026-11-13T03:00:18Z"
+                                   }
+                               ],
+                     "check_run_url":  "https://api.github.com/repos/song20060422-maker/shop-word-01/check-runs/131656112607",
+                     "labels":  [
+                                    "ubuntu-latest"
+                                ],
+                     "runner_id":  1000000013,
+                     "runner_name":  "GitHub Actions 1000000013",
+                     "runner_group_id":  0,
+                     "runner_group_name":  "GitHub Actions"
+                 }
+             ]
+}

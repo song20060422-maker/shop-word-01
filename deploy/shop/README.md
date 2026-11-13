@@ -1,17 +1,20 @@
 # Shop 部署与冒烟（题目 01）
 
-## 1. 组成与架构（2026-11-13 拆分后）
+## 1. 组成与架构（2026-11-13 拆分后，双服务）
 
 | 组件 | 说明 |
 | --- | --- |
-| `server/Dockerfile.shop` | 买家端专用镜像：`server/cmd/shop`（买家 + 模拟支付渠道，含全部契约路径），多阶段构建，静态编译，内置健康检查 |
-| `server/config.shop-docker.yaml` | 买家端容器配置（独立服务格式），连接 gva 库 |
-| `deploy/shop/docker-compose.yaml` | MySQL 8 + Redis 7 + 买家端服务，端口 18099 / 13307 / 16379 |
-| `deploy/shop/gva-admin-shop.sql` | GVA 管理端商城后台（运营/仓库/客服）菜单 / 接口 / Casbin 授权初始化（幂等） |
+| `server/Dockerfile.shop` → `shop-buyer` 镜像 | 买家端独立服务：`server/cmd/shop`（买家 + 模拟支付渠道，含全部契约路径），多阶段构建，静态编译，内置健康检查 |
+| `server/Dockerfile.gva` → `shop-admin` 镜像 | GVA 管理端服务：gva 登录 + Casbin + `/shop/**` 后台接口，启动时自动迁移 gva 框架表 |
+| `server/config.shop-docker.yaml` / `server/config.gva-docker.yaml` | 两服务容器配置，MySQL/Redis 用 compose 服务名寻址 |
+| `deploy/shop/docker-compose.yaml` | MySQL 8 + Redis 7 + 买家端（18099）+ GVA 管理端（18098）+ admin-seed 一次性种子任务 |
+| `deploy/shop/init/01-databases.sql`、`02-gva-framework.sql` | 数据卷首次初始化：建 gva 库 + gva 框架表结构与种子（mysqldump 自已初始化的库） |
+| `deploy/shop/gva-admin-shop.sql` | 商城后台（运营/仓库/客服）菜单 / 接口 / Casbin 授权（幂等） |
+| `deploy/shop/gva-framework-seed.sql` + `admin-seed.sh` | 已有数据卷场景的框架种子（sys_users 为空时注入） |
 
 数据库约定：**业务表统一存放在 gva 库**（gva 框架表 + shop 业务 11 张表共用一个库），不再单独建 shop 库。
-架构拆分：买家端 + 模拟支付渠道 = 独立 Gin 服务（`server/cmd/shop`，本地 :8090 / 容器 :8099）；
-运营 / 仓库 / 客服后台 = GVA 管理端（gva 登录 + Casbin，接口 `/shop/**`，页面 `web/src/view/shop/**`）。
+架构拆分：买家端 + 模拟支付渠道 = 独立 Gin 服务（`server/cmd/shop`，本地 :8090 / 容器 :18099）；
+运营 / 仓库 / 客服后台 = GVA 管理端（gva 登录 + Casbin，接口 `/shop/**`，页面 `web/src/view/shop/**`，容器 :18098）。
 
 ## 2. 启动
 
@@ -22,8 +25,11 @@ docker compose -f deploy/shop/docker-compose.yaml up -d --build
 docker compose -f deploy/shop/docker-compose.yaml ps
 ```
 
-买家端服务启动时自动执行 `shop/migrations/*.sql`（建表 + 幂等种子），无需手工导库；
-GVA 管理端如需商城后台页面，执行 `deploy/shop/gva-admin-shop.sql` 并重启 gva 服务端。
+- 买家端容器启动时自动执行 `shop/migrations/*.sql`（建表 + 幂等种子），无需手工导库；
+- GVA 管理端容器启动时自动迁移 gva 框架表；`admin-seed` 一次性服务会等框架表就绪后
+  注入框架种子（admin/123456 等账号）与商城后台菜单/接口/Casbin 授权；
+- **首次部署后需 `docker compose restart admin`**：Casbin 策略在启动时加载，种子注入后重启生效。
+- 管理端页面：本地 `cd web && npm run dev`（或 `npm run build` 后由 nginx 等托管 `web/dist`）。
 
 ## 3. 冒烟
 

@@ -88,8 +88,8 @@ python scripts\run_acceptance.py --no-build --no-start   # 服务已在运行
 | gofmt（LF） | 通过（`gofmt -l shop` 空输出） | `gofmt -l shop` |
 | go vet | 通过 | `go vet ./shop/...` |
 | 全量编译 | 通过 | `go build ./...` |
-| 单元 + 集成测试 | 全部通过 | `go test ./shop/... -count=1` |
-| 覆盖率 | 总 **87.3%**（标准单命令生成，无拼接）；service **85.6** / api **88.0** / router 97.8 / middleware 100 / config 95.9 / utils 89.2 / initialize 84.6 / db 69.7 | `go test ./shop/... -coverprofile=coverage-single.out -coverpkg=./shop/... -count=1` |
+| 单元 + 集成测试 | 全部通过 | `go test -p 1 ./shop/... -count=1` |
+| 覆盖率 | 标准单命令（跨包并集）总 **88.7%**；分包口径（各包仅自测）总 **82.8%**，其中 adminapi **81.4** / api **81.3** / router 75.2 / service 85.5 / middleware 100 / config 95.9 / utils 89.2 / initialize 84.6 / db 81.6（2026-11-13 新增 adminapi 三个后台分组与 api 契约全链路测试后复测；留证 `docs/evidence/coverage-single-20261113.out` 与 `coverage-20261113.out`） | `go test -p 1 ./shop/... "-coverprofile=coverage-single.out" "-coverpkg=./shop/..." -covermode=atomic -count=1` |
 | 业务验收 | 51/51（2026-11-12 实测） | `py -3 scripts/run_acceptance.py --no-build --no-start` |
 | CI | `.github/workflows/shop-ci.yml`：gofmt/vet/build/test/覆盖率阈值/race/冒烟 | 推送触发 |
 | 部署 | `server/Dockerfile.shop` + `deploy/shop/docker-compose.yaml`（详见 `deploy/shop/README.md`） | `docker compose -f deploy/shop/docker-compose.yaml up -d --build` |

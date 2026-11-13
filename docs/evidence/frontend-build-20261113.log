@@ -1,0 +1,19 @@
+管理端前端构建留证（审计 I-27）
+时间：2026-11-13 10:31
+命令：cd web && npm run build
+
+结果：
+  vite build 成功（built in 4.48s），产物 web/dist/：
+  - index.html（8754 字节）
+  - dist/assets/*.js（含商城后台三个页面 chunk）
+      087AC4D233B64EB0ops.BPh5LgFi.js        9,343 字节
+      087AC4D233B64EB0ops.D8NiqG8d.css         302 字节
+      087AC4D233B64EB0warehouse.DLtapVuS.js  4,159 字节
+      087AC4D233B64EB0warehouse.UYWN6gUv.css   102 字节
+      087AC4D233B64EB0cs.BgR-n6xc.js        5,758 字节
+      087AC4D233B64EB0cs.B5ajsMRa.css         248 字节
+      087AC4D233B64EB0shop.iK4xr0wh.js      1,269 字节
+
+说明：
+  - 构建仅有 chunk > 500kB 的体积提示（echarts/formCreate 等框架级大包，非本次页面）。
+  - dist 不入 git（web/.gitignore 已忽略）；本留证记录 chunk 名与字节数可复核。

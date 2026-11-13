@@ -67,8 +67,20 @@
 | `3d4b257` | [fix][v0.2.0][T10] 验收包装脚本强制 UTF-8（I-24） |
 | `c6be8d7` | [docs][v0.2.0][T10] 约束文件重构（I-07/I-21）：.agents 00~09 编号文件集 |
 | `e067a24` | [test][v0.2.0][T10] 自编 Skill 实际调用留痕（I-06）：验收 Skill 43/43 + 业务 Skill 51/51 |
+| `8b0d468` | [refactor][v0.2.0][T11] 数据库合一与前后台服务拆分：业务表并入 gva 单库（备份留证），测试统一 shop_test；买家端拆为独立 Gin 服务 server/cmd/shop(:8090)；运营/仓库/客服后台入 GVA 管理端（adminapi + /shop/** Casbin + Vue 三页 + 幂等种子 SQL） |
+| `5e4529b` | [test][v0.2.0][T11] 审计 I-26：补 adminapi 测试（0→81.4%）与 api 契约全链路 HTTP 测试（54.1%→81.3%）；覆盖率双口径复测（分包 82.8% / 跨包并集 88.7%） |
+| `2ddb551` | [deploy][v0.2.0][T11] 审计 I-25：双服务镜像重建部署——Dockerfile.gva + config.gva-docker.yaml，compose 扩为 shop-buyer(18099)+shop-admin(18098)+admin-seed 种子任务（实测冒烟通过） |
+| 本提交 | [docs][v0.2.0][T11] 审计 I-25~I-28 整改闭环：DELIVERY.md/.agents05 覆盖率改真实复算值；npm run build 留证（I-27）；51/51 验收复跑 + 独立测试报告（I-28）；events #34~#40；CI run #14 @2ddb551 结论留证 |
 
 > main 分支保留基线快照（`9dd5040`），整改全部落在 `dev/01-shop`；推送后对 main 发起 PR，由 CI 复核后再合并。
+
+### 2026-11-13 batch5 整改会话更新
+
+> - 2026-11-13 完成数据库合一 + 前后台服务拆分（8b0d468），并针对 batch5 审计 4 项新增问题完成整改：
+>   I-25 版本锁定（镜像 shop-buyer/shop-admin:8b0d468 实际部署 + CI run #14）、
+>   I-26 覆盖率（adminapi 0→81.4%，api 54.1%→81.3%，跨包并集 88.7%，文档改为真实复算值）、
+>   I-27 管理端前端构建（npm run build + dist chunk 留证）、
+>   I-28 新架构独立测试/验收/事件（51/51 复跑 + independent-test-20261113.md + events #34~#40）。
 
 ## 5. 未完成 / 待学生执行
 

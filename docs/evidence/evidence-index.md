@@ -59,3 +59,18 @@
 ## 结论
 
 自动判定 43 项（含本索引后）→ 缺口仅 **B4（JSONL 导出）**，为环境待办而非实现缺陷；其余全部有真实产物支撑。
+
+## 2026-11-13 增补（batch5 整改会话，提交 8b0d468~2ddb551）
+
+| 编号 | 类型 | 产物/位置 |
+| --- | --- | --- |
+| N1 | 覆盖率（分包口径 82.8%） | docs/evidence/coverage-20261113.out（go tool cover -func 总计行可复核） |
+| N2 | 覆盖率（跨包并集 88.7%，标准单命令） | docs/evidence/coverage-single-20261113.out |
+| N3 | 新增 adminapi 测试 | server/shop/adminapi/adminapi_test.go（adminapi 0→81.4%） |
+| N4 | 新增 api 契约全链路 HTTP 测试 | server/shop/api/contract_http_test.go（api 54.1%→81.3%） |
+| N5 | 管理端前端构建（I-27） | docs/evidence/frontend-build-20261113.log（web/dist 三个页面 chunk 名与字节数） |
+| N6 | 双服务镜像重建与部署（I-25） | docs/evidence/deploy-dual-20261113.md（shop-buyer/shop-admin:8b0d468 + admin-seed + 容器冒烟） |
+| N7 | 业务验收复跑（I-28） | docs/evidence/acceptance-20261113-newarch.log（51/51，:8090 独立买家端） |
+| N8 | 独立测试报告（I-28） | docs/evidence/independent-test-20261113.md（覆盖 8b0d468 新架构） |
+| N9 | CI run #14（**success**） | push 2ddb551 触发，https://github.com/song20060422-maker/shop-word-01/actions/runs/43355394482 ；步骤明细 `docs/evidence/ci-run14.md` + `ci-run14-jobs.json`（含双服务冒烟与覆盖率阈值步骤） |
+| N10 | 事件登记 | docs/events.md #34~#40；docs/dev_log.md §4 提交清单增补 8b0d468/5e4529b/2ddb551/本提交 |

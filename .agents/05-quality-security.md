@@ -6,11 +6,12 @@
 - profile 必须以**标准单命令**生成（禁止拼接多份分包 profile）：
 
 ```powershell
-go test ./shop/... -coverprofile=coverage-single.out -coverpkg=./shop/... -count=1
+go test -p 1 ./shop/... "-coverprofile=coverage-single.out" "-coverpkg=./shop/..." -covermode=atomic -count=1
 ```
 
 - 覆盖不足只能补**真实业务路径**用例；工具函数凑数式补洞被视为低价值（审计 I-23 教训）。
-- 当前基线：总 88.0%，service 87.5%，api 88.0%。
+- 共库测试必须 `-p 1` 串行（含覆盖率命令，否则并行清表互踩）。
+- 当前基线（2026-11-13 架构拆分后）：跨包并集总 88.7%，service 85.5%，api 81.3%，adminapi 81.4%（分包口径总 82.8%）。
 
 ## 测试要求
 
