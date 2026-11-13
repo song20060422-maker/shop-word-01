@@ -34,9 +34,13 @@ WHERE m.name IN ('shopAdmin', 'shopOps', 'shopWarehouse', 'shopCs') AND m.delete
                   WHERE am.sys_base_menu_id = m.id AND am.sys_authority_authority_id = a.aid);
 
 -- ---------- 2.1 历史外链菜单修正：买家端已拆分为独立 Gin 服务（:8090） ----------
+-- gva 前端判断外链看的是菜单 name（normalMode.vue: index = routerInfo.name，含 http 才 window.open），
+-- 只改 path 会导致 permission.js 跳过路由注册 + router.push({name:'shopDemo'}) 找不到路由 → 点击无反应。
+-- 因此 name 与 path 必须同时置为 URL。
 UPDATE sys_base_menus
-SET path = 'http://127.0.0.1:8090/shop', title = '商城买家端', icon = 'shop', updated_at = NOW(3)
-WHERE name = 'shopDemo' AND deleted_at IS NULL;
+SET name = 'http://127.0.0.1:8090/shop', path = 'http://127.0.0.1:8090/shop',
+    title = '商城买家端', icon = 'shop', updated_at = NOW(3)
+WHERE name IN ('shopDemo', 'http://127.0.0.1:8090/shop') AND deleted_at IS NULL;
 
 -- ---------- 3. 接口注册（sys_apis，分组「商城管理」） ----------
 INSERT INTO sys_apis (created_at, updated_at, deleted_at, path, description, api_group, method)
