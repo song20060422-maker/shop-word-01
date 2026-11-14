@@ -169,8 +169,26 @@ async function cancelOrder(no){try{await api('/api/orders/'+no+'/cancel',{method
 function copyPay(no,amt){switchTab('channel');document.getElementById('txn').value='TXN-'+no;toast('已切换到渠道页：对订单 '+no+' 发送支付通知（金额 '+amt+' 分）');}
 async function alipayPay(no){
   try{const d=await api('/api/orders/'+no+'/alipay-pay',{method:'POST'});
-    if(d&&d.payURL){window.open(d.payURL,'_blank');toast('已打开支付宝沙箱收银台，付款后本单由异步通知自动推进（需公网回调可达）');}
+    if(d&&d.payURL){window.open(d.payURL,'_blank');toast('已打开支付宝沙箱收银台，付款后本单由异步通知自动推进（需公网回调可达）');
+      watchPay(no);}
     refresh();}catch(e){}
+}
+// watchPay 付款后监听：每 4 秒查订单列表（与页面展示同口径 pending_payment/paid），
+// 状态离开待付款（付款成功/超时关闭/取消）即停止并提示。
+async function watchPay(no){
+  const deadline=Date.now()+10*60*1000;
+  while(Date.now()<deadline){
+    await new Promise(r=>setTimeout(r,4000));
+    try{const list=await api('/api/orders');
+      const o=(list||[]).find(x=>x.orderNo===no);
+      if(!o){refresh();return;}
+      if(o.status!=='pending_payment'){
+        toast(o.status==='paid'?'支付宝付款已到账，订单 '+no+' 进入待发货':'订单 '+no+' 已离开待付款（'+(STATUS[o.status]||o.status)+'）');
+        refresh();return;
+      }
+    }catch(e){refresh();return;}
+  }
+  refresh();
 }
 async function applyRefund(no){
   const reason=prompt('退款原因：','买家申请整单退款');if(reason===null)return;
