@@ -21,7 +21,8 @@ import (
 	"shop/shop/web"
 )
 
-// InitShopRouter 装配 Shop 全部路由：公开区、登录区、运营/仓库/客服分区。
+// InitShopRouter 装配买家端 Gin 服务路由：公开区、登录区、买家/运营/仓库/客服接口分区，
+// 页面仅托管买家端 /shop（后台页面由 GVA 管理端 Vue 提供）。
 
 func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.Config, now func() time.Time) {
 	ag := api.NewApiGroup(g)
@@ -65,12 +66,9 @@ func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.
 		})
 	}
 
-	// 内置页面（随服务发布，无需前端构建）：
-	//   /          集成版全功能页：买家 / 模拟支付渠道 / 仓库 / 客服 / 运营 五个页签同页切换
-	//   /shop      买家端 + 模拟支付渠道页（独立页）
-	//   /ops /warehouse /cs  后台管理独立页（SHOP·OS 原型深色风格），
-	//       页面经本服务 /gva/* 反向代理调用 GVA 管理端接口（gva 登录 + Casbin）
-	// 运营/仓库/客服后台同时仍由 GVA 管理端（Vue 三页）提供，双入口并存。
+	// 内置页面只保留买家端（随服务发布，无需前端构建）：/shop 买家 + 模拟支付渠道页。
+	// 运营/仓库/客服后台页面统一由 GVA 管理端 Vue（web/src/view/shop/*.vue）提供，
+	// 接口走 GVA /shop/**（gva 登录 + Casbin），本服务不再重复内置后台页。
 	page := func(name string) gin.HandlerFunc {
 		return func(c *gin.Context) {
 			var (
@@ -78,16 +76,8 @@ func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.
 				err  error
 			)
 			switch name {
-			case "all":
-				data, err = web.Index()
 			case "buyer":
 				data, err = web.Buyer()
-			case "ops":
-				data, err = web.Ops()
-			case "warehouse":
-				data, err = web.Warehouse()
-			case "cs":
-				data, err = web.CS()
 			default:
 				err = errors.New("未知页面")
 			}
@@ -98,21 +88,24 @@ func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.
 			c.Data(http.StatusOK, "text/html; charset=utf-8", data)
 		}
 	}
-	// 根路径：集成版全功能页（买家/渠道/仓库/客服/运营 五页签同页），
-	// 适合"一个页面看全部"；独立页 /shop /ops /warehouse /cs 同时保留。
-	group.GET("/", page("all"))
-	group.GET("/index.html", page("all"))
+	// 根路径与 /index.html 统一跳转买家页（历史入口兼容）
+	group.GET("/", func(c *gin.Context) { c.Redirect(http.StatusFound, "/shop") })
+	group.GET("/index.html", func(c *gin.Context) { c.Redirect(http.StatusFound, "/shop") })
 	group.GET("/shop", page("buyer"))
 	group.GET("/shop/", page("buyer"))
-	group.GET("/ops", page("ops"))
-	group.GET("/ops/", page("ops"))
-	group.GET("/warehouse", page("warehouse"))
-	group.GET("/warehouse/", page("warehouse"))
-	group.GET("/cs", page("cs"))
-	group.GET("/cs/", page("cs"))
+	// 后台三页入口已迁移到 GVA 管理端：命中旧路径时提示去向，避免静默 404
+	adminHint := func(page string) gin.HandlerFunc {
+		return func(c *gin.Context) {
+			c.String(http.StatusNotFound,
+				"后台管理页面已迁移至 GVA 管理端（Vue）：请在 http://127.0.0.1:8080 登录后打开「商城管理 → %s」；买家端仅保留 /shop", page)
+		}
+	}
+	group.GET("/ops", adminHint("运营核查"))
+	group.GET("/warehouse", adminHint("仓库发货"))
+	group.GET("/cs", adminHint("客服退款"))
 
-	// /gva/* 反向代理到 GVA 管理端：后台独立页面同源调用 /gva/base/login、
-	// /gva/shop/** 等，浏览器无跨域；目标地址取 system.admin-target。
+	// /gva/* 反向代理到 GVA 管理端（历史兼容保留）：/gva/base/login、/gva/shop/** 等
+	// 可经本服务同源访问，目标地址取 system.admin-target。正式后台入口为 GVA Vue（:8080）。
 	adminURL, err := url.Parse(cfg.System.AdminTarget)
 	if err != nil || adminURL.Scheme == "" || adminURL.Host == "" {
 		log.Printf("shop: system.admin-target 非法 %q，/gva 反向代理未启用", cfg.System.AdminTarget)

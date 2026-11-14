@@ -25,29 +25,41 @@ func newServerWithCfg(t *testing.T, cfg config.Config) *gin.Engine {
 	return r
 }
 
-// TestAdminPagesServed 后台三个独立页（/ops /warehouse /cs）与买家端页均随服务托管。
+// TestAdminPagesServed 买家端页随服务托管；根路径重定向；后台三页已迁移 GVA 管理端（404 提示去向）。
 func TestAdminPagesServed(t *testing.T) {
 	r, _ := newServer(t, true)
-	cases := []struct{ path, marker string }{
-		{"/", "data-tab=\"warehouse\""},
-		{"/index.html", "data-tab=\"ops\""},
-		{"/shop", "买家端"},
-		{"/shop/", "买家端"},
-		{"/ops", "运营核查"},
-		{"/ops/", "运营核查"},
-		{"/warehouse", "仓库发货"},
-		{"/cs", "客服退款"},
-	}
-	for _, c := range cases {
-		w := doJSON(r, "GET", c.path, "", "", nil)
+	// 买家页：/shop、/shop/ 直接返回 HTML
+	for _, p := range []string{"/shop", "/shop/"} {
+		w := doJSON(r, "GET", p, "", "", nil)
 		if w.Code != http.StatusOK {
-			t.Fatalf("%s 应 200, got %d", c.path, w.Code)
+			t.Fatalf("%s 应 200, got %d", p, w.Code)
 		}
 		if ct := w.Header().Get("Content-Type"); !strings.Contains(ct, "text/html") {
-			t.Fatalf("%s Content-Type 应为 html: %s", c.path, ct)
+			t.Fatalf("%s Content-Type 应为 html: %s", p, ct)
 		}
-		if !strings.Contains(w.Body.String(), c.marker) {
-			t.Fatalf("%s 页面缺少标记 %q", c.path, c.marker)
+		if !strings.Contains(w.Body.String(), "买家") {
+			t.Fatalf("%s 页面缺少标记", p)
+		}
+	}
+	// 根路径与 /index.html 重定向到 /shop（历史入口兼容）
+	for _, p := range []string{"/", "/index.html"} {
+		w := doJSON(r, "GET", p, "", "", nil)
+		if w.Code != http.StatusFound || w.Header().Get("Location") != "/shop" {
+			t.Fatalf("%s 应 302 到 /shop, got %d %q", p, w.Code, w.Header().Get("Location"))
+		}
+	}
+	// 后台三页已迁移：返回 404 + 明确去向提示，不做静默 404
+	for _, c := range []struct{ path, marker string }{
+		{"/ops", "运营核查"},
+		{"/warehouse", "仓库发货"},
+		{"/cs", "客服退款"},
+	} {
+		w := doJSON(r, "GET", c.path, "", "", nil)
+		if w.Code != http.StatusNotFound {
+			t.Fatalf("%s 应 404, got %d", c.path, w.Code)
+		}
+		if !strings.Contains(w.Body.String(), "GVA 管理端") || !strings.Contains(w.Body.String(), c.marker) {
+			t.Fatalf("%s 提示缺少去向说明: %s", c.path, w.Body.String())
 		}
 	}
 }
@@ -114,8 +126,8 @@ func TestGVAReverseProxyInvalidTarget(t *testing.T) {
 	cfg.System.AdminTarget = "://bad-target"
 	r := newServerWithCfg(t, cfg)
 
-	if w := doJSON(r, "GET", "/ops", "", "", nil); w.Code != http.StatusOK {
-		t.Fatalf("页面仍应可访问: %d", w.Code)
+	if w := doJSON(r, "GET", "/shop", "", "", nil); w.Code != http.StatusOK {
+		t.Fatalf("买家页仍应可访问: %d", w.Code)
 	}
 	if w := doJSON(r, "GET", "/gva/health", "", "", nil); w.Code == http.StatusOK {
 		t.Fatalf("非法目标不应注册反代: %d", w.Code)

@@ -19,9 +19,9 @@ import (
 type externalChannel struct{}
 
 func (externalChannel) Refund(string, string, int64) (bool, error) { return true, nil }
-func (externalChannel) SetRefundMode(string)               {}
-func (externalChannel) RefundMode() string                 { return "external" }
-func (externalChannel) RefundCalls() int                   { return 0 }
+func (externalChannel) SetRefundMode(string)                       {}
+func (externalChannel) RefundMode() string                         { return "external" }
+func (externalChannel) RefundCalls() int                           { return 0 }
 
 func newGroupWithChannel(t *testing.T, ch service.ChannelClient) *service.ServiceGroup {
 	t.Helper()
