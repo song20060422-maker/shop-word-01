@@ -45,3 +45,7 @@ worktrees/
 
 # 本机构建产物与运行日志
 /server/bin/
+
+# local runtime logs (go run / debug)
+server/*.log
+server/logs/
