@@ -49,3 +49,4 @@ worktrees/
 # local runtime logs (go run / debug)
 server/*.log
 server/logs/
+web/*.log
