@@ -35,6 +35,16 @@ type ServiceGroup struct {
 	Channel ChannelClient
 }
 
+// NewChannelFromConfig 按 shop.pay-channel 构建渠道：alipay（配置完整时）或 nil（回落模拟渠道，默认）。
+// 返回 error 仅在显式要求支付宝但配置非法时发生——启动即失败，不静默降级。
+
+func NewChannelFromConfig(cfg config.Config) (ChannelClient, error) {
+	if cfg.Shop.PayChannel != "alipay" {
+		return nil, nil
+	}
+	return NewAlipayChannel(cfg.Shop.Alipay)
+}
+
 // NewServiceGroup 组装全部业务服务
 
 func NewServiceGroup(d Deps) *ServiceGroup {
@@ -95,6 +105,8 @@ var (
 	ErrDuplicatedPay    = NewBizError(3003, "重复支付通知，未重复记款")
 	ErrChannelRefund    = NewBizError(3004, "渠道退款失败，已保留待处理记录")
 	ErrAbnormalNotFound = NewBizError(3005, "异常收款记录不存在或已处理")
+	ErrAlipayDisabled   = NewBizError(3007, "支付宝渠道未启用")
+	ErrTradeNotPaid     = NewBizError(3008, "交易未完成，拒绝记款")
 
 	ErrRefundNotFound     = NewBizError(4001, "退款单不存在")
 	ErrRefundExists       = NewBizError(4002, "该订单已退款或已在退款流程中")

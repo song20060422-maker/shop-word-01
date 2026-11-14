@@ -18,7 +18,7 @@ import (
 // externalChannel 非模拟渠道实现：用于覆盖「渠道不支持切换退款模式」分支。
 type externalChannel struct{}
 
-func (externalChannel) Refund(string, int64) (bool, error) { return true, nil }
+func (externalChannel) Refund(string, string, int64) (bool, error) { return true, nil }
 func (externalChannel) SetRefundMode(string)               {}
 func (externalChannel) RefundMode() string                 { return "external" }
 func (externalChannel) RefundCalls() int                   { return 0 }

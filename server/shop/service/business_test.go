@@ -576,11 +576,11 @@ func TestSimulatedChannel(t *testing.T) {
 	if ch.RefundMode() != "fail" {
 		t.Fatalf("初始模式错误: %s", ch.RefundMode())
 	}
-	if ok, _ := ch.Refund("RF1", 100); ok {
+	if ok, _ := ch.Refund("SO-1", "RF1", 100); ok {
 		t.Fatal("fail 模式应返回失败")
 	}
 	ch.SetRefundMode("success")
-	if ok, _ := ch.Refund("RF1", 100); !ok {
+	if ok, _ := ch.Refund("SO-1", "RF1", 100); !ok {
 		t.Fatal("success 模式应返回成功")
 	}
 	ch.SetRefundMode("非法值")

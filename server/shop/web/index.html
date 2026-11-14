@@ -227,7 +227,7 @@ async function loadMyOrders(){
   if(S.role!=='buyer')return;
   try{const list=await api('/api/orders');const tb=document.querySelector('#orderTbl tbody');tb.innerHTML='';
     list.forEach(o=>{const tr=document.createElement('tr');let acts=`<button class="btn" onclick="detail('${o.orderNo}','buyer')">详情</button>`;
-      if(o.status==='pending_payment')acts+=` <button class="btn w" onclick="cancelOrder('${o.orderNo}')">取消</button> <button class="btn g" onclick="copyPay('${o.orderNo}',${o.amountCents})">去支付</button>`;
+      if(o.status==='pending_payment')acts+=` <button class="btn w" onclick="cancelOrder('${o.orderNo}')">取消</button> <button class="btn g" onclick="copyPay('${o.orderNo}',${o.amountCents})">去支付</button> <button class="btn" onclick="alipayPay('${o.orderNo}')">支付宝支付</button>`;
       if(o.status==='paid')acts+=` <button class="btn p" onclick="applyRefund('${o.orderNo}')">申请退款</button>`;
       tr.innerHTML=`<td>${o.orderNo}</td><td>${esc(o.productName)}</td><td>${o.qty}</td><td>${fen(o.amountCents)}</td>
       <td><span class="tag t-${o.status}">${STATUS[o.status]||o.status}</span></td><td>${new Date(o.expireAt).toLocaleString()}</td><td>${acts}</td>`;
@@ -235,6 +235,11 @@ async function loadMyOrders(){
 }
 async function cancelOrder(no){try{await api('/api/orders/'+no+'/cancel',{method:'POST'});toast('已取消，占用已释放');refresh();}catch(e){}}
 function copyPay(no,amt){switchTab('channel');document.getElementById('txn').value='TXN-'+no;toast('已切换到渠道页：对订单 '+no+' 发送支付通知（金额 '+amt+' 分）');}
+async function alipayPay(no){
+  try{const d=await api('/api/orders/'+no+'/alipay-pay',{method:'POST'});
+    if(d&&d.payURL){window.open(d.payURL,'_blank');toast('已打开支付宝沙箱收银台，付款后本单由异步通知自动推进（需公网回调可达）');}
+    refresh();}catch(e){}
+}
 async function applyRefund(no){
   try{const d=await api('/api/orders/'+no+'/refund',{method:'POST',body:{orderNo:no,reason:'买家申请整单退款'}});
     toast('退款申请已提交：'+(d.refund.refundNo||''));refresh();}catch(e){}

@@ -3,9 +3,12 @@ package api
 import (
 	"encoding/json"
 	"net/http"
+	"net/url"
 
 	"github.com/gin-gonic/gin"
 
+	"shop/shop/middleware"
+	"shop/shop/model"
 	"shop/shop/model/request"
 	"shop/shop/model/response"
 	"shop/shop/service"
@@ -32,6 +35,41 @@ func (a PayApi) Notify(c *gin.Context) {
 		status = statusOf(code)
 	}
 	c.JSON(status, response.Body{Code: code, Data: res, Msg: msg})
+}
+
+// AlipayPay 生成支付宝收银台跳转地址（电脑网站支付，买家本人 + 待付款订单）
+
+func (a PayApi) AlipayPay(c *gin.Context) {
+	claims := middleware.ClaimsOf(c)
+	orderNo := c.Param("orderNo")
+	payURL, err := a.s.PaymentService.AlipayPayURL(orderNo, claims.UserID)
+	if err != nil {
+		fail(c, err)
+		return
+	}
+	ok(c, gin.H{"payURL": payURL})
+}
+
+// AlipayNotify 支付宝异步通知回调：POST 表单，RSA2 验签；任何分支都留痕可查。
+// 应答约定：受理成功返回纯文本 success，否则 fail（支付宝将按策略重发）。
+
+func (a PayApi) AlipayNotify(c *gin.Context) {
+	raw, err := c.GetRawData()
+	if err != nil {
+		c.String(http.StatusBadRequest, "fail")
+		return
+	}
+	form, perr := url.ParseQuery(string(raw))
+	if perr != nil {
+		c.String(http.StatusBadRequest, "fail")
+		return
+	}
+	res, err := a.s.PaymentService.NotifyAlipay(form, string(raw))
+	if err == nil && res.Result == model.NoticeAccepted {
+		c.String(http.StatusOK, "success")
+		return
+	}
+	c.String(http.StatusOK, "fail")
 }
 
 // CloseExpired 服务端时间触发的超时关闭（演示可手动触发，也可由定时任务调用）

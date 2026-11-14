@@ -2,11 +2,13 @@ package service
 
 import "sync"
 
-// ChannelClient 模拟支付渠道：受理退款并报告退款结果。
-// 真实渠道由网络调用实现，这里用可控的内存实现，保证「首次失败、再次成功」可复现。
+// ChannelClient 支付渠道：受理退款并报告退款结果。
+// 默认实现为可控内存模拟渠道，保证「首次失败、再次成功」可复现；
+// 真实渠道（支付宝沙箱）见 alipay.go，经 shop.pay-channel=alipay 启用。
 
 type ChannelClient interface {
-	Refund(refundNo string, amountCents int64) (bool, error)
+	// Refund 受理退款：orderNo 用于真实渠道定位原交易（模拟渠道忽略）
+	Refund(orderNo, refundNo string, amountCents int64) (bool, error)
 	SetRefundMode(mode string)
 	RefundMode() string
 	RefundCalls() int
@@ -30,9 +32,9 @@ func NewSimulatedChannel(allow bool) *SimulatedChannel {
 	return &SimulatedChannel{mode: mode}
 }
 
-// Refund 受理退款
+// Refund 受理退款（模拟渠道忽略订单号）
 
-func (c *SimulatedChannel) Refund(refundNo string, amountCents int64) (bool, error) {
+func (c *SimulatedChannel) Refund(orderNo, refundNo string, amountCents int64) (bool, error) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	c.calls++

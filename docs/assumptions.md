@@ -29,3 +29,4 @@
 | A-17（新） | 测试数据库使用同一 MySQL 实例的不同库（`shop_test_service/router/api/db/boot`），避免并行包互相清表 | 已落地 |
 | A-18（新） | `-race` 在 Linux CI 执行；Windows 本机无 cgo 工具链时仅运行普通测试 | 已落地（CI 配置） |
 | A-19（新） | 员工契约账号 `ops/warehouse/cs` 作为 `ops1/wh1/cs1` 的登录别名，不改变原型账号 | 已落地（`compatStaffAlias`） |
+| A-20（新） | 支付宝沙箱渠道作为**可选渠道**接入（学生裁决 2026-11-14）：`shop.pay-channel=alipay` 启用，模拟渠道仍为默认，验收口径与 BR-01~12 行为完全不变；真实通知复用同一套状态机/幂等/异常路径（RSA2 验签替代 HMAC）。偏离点如实登记：①题目"不扩大范围：真实第三方支付"红线按裁决放行，验收材料标注为演示扩展；②密钥写入 config（学生裁决，沙箱凭据无真实资金）；③cpolar 回调地址重启会变，需同步沙箱后台；④退款为事务内同步调用 `alipay.trade.refund`（演示取舍，生产应改异步回调 + 闸门状态机） | 已落地（`service/alipay.go`、`/api/pay/alipay/*`、5 个单测） |

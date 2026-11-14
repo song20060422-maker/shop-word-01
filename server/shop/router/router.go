@@ -45,6 +45,7 @@ func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.
 		// 模拟渠道：待支付订单查询、支付通知回调（靠签名鉴权，不需要登录态）
 		pub.GET("/pay/pending", ag.PendingOrders)
 		pub.POST("/pay/notify", ag.Notify)
+		pub.POST("/pay/alipay/notify", ag.AlipayNotify)
 		pub.GET("/pay/channel", ag.ChannelState)
 		// 超时关单测试钩子：仅演示模式可用（生产由定时任务触发）
 		pub.POST("/jobs/close-expired", func(c *gin.Context) {
@@ -145,6 +146,7 @@ func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.
 			buyer.POST("/orders/:orderNo/cancel", ag.Cancel)
 			buyer.POST("/orders/:orderNo/refund", ag.RefundApply)
 			buyer.GET("/orders/:orderNo/refund", ag.MyRefund)
+			buyer.POST("/orders/:orderNo/alipay-pay", ag.AlipayPay)
 		}
 
 		// 运营：上下架、核查、查询

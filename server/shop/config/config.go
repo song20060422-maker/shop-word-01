@@ -36,12 +36,27 @@ type Jwt struct {
 }
 
 // Shop 业务参数
-
 type Shop struct {
 	OrderTimeoutMinutes int    `yaml:"order-timeout-minutes"`
 	PayNotifySecret     string `yaml:"pay-notify-secret"`
 	DemoPassword        string `yaml:"demo-password"`
 	DemoMode            bool   `yaml:"demo-mode"` // 演示数据重置开关，生产必须为 false
+	// PayChannel 支付渠道选择：simulated（默认，模拟渠道，验收口径不变）| alipay（支付宝沙箱真实渠道，
+	// 演示扩展，见 docs/assumptions.md）。
+	PayChannel string `yaml:"pay-channel"`
+	// Alipay 支付宝渠道参数（沙箱凭据，无真实资金；密钥入配置已提请学生裁决）
+	Alipay Alipay `yaml:"alipay"`
+}
+
+// Alipay 支付宝渠道配置：私钥/支付宝公钥为 PKCS8 PEM 内容（不含头尾行）。
+// 网关地址由 SDK 按 production 开关自动选择（沙箱 openapi-sandbox.dl.alipaydev.com）。
+
+type Alipay struct {
+	AppID           string `yaml:"app-id"`
+	PrivateKey      string `yaml:"private-key"`
+	AlipayPublicKey string `yaml:"alipay-public-key"`
+	NotifyURL       string `yaml:"notify-url"` // 公网可达的异步通知地址
+	ReturnURL       string `yaml:"return-url"` // 支付完成后跳回的买家页地址
 }
 
 // Channel 模拟支付渠道配置
@@ -72,7 +87,7 @@ func Default() Config {
 			LogMode:      false,
 		},
 		Jwt:     Jwt{Secret: "shop-gva-dev-secret", ExpireHours: 12},
-		Shop:    Shop{OrderTimeoutMinutes: 10, PayNotifySecret: "channel-shared-secret", DemoPassword: "shop123"},
+		Shop:    Shop{OrderTimeoutMinutes: 10, PayNotifySecret: "channel-shared-secret", DemoPassword: "shop123", PayChannel: "simulated"},
 		Channel: Channel{RefundMode: "success"},
 	}
 }
@@ -107,6 +122,9 @@ func Load(path string) (Config, error) {
 	}
 	if v := os.Getenv("SHOP_PAY_SECRET"); v != "" {
 		cfg.Shop.PayNotifySecret = v
+	}
+	if v := os.Getenv("SHOP_PAY_CHANNEL"); v != "" {
+		cfg.Shop.PayChannel = v
 	}
 	if v := os.Getenv("SHOP_ORDER_TIMEOUT_MINUTES"); v != "" {
 		if n, err := strconv.Atoi(v); err == nil && n > 0 {

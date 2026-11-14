@@ -230,6 +230,14 @@ shop:
     mysql-dsn: root:root@tcp(127.0.0.1:3307)/gva?charset=utf8mb4&parseTime=True&loc=Local
     order-timeout-minutes: 10
     pay-notify-secret: channel-shared-secret
+    # 支付渠道：simulated（默认）| alipay（支付宝沙箱，管理端退款走真实渠道）
+    pay-channel: simulated
+    alipay:
+        app-id: "9021000158651669"
+        private-key: "MIIEogIBAAKCAQEAvnuuFQAo+htBui0JY75NKKeH7LpS2q6XWjLXCjYROVpVNzrzPzkm6RLJ3Sqv9f+TVQGr4M2QV/goZTN/UVhBA/e+XiIRoMggscALxg5CFef+xkxp4DyieH267omDdSzqJ4hPpdATc9hcDsa/4BQrLobxZursUEnrWIR+SoyeeD1EpwcKrtfAiFBRp3LHWo0MqDK4EHOUGW0cTmyrqS3CZKwLsYA66lKEECtyGzYc0FckD5sBdRobGzsp6uJAwUveEbecvOozcAaaGURtbvcN5QZLAFFxVWUwiMwUyYr/VIH1W4SfE5RohooVL1ps12TP45J5bgYaXLk9z4HnzvN6TQIDAQABAoIBAAeY+0qPJRNEvwxj+3nk/0Ld28gPbnqWeCb63CTmHy3AcqGvUkB1UR3+x9pwd3BCb2f2lxpyWI2JsmLG+Q8PjBhSa19p0HYvRU6RsGaH7w7coAbcyWRORtSzfx9AkOO9lOFayIJ+mCgIuzNDrieL5mUGsN5ABIj3SdHQBxGGJlP5W9rvgIaMyl9hiiyEKpEA3z+VS6vlV0P1ILaRPSg8CQL/Jia/NuK5bULxOI8uNOflZj0AsfYr7Ji6cLb09SC0/pNNT9kOETdUxyh2uH6Mb3Gw+P0r9b7XzXRlBhQSYsxr6PwGjg/QmTSA+oUPPqmo8NUJ6dTPN5AhJw//KczwU4ECgYEA/LLUOo3SXydi/usv2AicfUSswFJlfczUjzyytAgn7B6c69orq+/SswxOH7/JetDNrHGC47Fi1+ui2So4Q6chjQxdJ99pP1lFn2ebgHpT8Wk/MvHSlMailcrA7t/8mqGrJN/iXy/3PrLD3hW+Y27YAXISl9UPbsMep7KP7/A/5DECgYEAwPjEMzu54XWymzODEtqD1BgPilTGSRkLQ6YA5g1qyHY6Gl30OixqRbdtubyAA+wdufpBveZlUHDp2etlOweLu717Dc1zaXkUkTH3LdwQA8qr/1zyI2IlfSWcb6W9gyzLtUN29D9pWq+3bMOldzO0Uto3UyFhk/bEYq7YVE9QPN0CgYB7Cf+3+vHhjuXuxUjoYVkAzX1nrzbnh+I/VAiXDBmUKFuzouj8sKrgry8i2lkZya07N5HJl8dO5tbF8n6uwiPd75U0It22EJuLwADBD87rjplNDt2/vu/PC4fhR4JRMEKKk9A/FLXH+3bPHbsz4vadzZMsBnubLLoyYQkghNQ3IQKBgHyl9C5X7SjqmvVPn+IkzjTJWfhz7CU5jSIkb74qeoiEfeGcQO7206q24qSwU0y1Tzpboe2ljloYpaXDPP+VTzh1G7B9vogp0xQ63zx7QskAOHvaMPqUIj0ld1hTCghafjdXHdaFw2r1yBj0g8Rs3JUMKeKD1ID8TDymTkyfcuftAoGAAt/L2ht72LecO6UjAiQv2Rz4xpeb7VbhMYPq1O3WaIFRSpKCcUAyfpiXaErmsmMLKFFaQqNtHGRZ9QVJX2uqRWfMLVdxd3NOAKQPovlLOAw0NhR4iOTSIL2YQvAkYgrX3hPIJBK0wdsNxqnsoSNfhCxnBgWgGmLkxQGZcladOQc="
+        alipay-public-key: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkyv768vDD3elIPdofegeDNsY5H291y+AEFoW4aNvTrRrnAQMbTrE3gT3Z3Jx063+JRk3M75KCX+DpzWGoHyCEq//rY108G0pKRo90jrWuXP8yTndxWgIkX1glPya5VYiBXohuFrN+flqp6oHowp1lFIPdtYLdf8Qg1/4VUqGtkrFNgoz2YFHUkTn36BVbE04/P/H8+Vy//O+clX63Ly9AQlbUhQvoj5wZ8P5B/3/wYVDt85FywW+WpPo+kxdABRnUwjAz4YaJxK8il6Q3wFdo3W82SZzZFJC8Jkm/s6/cGrXXGhwyEZB5oF/EeNIb50dOTPwj21BAadM0uahbhx5ZwIDAQAB"
+        notify-url: "http://525265d8.r9.cpolar.cn/api/pay/alipay/notify"
+        return-url: "http://127.0.0.1:8090/shop"
     refund-mode: success
 sqlite:
     prefix: ""

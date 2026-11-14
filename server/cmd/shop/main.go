@@ -41,7 +41,17 @@ func main() {
 		log.Fatalf("种子账号失败: %v", err)
 	}
 
-	g := service.NewServiceGroup(service.Deps{DB: db, Now: time.Now, Cfg: cfg})
+	// 渠道装配：pay-channel=alipay 且配置完整时启用支付宝沙箱渠道，否则保持模拟渠道（默认）
+	ch, err := service.NewChannelFromConfig(cfg)
+	if err != nil {
+		log.Fatalf("支付宝渠道初始化失败: %v", err)
+	}
+	g := service.NewServiceGroup(service.Deps{DB: db, Now: time.Now, Cfg: cfg, Channel: ch})
+	if _, isAli := g.Channel.(*service.AlipayChannel); isAli {
+		log.Printf("支付渠道：支付宝沙箱（%s），异步通知 %s", cfg.Shop.Alipay.AppID, cfg.Shop.Alipay.NotifyURL)
+	} else {
+		log.Print("支付渠道：模拟渠道（shop.pay-channel=alipay 可切换）")
+	}
 
 	if cfg.System.Mode == "release" {
 		gin.SetMode(gin.ReleaseMode)

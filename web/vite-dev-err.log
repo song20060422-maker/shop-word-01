@@ -1,0 +1,5 @@
+[33m(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - import "./src/core/config" without a file extension (vite.config.js:1:26). Add the file extension
+  - import "./vitePlugin/secret" resolves to a directory index (vite.config.js:10:27). Import the index file directly
+  - JSON import "../../package.json" without import attributes (src/core/config.js:4:25). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.[39m

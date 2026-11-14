@@ -30,9 +30,18 @@ func Boot() (*service.ServiceGroup, config.Config, error) {
 	}
 
 	now := time.Now
-	group := service.NewServiceGroup(service.Deps{DB: db, Now: now, Cfg: cfg})
+	// 渠道装配：pay-channel=alipay 时管理端退款走支付宝沙箱真实渠道；失败即启动失败，不静默降级
+	ch, err := service.NewChannelFromConfig(cfg)
+	if err != nil {
+		return nil, cfg, err
+	}
+	group := service.NewServiceGroup(service.Deps{DB: db, Now: now, Cfg: cfg, Channel: ch})
 	if global.GVA_LOG != nil {
-		global.GVA_LOG.Info("shop 业务模块初始化完成")
+		if _, isAli := group.Channel.(*service.AlipayChannel); isAli {
+			global.GVA_LOG.Info("shop 业务模块初始化完成（支付渠道：支付宝沙箱）")
+		} else {
+			global.GVA_LOG.Info("shop 业务模块初始化完成（支付渠道：模拟渠道）")
+		}
 	}
 	return group, cfg, nil
 }

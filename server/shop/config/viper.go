@@ -30,6 +30,15 @@ func FromViper(vp *viper.Viper) Config {
 	if v := vp.GetString("shop.refund-mode"); strings.TrimSpace(v) != "" {
 		cfg.Channel.RefundMode = v
 	}
+	if v := vp.GetString("shop.pay-channel"); strings.TrimSpace(v) != "" {
+		cfg.Shop.PayChannel = v
+	}
+	// 支付宝渠道（沙箱演示扩展）：管理端只用到退款能力，密钥等配置与买家端共用同一 yaml 段。
+	cfg.Shop.Alipay.AppID = vp.GetString("shop.alipay.app-id")
+	cfg.Shop.Alipay.PrivateKey = vp.GetString("shop.alipay.private-key")
+	cfg.Shop.Alipay.AlipayPublicKey = vp.GetString("shop.alipay.alipay-public-key")
+	cfg.Shop.Alipay.NotifyURL = vp.GetString("shop.alipay.notify-url")
+	cfg.Shop.Alipay.ReturnURL = vp.GetString("shop.alipay.return-url")
 	if n := vp.GetInt("shop.order-timeout-minutes"); n > 0 {
 		cfg.Shop.OrderTimeoutMinutes = n
 	}

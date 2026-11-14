@@ -229,7 +229,7 @@ func (s RefundService) HandleAbnormal(csID uint64, txnID, reason string) (model.
 		// I-18：行锁持有期间调用渠道——同一异常记录的并发处理在事务层互斥，
 		// 渠道只会被真实受理一次；失败时异常记录保留待处理（可重试）。
 		var cerr error
-		ok, cerr = s.deps.Channel.Refund(refund.RefundNo, refund.AmountCents)
+		ok, cerr = s.deps.Channel.Refund(refund.OrderNo, refund.RefundNo, refund.AmountCents)
 		if cerr != nil {
 			ok = false
 		}
@@ -302,7 +302,7 @@ func (s RefundService) callChannel(refund model.Refund, csID uint64, expectedCha
 			return ErrRefundNotRetryable
 		}
 		var cerr error
-		ok, cerr = s.deps.Channel.Refund(result.RefundNo, result.AmountCents)
+		ok, cerr = s.deps.Channel.Refund(result.OrderNo, result.RefundNo, result.AmountCents)
 		if cerr != nil {
 			ok = false
 		}

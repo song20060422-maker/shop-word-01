@@ -1,11 +1,14 @@
 package service
 
 import (
+	"context"
 	"errors"
+	"net/url"
 	"strings"
 	"time"
 
 	"github.com/go-sql-driver/mysql"
+	"github.com/smartwalle/alipay/v3"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 
@@ -43,27 +46,61 @@ type PaymentService struct {
 	deps Deps
 }
 
-// Notify 受理支付通知：验签 → 匹配订单与金额 → 幂等记款 / 迟到支付转异常。
+// Notify 受理模拟渠道支付通知：HMAC 验签 → 复用 applyPayment 推进。
 
 func (s PaymentService) Notify(orderNo, txn string, amount int64, sign, rawBody string) (NotifyResult, error) {
 	now := s.deps.Now()
 	orderNo = strings.TrimSpace(orderNo)
 	txn = strings.TrimSpace(txn)
-	result := NotifyResult{OrderNo: orderNo, ChannelTxnID: txn, AmountCents: amount}
 
 	// 1. 参数与验签：验签失败必须留痕，且绝不记款
 	if orderNo == "" || txn == "" || amount <= 0 || sign == "" {
-		result.Result = model.NoticeRejected
-		result.Reason = "参数不合法"
+		result := NotifyResult{Result: model.NoticeRejected, OrderNo: orderNo, ChannelTxnID: txn, AmountCents: amount, Reason: "参数不合法"}
 		s.saveNotice(result, false, rawBody, now)
 		return result, ErrInvalidParam
 	}
 	if utils.PaySign(s.deps.Cfg.Shop.PayNotifySecret, orderNo, txn, amount) != sign {
-		result.Result = model.NoticeRejected
-		result.Reason = "验签失败"
+		result := NotifyResult{Result: model.NoticeRejected, OrderNo: orderNo, ChannelTxnID: txn, AmountCents: amount, Reason: "验签失败"}
 		s.saveNotice(result, false, rawBody, now)
 		return result, ErrBadSign
 	}
+	return s.applyPayment(orderNo, txn, amount, rawBody, now)
+}
+
+// NotifyAlipay 支付宝异步通知：RSA2 验签（渠道内实现）→ app_id/交易状态校验 → 复用同一套推进逻辑，
+// 保证真实渠道与模拟渠道在订单状态机、幂等与异常收款上行为完全一致。
+
+func (s PaymentService) NotifyAlipay(form url.Values, rawBody string) (NotifyResult, error) {
+	now := s.deps.Now()
+	result := NotifyResult{Result: model.NoticeRejected,
+		OrderNo: form.Get("out_trade_no"), ChannelTxnID: form.Get("trade_no")}
+	ch, isAli := s.deps.Channel.(NotifyVerifier)
+	if !isAli {
+		result.Reason = "支付宝渠道未启用"
+		s.saveNotice(result, false, rawBody, now)
+		return result, ErrAlipayDisabled
+	}
+	payload, err := ch.VerifyNotify(context.Background(), form)
+	result.OrderNo = payload.OrderNo
+	result.ChannelTxnID = payload.Txn
+	result.AmountCents = payload.AmountCents
+	if err != nil {
+		result.Reason = "验签失败：" + err.Error()
+		s.saveNotice(result, false, rawBody, now)
+		return result, ErrBadSign
+	}
+	if alipay.TradeStatus(payload.TradeStatus) != alipay.TradeStatusSuccess && alipay.TradeStatus(payload.TradeStatus) != alipay.TradeStatusFinished {
+		result.Reason = "交易未完成：" + payload.TradeStatus
+		s.saveNotice(result, false, rawBody, now)
+		return result, ErrTradeNotPaid
+	}
+	return s.applyPayment(payload.OrderNo, payload.Txn, payload.AmountCents, rawBody, now)
+}
+
+// applyPayment 验签通过后的共同路径：匹配订单与金额 → 幂等记款 / 迟到支付转异常。
+
+func (s PaymentService) applyPayment(orderNo, txn string, amount int64, rawBody string, now time.Time) (NotifyResult, error) {
+	result := NotifyResult{OrderNo: orderNo, ChannelTxnID: txn, AmountCents: amount}
 
 	err := s.deps.DB.Transaction(func(tx *gorm.DB) error {
 		var o model.Order
@@ -139,6 +176,27 @@ func (s PaymentService) Notify(orderNo, txn string, amount int64, sign, rawBody 
 		return result, ErrDuplicatedPay
 	}
 	return result, nil
+}
+
+// AlipayPayURL 为待付款订单生成支付宝收银台跳转地址（电脑网站支付）：
+// 校验本人订单与待付款状态，渠道未启用返回业务错误。
+
+func (s PaymentService) AlipayPayURL(orderNo string, buyerID uint64) (string, error) {
+	var o model.Order
+	if err := s.deps.DB.Where("order_no = ?", strings.TrimSpace(orderNo)).First(&o).Error; err != nil {
+		return "", ErrOrderNotFound
+	}
+	if o.BuyerID != buyerID {
+		return "", ErrForbidden
+	}
+	if o.Status != model.OrderStatusPendingPayment {
+		return "", ErrOrderNotPayable
+	}
+	ac, isAli := s.deps.Channel.(*AlipayChannel)
+	if !isAli {
+		return "", ErrAlipayDisabled
+	}
+	return ac.PagePayURL(o.OrderNo, o.AmountCents, "商城订单："+o.ProductName)
 }
 
 // markAbnormal 迟到支付：登记异常收款，绝不恢复订单、绝不重新占用库存。
