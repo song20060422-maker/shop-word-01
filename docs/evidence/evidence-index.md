@@ -89,4 +89,5 @@
 | N23 | CI run #23/#24（均 **success**） | #23 @7309737（客服审核交互修复）、#24 @330923a（容器重建留证） |
 | N24 | 集成版全功能页恢复（86e3144） | `/` 与 `/index.html` 输出五页签集成页；独立页 `/shop` `/ops` `/warehouse` `/cs` 保留；镜像 `86e3144` 容器冒烟：五入口 200、根路径含五页签、容器内 products/ops.summary/orders/ledger 均 200 |
 | N25 | 支付通知双形态验签（8eee633） | 演示页形态（`channelTxnId` + body `sign`）→ `code=0 status=SUCCESS`、订单 `paid`、错签 400；契约形态（snake_case + `X-Channel-Signature`）回归 `code=0`；`contract_http_test` 新增两用例；容器 `8eee633` 复验通过 |
+| N26 | 后台三页白底 + 角色分权（a47947a） | 本地 8099 与容器 18099：ops1/wh1/cs1 登录 `code=0`、`authorityId` 分别 9001/9002/9003；ops1 调 `/shop/ops/summary`→code=0、`/shop/cs/refunds`→code=7；cs1 反之；`/shop` `/ops` `/warehouse` `/cs` 四页均白底（`#f4f6fb`+蓝色页签）；镜像 `shop-admin/shop-buyer:a47947a` healthy |
 
