@@ -5,15 +5,17 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
+	"shop/shop/model"
 )
 
 // ShipmentService 仓库发货：只为合法待发货订单登记一次。
+
 type ShipmentService struct {
 	deps Deps
 }
 
 // Shipable 待发货列表：仅 status=paid（退款申请/已退款/未付款都不在其中）
+
 func (s ShipmentService) Shipable() ([]model.Order, error) {
 	var list []model.Order
 	err := s.deps.DB.Where("status = ?", model.OrderStatusPaid).Order("id asc").Find(&list).Error
@@ -21,6 +23,7 @@ func (s ShipmentService) Shipable() ([]model.Order, error) {
 }
 
 // Ship 登记发货：状态条件更新 + 唯一键双保险，确保同一订单只发一次。
+
 func (s ShipmentService) Ship(whID uint64, orderNo, carrier, trackingNo string) (model.Order, error) {
 	orderNo = strings.TrimSpace(orderNo)
 	carrier = strings.TrimSpace(carrier)
@@ -70,6 +73,7 @@ func (s ShipmentService) Ship(whID uint64, orderNo, carrier, trackingNo string) 
 }
 
 // Get 查询发货记录（买家可查运单）
+
 func (s ShipmentService) Get(orderNo string) (*model.Shipment, error) {
 	var sh model.Shipment
 	if err := s.deps.DB.Where("order_no = ?", strings.TrimSpace(orderNo)).First(&sh).Error; err != nil {
@@ -79,6 +83,7 @@ func (s ShipmentService) Get(orderNo string) (*model.Shipment, error) {
 }
 
 // List 全部发货记录（运营核查）
+
 func (s ShipmentService) List() ([]model.Shipment, error) {
 	var list []model.Shipment
 	err := s.deps.DB.Order("id desc").Limit(200).Find(&list).Error
@@ -86,6 +91,7 @@ func (s ShipmentService) List() ([]model.Shipment, error) {
 }
 
 // shipStateError 把订单当前状态翻译为仓库看得懂的原因。
+
 func shipStateError(status string) error {
 	switch status {
 	case model.OrderStatusRefundRequested:

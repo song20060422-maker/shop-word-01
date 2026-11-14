@@ -29,7 +29,7 @@ spec:
             - containerPort: 8888
               name: http
           volumeMounts:
-            - mountPath: /go/src/github.com/flipped-aurora/gin-vue-admin/server/config.docker.yaml
+            - mountPath: /go/src/shop/config.docker.yaml
               name: config
               subPath: config.yaml
             - mountPath: /etc/localtime

@@ -1,9 +1,9 @@
 package middleware
 
 import (
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	"github.com/flipped-aurora/gin-vue-admin/server/model/common/response"
-	"github.com/flipped-aurora/gin-vue-admin/server/utils"
+	"shop/global"
+	"shop/model/common/response"
+	"shop/utils"
 	"github.com/gin-gonic/gin"
 	"strconv"
 	"strings"

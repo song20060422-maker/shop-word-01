@@ -13,11 +13,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
-	shopdb "github.com/flipped-aurora/gin-vue-admin/server/shop/db"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/migrations"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	"shop/shop/config"
+	shopdb "shop/shop/db"
+	"shop/shop/migrations"
+	"shop/shop/service"
+	"shop/shop/utils"
 )
 
 // 说明：本文件直测被契约兼容层委派遮蔽的原型 handler（同一路径已由 CompatApi 接管），

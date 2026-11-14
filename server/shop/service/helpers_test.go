@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
+	"shop/shop/model"
 )
 
 func TestBizErrorHelpers(t *testing.T) {

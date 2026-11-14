@@ -308,7 +308,7 @@ func init() {
 
 ### 插件默认注册功能
 
-`plugin/register.go` 文件下用 `	_ "github.com/flipped-aurora/gin-vue-admin/server/plugin/插件"
+`plugin/register.go` 文件下用 `	_ "shop/plugin/插件"
 ` 的方式匿名引用用于激活插件本体的init
 
 ### 代码组织示例：

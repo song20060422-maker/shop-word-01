@@ -7,10 +7,10 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
-	shopdb "github.com/flipped-aurora/gin-vue-admin/server/shop/db"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/migrations"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	"shop/shop/config"
+	shopdb "shop/shop/db"
+	"shop/shop/migrations"
+	"shop/shop/utils"
 )
 
 // 说明：service 层测试使用真实 MySQL（本机 3307），每个用例前清空业务数据并重放迁移/种子。

@@ -8,9 +8,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
 	"github.com/gin-gonic/gin"
+	"shop/shop/config"
+	"shop/shop/service"
 )
 
 // newServerWithCfg 与 newServer 相同，但允许用例自定义配置（如 system.admin-target）。

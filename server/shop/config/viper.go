@@ -9,6 +9,7 @@ import (
 
 // FromViper 从 GVA 全局 viper 读取 shop.* 配置段，未配置项回落到默认值。
 // 这样 Shop 业务与 GVA 自身的 mysql/jwt/system 配置解耦，互不覆盖。
+
 func FromViper(vp *viper.Viper) Config {
 	cfg := Default()
 	if vp == nil {

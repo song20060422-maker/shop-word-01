@@ -6,17 +6,19 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model/request"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model/response"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
+	"shop/shop/model/request"
+	"shop/shop/model/response"
+	"shop/shop/service"
 )
 
 // PayApi 模拟支付渠道与系统侧补偿接口
+
 type PayApi struct {
 	s *service.ServiceGroup
 }
 
 // Notify 渠道支付成功通知：不依赖登录态，靠签名鉴权；任何分支都留痕可查。
+
 func (a PayApi) Notify(c *gin.Context) {
 	raw, _ := c.GetRawData()
 	var req request.PaymentNotify
@@ -33,6 +35,7 @@ func (a PayApi) Notify(c *gin.Context) {
 }
 
 // CloseExpired 服务端时间触发的超时关闭（演示可手动触发，也可由定时任务调用）
+
 func (a PayApi) CloseExpired(c *gin.Context) {
 	n, err := a.s.OrderService.CloseExpired()
 	if err != nil {
@@ -43,6 +46,7 @@ func (a PayApi) CloseExpired(c *gin.Context) {
 }
 
 // ChannelMode 切换模拟渠道退款结果（success | fail），用于复现「首次失败、再次成功」
+
 func (a PayApi) ChannelMode(c *gin.Context) {
 	var req request.ChannelMode
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -59,6 +63,7 @@ func (a PayApi) ChannelMode(c *gin.Context) {
 }
 
 // PendingOrders 模拟渠道侧可见的待支付订单（演示页面据此发起支付/重发/迟到通知）
+
 func (a PayApi) PendingOrders(c *gin.Context) {
 	list, err := a.s.OrderService.ListByStatus("pending_payment", 50)
 	if err != nil {
@@ -79,6 +84,7 @@ func (a PayApi) PendingOrders(c *gin.Context) {
 }
 
 // ChannelState 查看渠道当前模式（演示与验收脚本用）
+
 func (a PayApi) ChannelState(c *gin.Context) {
 	sc, isSim := a.s.Channel.(*service.SimulatedChannel)
 	if !isSim {

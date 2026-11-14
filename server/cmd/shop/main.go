@@ -14,11 +14,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	shopconfig "github.com/flipped-aurora/gin-vue-admin/server/shop/config"
-	shopdb "github.com/flipped-aurora/gin-vue-admin/server/shop/db"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/migrations"
-	shoprouter "github.com/flipped-aurora/gin-vue-admin/server/shop/router"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
+	shopconfig "shop/shop/config"
+	shopdb "shop/shop/db"
+	"shop/shop/migrations"
+	shoprouter "shop/shop/router"
+	"shop/shop/service"
 )
 
 func main() {

@@ -10,6 +10,7 @@ import (
 )
 
 // System 服务基础配置
+
 type System struct {
 	Addr string `yaml:"addr"`
 	Mode string `yaml:"mode"` // debug | release | test
@@ -19,6 +20,7 @@ type System struct {
 }
 
 // Mysql 数据库配置
+
 type Mysql struct {
 	DSN          string `yaml:"dsn"`
 	MaxIdleConns int    `yaml:"max-idle-conns"`
@@ -27,12 +29,14 @@ type Mysql struct {
 }
 
 // Jwt 令牌配置
+
 type Jwt struct {
 	Secret      string `yaml:"secret"`
 	ExpireHours int    `yaml:"expire-hours"`
 }
 
 // Shop 业务参数
+
 type Shop struct {
 	OrderTimeoutMinutes int    `yaml:"order-timeout-minutes"`
 	PayNotifySecret     string `yaml:"pay-notify-secret"`
@@ -41,11 +45,13 @@ type Shop struct {
 }
 
 // Channel 模拟支付渠道配置
+
 type Channel struct {
 	RefundMode string `yaml:"refund-mode"` // success | fail
 }
 
 // Config 聚合配置
+
 type Config struct {
 	System  System  `yaml:"system"`
 	Mysql   Mysql   `yaml:"mysql"`
@@ -55,6 +61,7 @@ type Config struct {
 }
 
 // Default 返回可立即运行的默认配置（本地 shop-mysql:3307）。
+
 func Default() Config {
 	return Config{
 		System: System{Addr: ":8090", Mode: "debug", AdminTarget: "http://127.0.0.1:8099"},
@@ -71,6 +78,7 @@ func Default() Config {
 }
 
 // Load 读取 yaml 配置（文件不存在时使用默认值），随后应用环境变量覆盖。
+
 func Load(path string) (Config, error) {
 	cfg := Default()
 	if path != "" {
@@ -109,6 +117,7 @@ func Load(path string) (Config, error) {
 }
 
 // OrderTimeout 待付款订单保留时长，缺省 10 分钟。
+
 func (c Config) OrderTimeout() time.Duration {
 	if c.Shop.OrderTimeoutMinutes <= 0 {
 		return 10 * time.Minute
@@ -117,4 +126,5 @@ func (c Config) OrderTimeout() time.Duration {
 }
 
 // AllowRefundByChannel 渠道当前是否受理退款成功。
+
 func (c Config) AllowRefundByChannel() bool { return c.Channel.RefundMode != "fail" }

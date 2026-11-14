@@ -10,9 +10,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	"shop/shop/model"
+	"shop/shop/service"
+	"shop/shop/utils"
 )
 
 // externalChannel 非模拟渠道实现：用于覆盖「渠道不支持切换退款模式」分支。

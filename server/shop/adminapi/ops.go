@@ -5,13 +5,14 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model/request"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
+	"shop/shop/model/request"
+	"shop/shop/service"
 )
 
 // ---------- 运营（GVA 管理端） ----------
 
 // Summary 交易汇总：可售数量、已收款、已退款与状态分布
+
 func (a *Api) Summary(c *gin.Context) {
 	sum, err := a.s.ReportService.Summary()
 	if err != nil {
@@ -22,6 +23,7 @@ func (a *Api) Summary(c *gin.Context) {
 }
 
 // Products 全部商品（含下架）
+
 func (a *Api) Products(c *gin.Context) {
 	list, err := a.s.CatalogService.All()
 	if err != nil {
@@ -32,6 +34,7 @@ func (a *Api) Products(c *gin.Context) {
 }
 
 // ProductUpdate 运营维护商品：上下架/调价/直接覆盖可售数量
+
 func (a *Api) ProductUpdate(c *gin.Context) {
 	id, err := strconv.ParseUint(c.Param("id"), 10, 64)
 	if err != nil || id == 0 {
@@ -69,6 +72,7 @@ func (a *Api) ProductUpdate(c *gin.Context) {
 }
 
 // Orders 按状态查询全量订单
+
 func (a *Api) Orders(c *gin.Context) {
 	list, err := a.s.OrderService.ListByStatus(c.Query("status"), 0)
 	if err != nil {
@@ -79,6 +83,7 @@ func (a *Api) Orders(c *gin.Context) {
 }
 
 // OrderTrace 订单全链路核查视图
+
 func (a *Api) OrderTrace(c *gin.Context) {
 	actorID, role := actor(c, "ops")
 	detail, err := a.s.ReportService.OrderDetail(c.Param("orderNo"), actorID, role)
@@ -90,6 +95,7 @@ func (a *Api) OrderTrace(c *gin.Context) {
 }
 
 // Notices 支付通知处理结果查询（按 orderNo / result 过滤）
+
 func (a *Api) Notices(c *gin.Context) {
 	no := c.Query("orderNo")
 	if no != "" {
@@ -111,6 +117,7 @@ func (a *Api) Notices(c *gin.Context) {
 }
 
 // Abnormals 异常收款列表
+
 func (a *Api) Abnormals(c *gin.Context) {
 	list, err := a.s.PaymentService.AbnormalList(c.Query("status"))
 	if err != nil {
@@ -121,6 +128,7 @@ func (a *Api) Abnormals(c *gin.Context) {
 }
 
 // Ledger 库存流水（核对占用/释放/恢复守恒）
+
 func (a *Api) Ledger(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Query("productId"), 10, 64)
 	list, err := a.s.ReportService.Ledger(id)
@@ -132,6 +140,7 @@ func (a *Api) Ledger(c *gin.Context) {
 }
 
 // Trail 操作留痕
+
 func (a *Api) Trail(c *gin.Context) {
 	list, err := a.s.ReportService.Trail(c.Query("orderNo"))
 	if err != nil {

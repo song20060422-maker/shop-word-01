@@ -5,12 +5,13 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/middleware"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model/request"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
+	"shop/shop/middleware"
+	"shop/shop/model/request"
+	"shop/shop/service"
 )
 
 // StaffApi 员工侧接口：运营核查、仓库发货、客服退款与异常处理
+
 type StaffApi struct {
 	s *service.ServiceGroup
 }
@@ -18,6 +19,7 @@ type StaffApi struct {
 // ---------- 运营 ----------
 
 // ProductUpdate 上下架与调价（不影响已有订单金额快照）
+
 func (a StaffApi) ProductUpdate(c *gin.Context) {
 	var req request.ProductUpdate
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -34,6 +36,7 @@ func (a StaffApi) ProductUpdate(c *gin.Context) {
 }
 
 // Summary 交易汇总：可售数量、已收款、已退款与状态分布
+
 func (a StaffApi) Summary(c *gin.Context) {
 	sum, err := a.s.ReportService.Summary()
 	if err != nil {
@@ -44,6 +47,7 @@ func (a StaffApi) Summary(c *gin.Context) {
 }
 
 // Orders 按状态查询全量订单
+
 func (a StaffApi) Orders(c *gin.Context) {
 	list, err := a.s.OrderService.ListByStatus(c.Query("status"), 0)
 	if err != nil {
@@ -54,6 +58,7 @@ func (a StaffApi) Orders(c *gin.Context) {
 }
 
 // OrderTrace 订单全链路视图（运营/客服/仓库共用）
+
 func (a StaffApi) OrderTrace(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
 	detail, err := a.s.ReportService.OrderDetail(c.Param("orderNo"), claims.UserID, claims.Role)
@@ -65,6 +70,7 @@ func (a StaffApi) OrderTrace(c *gin.Context) {
 }
 
 // Notices 支付通知处理结果查询（按 result 过滤）
+
 func (a StaffApi) Notices(c *gin.Context) {
 	no := c.Query("orderNo")
 	if no != "" {
@@ -86,6 +92,7 @@ func (a StaffApi) Notices(c *gin.Context) {
 }
 
 // Abnormals 异常收款列表
+
 func (a StaffApi) Abnormals(c *gin.Context) {
 	list, err := a.s.PaymentService.AbnormalList(c.Query("status"))
 	if err != nil {
@@ -96,6 +103,7 @@ func (a StaffApi) Abnormals(c *gin.Context) {
 }
 
 // Ledger 库存流水（核对占用/释放/恢复守恒）
+
 func (a StaffApi) Ledger(c *gin.Context) {
 	id, _ := strconv.ParseUint(c.Query("productId"), 10, 64)
 	list, err := a.s.ReportService.Ledger(id)
@@ -107,6 +115,7 @@ func (a StaffApi) Ledger(c *gin.Context) {
 }
 
 // Trail 操作留痕
+
 func (a StaffApi) Trail(c *gin.Context) {
 	list, err := a.s.ReportService.Trail(c.Query("orderNo"))
 	if err != nil {
@@ -119,6 +128,7 @@ func (a StaffApi) Trail(c *gin.Context) {
 // ---------- 仓库 ----------
 
 // Shipable 待发货列表
+
 func (a StaffApi) Shipable(c *gin.Context) {
 	list, err := a.s.ShipmentService.Shipable()
 	if err != nil {
@@ -129,6 +139,7 @@ func (a StaffApi) Shipable(c *gin.Context) {
 }
 
 // Ship 发货登记
+
 func (a StaffApi) Ship(c *gin.Context) {
 	var req request.Ship
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -145,6 +156,7 @@ func (a StaffApi) Ship(c *gin.Context) {
 }
 
 // Shipments 发货记录
+
 func (a StaffApi) Shipments(c *gin.Context) {
 	list, err := a.s.ShipmentService.List()
 	if err != nil {
@@ -157,6 +169,7 @@ func (a StaffApi) Shipments(c *gin.Context) {
 // ---------- 客服 ----------
 
 // Refunds 退款单列表
+
 func (a StaffApi) Refunds(c *gin.Context) {
 	list, err := a.s.RefundService.List(c.Query("status"))
 	if err != nil {
@@ -167,6 +180,7 @@ func (a StaffApi) Refunds(c *gin.Context) {
 }
 
 // RefundAudit 审核售前退款
+
 func (a StaffApi) RefundAudit(c *gin.Context) {
 	var req request.RefundAudit
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -184,6 +198,7 @@ func (a StaffApi) RefundAudit(c *gin.Context) {
 }
 
 // RefundRetry 渠道失败后重试
+
 func (a StaffApi) RefundRetry(c *gin.Context) {
 	var req request.RefundRetry
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -200,6 +215,7 @@ func (a StaffApi) RefundRetry(c *gin.Context) {
 }
 
 // HandleAbnormal 处理迟到支付：核实后发起退款
+
 func (a StaffApi) HandleAbnormal(c *gin.Context) {
 	var req request.AbnormalHandle
 	if err := c.ShouldBindJSON(&req); err != nil {

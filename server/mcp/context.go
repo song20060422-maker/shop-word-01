@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
+	"shop/global"
 )
 
 type mcpContextKey string

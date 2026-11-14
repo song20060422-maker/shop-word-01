@@ -7,11 +7,12 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model/response"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
+	"shop/shop/model/response"
+	"shop/shop/service"
 )
 
 // ApiGroup 全部接口处理器
+
 type ApiGroup struct {
 	AuthApi
 	BuyerApi
@@ -21,6 +22,7 @@ type ApiGroup struct {
 }
 
 // NewApiGroup 组装接口层
+
 func NewApiGroup(g *service.ServiceGroup) *ApiGroup {
 	return &ApiGroup{
 		AuthApi:  AuthApi{s: g},
@@ -32,14 +34,19 @@ func NewApiGroup(g *service.ServiceGroup) *ApiGroup {
 }
 
 // fail 把业务错误翻译为 HTTP 状态 + 稳定错误码，便于三类使用者看到明确原因。
+
 func fail(c *gin.Context, err error) {
 	code, msg := service.BizCode(err)
 	c.JSON(statusOf(code), response.Fail(code, msg))
 }
 
+// ok 统一成功响应包装：业务码 0 + data。
+
 func ok(c *gin.Context, data interface{}) {
 	c.JSON(http.StatusOK, response.OK(data))
 }
+
+// statusOf 业务错误码 → HTTP 状态码映射（契约中 2002 越权为 403）。
 
 func statusOf(code int) int {
 	switch code {

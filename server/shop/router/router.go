@@ -12,16 +12,17 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/api"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/middleware"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model/response"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/web"
+	"shop/shop/api"
+	"shop/shop/config"
+	"shop/shop/middleware"
+	"shop/shop/model"
+	"shop/shop/model/response"
+	"shop/shop/service"
+	"shop/shop/web"
 )
 
 // InitShopRouter 装配 Shop 全部路由：公开区、登录区、运营/仓库/客服分区。
+
 func InitShopRouter(group *gin.RouterGroup, g *service.ServiceGroup, cfg config.Config, now func() time.Time) {
 	ag := api.NewApiGroup(g)
 	// 接口契约兼容层：复用同一套 service，仅做入参/出参契约适配

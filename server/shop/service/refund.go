@@ -7,16 +7,18 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	"shop/shop/model"
+	"shop/shop/utils"
 )
 
 // RefundService 售前退款与迟到支付退款
+
 type RefundService struct {
 	deps Deps
 }
 
 // Apply 买家对「已付款未发货」订单申请整单退款；申请期间订单不在待发货列表，天然暂停发货。
+
 func (s RefundService) Apply(buyerID uint64, orderNo, reason string) (model.Refund, error) {
 	now := s.deps.Now()
 	orderNo = strings.TrimSpace(orderNo)
@@ -98,6 +100,7 @@ func (s RefundService) Apply(buyerID uint64, orderNo, reason string) (model.Refu
 
 // Audit 客服审核：同意则调用渠道退款，拒绝则订单回到可发货状态。
 // 题面要求客服同意/拒绝都必须写明原因，空原因直接拒绝，保证处理记录可追溯。
+
 func (s RefundService) Audit(csID uint64, orderNo string, approve bool, reason string) (model.Refund, error) {
 	now := s.deps.Now()
 	orderNo = strings.TrimSpace(orderNo)
@@ -157,6 +160,7 @@ func (s RefundService) Audit(csID uint64, orderNo string, approve bool, reason s
 // I-18 并发防御：整段（锁定异常记录 -> 建/复用退款单 -> 调渠道 -> 推进）在同一事务内完成，
 // 事务内行锁串行化同一交易号的并发处理，杜绝并发重复发起渠道退款。
 // 模拟渠道为同步内存实现，事务内调用安全；真实渠道应改为闸门状态机+异步回调。
+
 func (s RefundService) HandleAbnormal(csID uint64, txnID, reason string) (model.Refund, error) {
 	now := s.deps.Now()
 	txnID = strings.TrimSpace(txnID)
@@ -266,6 +270,7 @@ func (s RefundService) HandleAbnormal(csID uint64, txnID, reason string) (model.
 }
 
 // Retry 渠道明确失败后由客服重试
+
 func (s RefundService) Retry(csID uint64, refundNo string) (model.Refund, error) {
 	now := s.deps.Now()
 	var refund model.Refund
@@ -283,6 +288,7 @@ func (s RefundService) Retry(csID uint64, refundNo string) (model.Refund, error)
 // 校验通过才真正调渠道——并发 Retry/审核到达同一退款单时，后到者在行锁上阻塞，
 // 解锁后读到的渠道状态已变更为 success/failed，闸门拒绝其再次发起渠道退款。
 // 模拟渠道为同步内存实现，事务内调用安全；真实渠道应改为闸门状态机+异步回调。
+
 func (s RefundService) callChannel(refund model.Refund, csID uint64, expectedChannel string, now time.Time) (model.Refund, error) {
 	ok := false
 	var result model.Refund
@@ -378,6 +384,7 @@ func (s RefundService) callChannel(refund model.Refund, csID uint64, expectedCha
 }
 
 // Get 按单号查询退款单
+
 func (s RefundService) Get(orderNo string) (model.Refund, error) {
 	var r model.Refund
 	if err := s.deps.DB.Where("order_no = ?", strings.TrimSpace(orderNo)).First(&r).Error; err != nil {
@@ -387,6 +394,7 @@ func (s RefundService) Get(orderNo string) (model.Refund, error) {
 }
 
 // List 客服工作台的退款单列表
+
 func (s RefundService) List(status string) ([]model.Refund, error) {
 	var list []model.Refund
 	q := s.deps.DB
@@ -396,6 +404,8 @@ func (s RefundService) List(status string) ([]model.Refund, error) {
 	err := q.Order("id desc").Limit(100).Find(&list).Error
 	return list, err
 }
+
+// uniqueRefundNo 生成退款单号：事务内先查重，冲突换时间片重试，兜底用纳秒偏移。
 
 func (s RefundService) uniqueRefundNo(tx *gorm.DB, now time.Time) string {
 	for i := 0; i < 5; i++ {
@@ -408,6 +418,8 @@ func (s RefundService) uniqueRefundNo(tx *gorm.DB, now time.Time) string {
 	}
 	return utils.NewRefundNo(now.Add(time.Nanosecond))
 }
+
+// boolLabel 布尔转中文，用于审计描述中的"是否恢复库存"等字段。
 
 func boolLabel(v bool) string {
 	if v {

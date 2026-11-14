@@ -14,12 +14,13 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	"shop/shop/config"
+	"shop/shop/model"
+	"shop/shop/utils"
 )
 
 // Gorm 建立连接：库不存在时自动创建，保证首次运行可直接启动。
+
 func Gorm(cfg config.Config) (*gorm.DB, error) {
 	newLogger := logger.Default.LogMode(logger.Silent)
 	if cfg.Mysql.LogMode {
@@ -48,6 +49,8 @@ func Gorm(cfg config.Config) (*gorm.DB, error) {
 	return gdb, nil
 }
 
+// createDatabase 首次启动时按 DSN 建库（不切库、不覆盖已有库）。
+
 func createDatabase(dsn string) error {
 	parsed, err := driver.ParseDSN(dsn)
 	if err != nil {
@@ -74,6 +77,7 @@ func createDatabase(dsn string) error {
 }
 
 // Migrate 按文件名顺序执行内置 migrations，脚本全部使用 IF NOT EXISTS 可重复执行。
+
 func Migrate(db *gorm.DB, fsys fs.FS) error {
 	names, err := fs.Glob(fsys, "*.sql")
 	if err != nil {
@@ -98,6 +102,7 @@ func Migrate(db *gorm.DB, fsys fs.FS) error {
 }
 
 // splitSQL 去掉注释行后按分号切分语句。
+
 func splitSQL(content string) []string {
 	var cleaned strings.Builder
 	for _, line := range strings.Split(content, "\n") {
@@ -118,6 +123,7 @@ func splitSQL(content string) []string {
 }
 
 // SeedAccounts 为预置账号补齐密码摘要（种子脚本不落明文，也不落固定哈希）。
+
 func SeedAccounts(db *gorm.DB, demoPassword string) error {
 	if demoPassword == "" {
 		demoPassword = "shop123"

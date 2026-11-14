@@ -6,6 +6,7 @@ package model
 import "time"
 
 // 订单状态机：pending_payment -> paid -> shipped / refund_requested -> refunded|refund_failed
+
 const (
 	OrderStatusPendingPayment  = "pending_payment"
 	OrderStatusCancelled       = "cancelled"
@@ -18,6 +19,7 @@ const (
 )
 
 // 角色
+
 const (
 	RoleBuyer     = "buyer"
 	RoleOps       = "ops"
@@ -26,12 +28,14 @@ const (
 )
 
 // 退款来源：售前退款 / 迟到支付退款
+
 const (
 	RefundSourcePresale      = "presale"
 	RefundSourceAbnormalLate = "abnormal_late"
 )
 
 // 退款审核与渠道状态
+
 const (
 	AuditPending  = "pending"
 	AuditApproved = "approved"
@@ -43,6 +47,7 @@ const (
 )
 
 // 支付通知处理结果
+
 const (
 	NoticeAccepted   = "accepted"
 	NoticeRejected   = "rejected"
@@ -51,6 +56,7 @@ const (
 )
 
 // 库存流水类型
+
 const (
 	LedgerOccupy  = "occupy"
 	LedgerRelease = "release"
@@ -59,12 +65,14 @@ const (
 )
 
 // 异常支付处理状态
+
 const (
 	AbnormalPending = "pending"
 	AbnormalHandled = "handled"
 )
 
 // User 买家与员工账号
+
 type User struct {
 	ID           uint64    `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
 	Username     string    `gorm:"column:username" json:"username"`
@@ -74,9 +82,12 @@ type User struct {
 	CreatedAt    time.Time `gorm:"column:created_at" json:"createdAt"`
 }
 
+// TableName 鍥哄畾琛ㄥ悕 users
+
 func (User) TableName() string { return "users" }
 
 // Product 商品与可售数量
+
 type Product struct {
 	ID           uint64    `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
 	SKU          string    `gorm:"column:sku" json:"sku"`
@@ -89,9 +100,12 @@ type Product struct {
 	UpdatedAt    time.Time `gorm:"column:updated_at" json:"updatedAt"`
 }
 
+// TableName 鍥哄畾琛ㄥ悕 products
+
 func (Product) TableName() string { return "products" }
 
 // Order 订单（含商品与价格快照）
+
 type Order struct {
 	ID          uint64     `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
 	OrderNo     string     `gorm:"column:order_no" json:"orderNo"`
@@ -110,9 +124,12 @@ type Order struct {
 	UpdatedAt   time.Time  `gorm:"column:updated_at" json:"updatedAt"`
 }
 
+// TableName 鍥哄畾琛ㄥ悕 orders
+
 func (Order) TableName() string { return "orders" }
 
 // Payment 成功记款（幂等基石：order_no 与 channel_txn_id 双唯一）
+
 type Payment struct {
 	ID           uint64    `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
 	OrderNo      string    `gorm:"column:order_no" json:"orderNo"`
@@ -122,9 +139,12 @@ type Payment struct {
 	CreatedAt    time.Time `gorm:"column:created_at" json:"createdAt"`
 }
 
+// TableName 鍥哄畾琛ㄥ悕 payments
+
 func (Payment) TableName() string { return "payments" }
 
 // PaymentNotice 支付通知原始留痕（含被拒与重复）
+
 type PaymentNotice struct {
 	ID           uint64    `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
 	OrderNo      string    `gorm:"column:order_no" json:"orderNo"`
@@ -137,9 +157,12 @@ type PaymentNotice struct {
 	CreatedAt    time.Time `gorm:"column:created_at" json:"createdAt"`
 }
 
+// TableName 鍥哄畾琛ㄥ悕 payment_notices
+
 func (PaymentNotice) TableName() string { return "payment_notices" }
 
 // Refund 退款单（整单退款，一单一张）
+
 type Refund struct {
 	ID            uint64     `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
 	RefundNo      string     `gorm:"column:refund_no" json:"refundNo"`
@@ -157,9 +180,12 @@ type Refund struct {
 	UpdatedAt     time.Time  `gorm:"column:updated_at" json:"updatedAt"`
 }
 
+// TableName 鍥哄畾琛ㄥ悕 refunds
+
 func (Refund) TableName() string { return "refunds" }
 
 // Shipment 发货登记
+
 type Shipment struct {
 	ID         uint64    `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
 	OrderNo    string    `gorm:"column:order_no" json:"orderNo"`
@@ -169,9 +195,12 @@ type Shipment struct {
 	CreatedAt  time.Time `gorm:"column:created_at" json:"createdAt"`
 }
 
+// TableName 鍥哄畾琛ㄥ悕 shipments
+
 func (Shipment) TableName() string { return "shipments" }
 
 // AbnormalPayment 迟到支付等异常收款待处理
+
 type AbnormalPayment struct {
 	ID           uint64     `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
 	OrderNo      string     `gorm:"column:order_no" json:"orderNo"`
@@ -185,9 +214,12 @@ type AbnormalPayment struct {
 	CreatedAt    time.Time  `gorm:"column:created_at" json:"createdAt"`
 }
 
+// TableName 鍥哄畾琛ㄥ悕 abnormal_payments
+
 func (AbnormalPayment) TableName() string { return "abnormal_payments" }
 
 // InventoryLedger 库存变动流水（守恒校验依据）
+
 type InventoryLedger struct {
 	ID             uint64    `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
 	ProductID      uint64    `gorm:"column:product_id" json:"productId"`
@@ -198,9 +230,12 @@ type InventoryLedger struct {
 	CreatedAt      time.Time `gorm:"column:created_at" json:"createdAt"`
 }
 
+// TableName 鍥哄畾琛ㄥ悕 inventory_ledger
+
 func (InventoryLedger) TableName() string { return "inventory_ledger" }
 
 // OperationLog 操作留痕（追加写，不提供修改与删除接口）
+
 type OperationLog struct {
 	ID        uint64    `gorm:"column:id;primaryKey;autoIncrement" json:"id"`
 	OrderNo   *string   `gorm:"column:order_no" json:"orderNo,omitempty"`
@@ -210,5 +245,7 @@ type OperationLog struct {
 	Detail    string    `gorm:"column:detail" json:"detail"`
 	CreatedAt time.Time `gorm:"column:created_at" json:"createdAt"`
 }
+
+// TableName 鍥哄畾琛ㄥ悕 operation_logs
 
 func (OperationLog) TableName() string { return "operation_logs" }

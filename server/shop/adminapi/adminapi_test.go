@@ -17,13 +17,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
-	systemReq "github.com/flipped-aurora/gin-vue-admin/server/model/system/request"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
-	shopdb "github.com/flipped-aurora/gin-vue-admin/server/shop/db"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/migrations"
-	shoprouter "github.com/flipped-aurora/gin-vue-admin/server/shop/router"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	systemReq "shop/model/system/request"
+	"shop/shop/config"
+	shopdb "shop/shop/db"
+	"shop/shop/migrations"
+	shoprouter "shop/shop/router"
+	"shop/shop/service"
+	"shop/shop/utils"
 )
 
 var (

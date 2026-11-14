@@ -8,14 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/qiniu/qmgo"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/utils/timer"
+	"shop/utils/timer"
 	"github.com/songzhibin97/gkit/cache/local_cache"
 
 	"golang.org/x/sync/singleflight"
 
 	"go.uber.org/zap"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/config"
+	"shop/config"
 
 	"github.com/redis/go-redis/v9"
 	"github.com/spf13/viper"

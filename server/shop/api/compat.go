@@ -13,14 +13,15 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/middleware"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	"shop/shop/config"
+	"shop/shop/middleware"
+	"shop/shop/model"
+	"shop/shop/service"
+	"shop/shop/utils"
 )
 
 // compatStaffAlias 接口契约账号名 -> 原型种子账号名（仅登录兜底使用）。
+
 var compatStaffAlias = map[string]string{
 	"ops":       "ops1",
 	"warehouse": "wh1",
@@ -34,6 +35,7 @@ var compatStaffAlias = map[string]string{
 //  2. 输出「契约扁平字段 + 原型 data 副本」双轨结构：验收脚本读顶层字段，
 //     内置演示页面继续读 data，既有 /api 原型页面的调用方式不被破坏；
 //  3. 对状态、金额单位、字段命名做契约侧映射（分、WAIT_PAY/TO_SHIP 等）。
+
 type CompatApi struct {
 	s   *service.ServiceGroup
 	cfg config.Config
@@ -41,6 +43,7 @@ type CompatApi struct {
 }
 
 // NewCompatApi 构造兼容层处理器。
+
 func NewCompatApi(g *service.ServiceGroup, cfg config.Config, now func() time.Time) *CompatApi {
 	if now == nil {
 		now = time.Now
@@ -49,6 +52,7 @@ func NewCompatApi(g *service.ServiceGroup, cfg config.Config, now func() time.Ti
 }
 
 // PublicGuard 公开区委派：命中与原型同名但契约语义不同的路径时改走兼容实现。
+
 func (a *CompatApi) PublicGuard() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if a.delegate(c) {
@@ -60,6 +64,7 @@ func (a *CompatApi) PublicGuard() gin.HandlerFunc {
 }
 
 // AuthGuard 登录区委派：必须挂在 JWT 中间件之后，保证 claims 已就绪。
+
 func (a *CompatApi) AuthGuard() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if a.delegate(c) {
@@ -71,6 +76,7 @@ func (a *CompatApi) AuthGuard() gin.HandlerFunc {
 }
 
 // delegate 按「方法 + 注册路径」判断是否需要交给契约兼容实现。
+
 func (a *CompatApi) delegate(c *gin.Context) bool {
 	full := c.FullPath()
 	match := func(target string) bool { return full == target || strings.HasSuffix(full, target) }
@@ -112,6 +118,7 @@ func (a *CompatApi) delegate(c *gin.Context) bool {
 // ---------------- 状态与视图映射 ----------------
 
 // orderStatusLabel 内部订单状态 → 契约状态（WAIT_PAY / TO_SHIP / SHIPPED / REFUND_PENDING / REFUNDED / CLOSED）。
+
 func orderStatusLabel(st string) string {
 	switch st {
 	case model.OrderStatusPendingPayment:
@@ -130,6 +137,7 @@ func orderStatusLabel(st string) string {
 }
 
 // refundStatusLabel 退款单内部状态 → 契约状态（PENDING / REFUNDING / FAILED / REFUNDED / REJECTED）。
+
 func refundStatusLabel(r model.Refund) string {
 	switch {
 	case r.AuditStatus == model.AuditRejected:
@@ -146,6 +154,7 @@ func refundStatusLabel(r model.Refund) string {
 }
 
 // refundFailReason 渠道失败原因（契约 refund.fail_reason）。
+
 func refundFailReason(r model.Refund) string {
 	if r.ChannelStatus != model.ChannelFailed {
 		return ""
@@ -157,6 +166,7 @@ func refundFailReason(r model.Refund) string {
 }
 
 // ts 统一时间输出格式（RFC3339）。旧版验收脚本会尝试解析 ISO8601。
+
 func ts(t time.Time) string {
 	if t.IsZero() {
 		return ""
@@ -165,6 +175,7 @@ func ts(t time.Time) string {
 }
 
 // tsP 指针时间输出，nil 时返回空字符串。
+
 func tsP(t *time.Time) string {
 	if t == nil {
 		return ""
@@ -173,6 +184,7 @@ func tsP(t *time.Time) string {
 }
 
 // productView 商品视图：id 使用 SKU（契约约定），同时保留原有 camelCase 字段。
+
 func productView(p model.Product) gin.H {
 	return gin.H{
 		"id":            p.SKU,
@@ -192,6 +204,7 @@ func productView(p model.Product) gin.H {
 }
 
 // refundView 退款单视图（契约 {id,status,reason,fail_reason}）。
+
 func refundView(r model.Refund) gin.H {
 	reason := r.AuditReason
 	if reason == "" {
@@ -223,6 +236,7 @@ func refundView(r model.Refund) gin.H {
 }
 
 // orderView 订单视图：同时提供契约 snake_case 字段与原型 camelCase 字段。
+
 func (a *CompatApi) orderView(o model.Order, refund *model.Refund, ship *model.Shipment) gin.H {
 	sku := ""
 	if p, err := a.s.CatalogService.Get(o.ProductID); err == nil {
@@ -286,6 +300,7 @@ func bindAny(c *gin.Context) map[string]interface{} {
 }
 
 // strOf 依次取第一个非空字段，兼容契约 snake_case 与原型 camelCase。
+
 func strOf(m map[string]interface{}, keys ...string) string {
 	for _, k := range keys {
 		v, ok := m[k]
@@ -310,6 +325,7 @@ func strOf(m map[string]interface{}, keys ...string) string {
 }
 
 // intOf 取整数值字段。
+
 func intOf(m map[string]interface{}, keys ...string) (int64, bool) {
 	for _, k := range keys {
 		v, ok := m[k]
@@ -335,6 +351,7 @@ func intOf(m map[string]interface{}, keys ...string) (int64, bool) {
 }
 
 // boolOf 取布尔值字段。
+
 func boolOf(m map[string]interface{}, keys ...string) (bool, bool) {
 	for _, k := range keys {
 		if v, ok := m[k]; ok && v != nil {
@@ -347,6 +364,7 @@ func boolOf(m map[string]interface{}, keys ...string) (bool, bool) {
 }
 
 // failJSON 契约要求的业务失败响应：4xx + {"code","message"}。
+
 func (a *CompatApi) failJSON(c *gin.Context, err error) {
 	code, msg := service.BizCode(err)
 	if msg == "" {
@@ -364,6 +382,7 @@ func (a *CompatApi) failJSON(c *gin.Context, err error) {
 }
 
 // okJSON 统一输出：顶层契约字段 + data 副本（原型页面继续读 data）。
+
 func (a *CompatApi) okJSON(c *gin.Context, flat gin.H, data gin.H) {
 	out := gin.H{"code": 0, "msg": "ok"}
 	for k, v := range flat {
@@ -377,6 +396,7 @@ func (a *CompatApi) okJSON(c *gin.Context, flat gin.H, data gin.H) {
 }
 
 // resolveProduct 商品双寻址：SKU 优先，其次数字主键。
+
 func (a *CompatApi) resolveProduct(ref string) (model.Product, error) {
 	if p, err := a.s.CatalogService.ProductBySKU(ref); err == nil {
 		return p, nil
@@ -390,6 +410,7 @@ func (a *CompatApi) resolveProduct(ref string) (model.Product, error) {
 // ---------------- 公开区接口 ----------------
 
 // Login POST /api/login -> {token, role}
+
 func (a *CompatApi) Login(c *gin.Context) {
 	body := bindAny(c)
 	username := strOf(body, "username")
@@ -430,6 +451,7 @@ func (a *CompatApi) Login(c *gin.Context) {
 }
 
 // Products GET /api/products -> [{id: sku, price_cents, available, on_sale}]
+
 func (a *CompatApi) Products(c *gin.Context) {
 	list, err := a.s.CatalogService.OnSale()
 	if err != nil {
@@ -451,6 +473,7 @@ func (a *CompatApi) Products(c *gin.Context) {
 // ---------------- 买家接口 ----------------
 
 // CreateOrder POST /api/orders -> {order_id, order_no, amount, status, expire_at}
+
 func (a *CompatApi) CreateOrder(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
 	// 兼容层委派路径绕过了路由组上的 RequireRole，必须在此复核角色（I-02 越权防护）
@@ -501,6 +524,7 @@ func (a *CompatApi) CreateOrder(c *gin.Context) {
 }
 
 // OrderDetail GET /api/orders/{id} -> 订单详情（{id} 兼容数字主键与订单号）
+
 func (a *CompatApi) OrderDetail(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
 	o, err := a.s.OrderService.FindByRef(c.Param("orderNo"))
@@ -549,6 +573,7 @@ func (a *CompatApi) OrderDetail(c *gin.Context) {
 }
 
 // CancelOrder POST /api/orders/{id}/cancel -> 待付款可取消（重复取消 4xx）
+
 func (a *CompatApi) CancelOrder(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
 	// 兼容层委派路径绕过了路由组上的 RequireRole，必须在此复核角色（I-02 越权防护）
@@ -571,6 +596,7 @@ func (a *CompatApi) CancelOrder(c *gin.Context) {
 }
 
 // RefundApply POST /api/orders/{id}/refund-apply -> {refund_id}（仅 TO_SHIP 可申请）
+
 func (a *CompatApi) RefundApply(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
 	// 兼容层委派/直接注册路径均绕过 RequireRole，必须在此复核角色（I-02 越权防护）
@@ -612,6 +638,7 @@ func (a *CompatApi) RefundApply(c *gin.Context) {
 // ---------------- 运营接口 ----------------
 
 // OpsProductUpdate PATCH /api/ops/products/{id} -> available 直接覆盖
+
 func (a *CompatApi) OpsProductUpdate(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
 	p, err := a.resolveProduct(c.Param("id"))
@@ -657,6 +684,7 @@ func (a *CompatApi) OpsProductUpdate(c *gin.Context) {
 }
 
 // OpsSummary GET /api/ops/summary -> {products:[{id,available}], paid_total, refunded_total}（分）
+
 func (a *CompatApi) OpsSummary(c *gin.Context) {
 	// 兼容层委派路径绕过了路由组上的 RequireRole，必须在此复核角色（E-10 越权防护）
 	if claims := middleware.ClaimsOf(c); claims.Role != model.RoleOps {
@@ -711,6 +739,7 @@ func (a *CompatApi) OpsSummary(c *gin.Context) {
 }
 
 // noticeStatusLabel 通知留痕结果 → 对外状态（成功记款单独以 SUCCESS 出现）。
+
 func noticeStatusLabel(n model.PaymentNotice) string {
 	switch n.Result {
 	case model.NoticeAccepted:
@@ -727,6 +756,7 @@ func noticeStatusLabel(n model.PaymentNotice) string {
 }
 
 // OpsPayments GET /api/ops/payments?order_no=X -> 该订单全部支付/通知记录（含失败记录）
+
 func (a *CompatApi) OpsPayments(c *gin.Context) {
 	orderNo := strings.TrimSpace(c.Query("order_no"))
 	if orderNo == "" {
@@ -785,6 +815,7 @@ func (a *CompatApi) OpsPayments(c *gin.Context) {
 // ---------------- 支付渠道模拟（脚本侧） ----------------
 
 // PayChannelPay POST /api/pay/channel-pay -> {channel_txn_no, amount}
+
 func (a *CompatApi) PayChannelPay(c *gin.Context) {
 	body := bindAny(c)
 	ref := strOf(body, "order_no", "orderNo")
@@ -812,6 +843,7 @@ func (a *CompatApi) PayChannelPay(c *gin.Context) {
 }
 
 // hmacHex 计算 HMAC-SHA256 十六进制小写摘要（渠道回调验签）。
+
 func hmacHex(secret string, raw []byte) string {
 	mac := hmac.New(sha256.New, []byte(secret))
 	mac.Write(raw)
@@ -819,6 +851,7 @@ func hmacHex(secret string, raw []byte) string {
 }
 
 // PayNotify POST /api/pay/notify：按原始请求体字节验签，失败分支 4xx 且留痕可查。
+
 func (a *CompatApi) PayNotify(c *gin.Context) {
 	raw, _ := c.GetRawData()
 	body := map[string]interface{}{}
@@ -883,6 +916,7 @@ func (a *CompatApi) PayNotify(c *gin.Context) {
 }
 
 // PayChannelMode POST /api/pay/channel-mode -> 设定下一次渠道退款结果
+
 func (a *CompatApi) PayChannelMode(c *gin.Context) {
 	body := bindAny(c)
 	raw := strOf(body, "refund_result", "refundResult", "mode", "refund_mode")
@@ -914,6 +948,7 @@ func (a *CompatApi) PayChannelMode(c *gin.Context) {
 // ---------------- 仓库接口 ----------------
 
 // WarehouseOrders GET /api/warehouse/orders -> 可发货（TO_SHIP）订单列表
+
 func (a *CompatApi) WarehouseOrders(c *gin.Context) {
 	list, err := a.s.ShipmentService.Shipable()
 	if err != nil {
@@ -928,6 +963,7 @@ func (a *CompatApi) WarehouseOrders(c *gin.Context) {
 }
 
 // WarehouseShip POST /api/warehouse/orders/{id}/ship -> 仅 TO_SHIP 可发货且幂等
+
 func (a *CompatApi) WarehouseShip(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
 	o, err := a.s.OrderService.FindByRef(c.Param("orderNo"))
@@ -960,6 +996,7 @@ func (a *CompatApi) WarehouseShip(c *gin.Context) {
 // ---------------- 客服接口 ----------------
 
 // CSRefunds GET /api/cs/refunds -> 退款单列表
+
 func (a *CompatApi) CSRefunds(c *gin.Context) {
 	// 兼容层委派路径绕过了路由组上的 RequireRole，必须在此复核角色（E-10 越权防护）
 	if claims := middleware.ClaimsOf(c); claims.Role != model.RoleCS {
@@ -980,6 +1017,7 @@ func (a *CompatApi) CSRefunds(c *gin.Context) {
 }
 
 // CSRefundDecide POST /api/cs/refunds/{id}/decide -> 审核并触发渠道退款
+
 func (a *CompatApi) CSRefundDecide(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
 	r, err := a.s.RefundService.FindByRef(c.Param("id"))
@@ -1032,6 +1070,7 @@ func (a *CompatApi) CSRefundDecide(c *gin.Context) {
 }
 
 // CSRefundRetry POST /api/cs/refunds/{id}/retry -> 对 FAILED 退款单重试
+
 func (a *CompatApi) CSRefundRetry(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
 	r, err := a.s.RefundService.FindByRef(c.Param("id"))
@@ -1064,6 +1103,7 @@ func (a *CompatApi) CSRefundRetry(c *gin.Context) {
 }
 
 // abnormalStatusLabel 异常收款状态（契约 payment-exceptions）。
+
 func abnormalStatusLabel(status string) string {
 	if status == model.AbnormalHandled {
 		return "HANDLED"
@@ -1072,6 +1112,7 @@ func abnormalStatusLabel(status string) string {
 }
 
 // CSExceptions GET /api/cs/payment-exceptions -> 异常支付列表
+
 func (a *CompatApi) CSExceptions(c *gin.Context) {
 	status := strings.ToLower(strings.TrimSpace(c.Query("status")))
 	list, err := a.s.PaymentService.AbnormalList(status)
@@ -1104,6 +1145,7 @@ func (a *CompatApi) CSExceptions(c *gin.Context) {
 }
 
 // CSExceptionRefund POST /api/cs/payment-exceptions/{id}/refund -> 对迟到支付发起退款（幂等）
+
 func (a *CompatApi) CSExceptionRefund(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
 	idText := strings.TrimSpace(c.Param("id"))
@@ -1141,6 +1183,7 @@ func (a *CompatApi) CSExceptionRefund(c *gin.Context) {
 // ---------------- 测试钩子 ----------------
 
 // diffNos 求 before - after（被关闭的订单号）。
+
 func diffNos(before, after []string) []string {
 	keep := make(map[string]bool, len(after))
 	for _, n := range after {
@@ -1159,6 +1202,7 @@ func diffNos(before, after []string) []string {
 //
 // 语义：先按服务端时间关闭真实超时订单；若本次没有订单到期（脚本刚创建订单的场景），
 // 测试钩子会让最新一笔待付款订单立即到期后再关闭，等价于「时间快进」到该订单到期时刻。
+
 func (a *CompatApi) TestExpireOrders(c *gin.Context) {
 	before, err := a.s.OrderService.PendingOrderNos()
 	if err != nil {

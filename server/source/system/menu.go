@@ -3,8 +3,8 @@ package system
 import (
 	"context"
 
-	. "github.com/flipped-aurora/gin-vue-admin/server/model/system"
-	"github.com/flipped-aurora/gin-vue-admin/server/service/system"
+	. "shop/model/system"
+	"shop/service/system"
 	"github.com/pkg/errors"
 	"gorm.io/gorm"
 )

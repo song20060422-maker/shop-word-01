@@ -2,7 +2,7 @@
 package system
 
 import (
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
+	"shop/global"
 )
 
 // 错误日志 结构体  SysError

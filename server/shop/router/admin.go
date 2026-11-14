@@ -4,12 +4,13 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/adminapi"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
+	"shop/shop/adminapi"
+	"shop/shop/service"
 )
 
 // InitShopAdminRouter 注册商城后台管理接口（运营/仓库/客服），前缀 /shop。
 // 调用方需保证 group 已经过 GVA JWTAuth + CasbinHandler。
+
 func InitShopAdminRouter(group *gin.RouterGroup, g *service.ServiceGroup) {
 	a := adminapi.NewApi(g)
 

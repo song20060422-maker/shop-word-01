@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	"shop/shop/model"
+	"shop/shop/utils"
 )
 
 // 契约兼容层 service 扩展方法的真实业务路径测试（替代工具函数补洞）。

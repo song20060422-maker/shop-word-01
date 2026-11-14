@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	"shop/shop/model"
+	"shop/shop/utils"
 )
 
 func TestCreateOrderSnapshotAndOccupy(t *testing.T) {

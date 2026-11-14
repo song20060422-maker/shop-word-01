@@ -5,14 +5,15 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/model/common/response"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model/request"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
+	"shop/model/common/response"
+	"shop/shop/model/request"
+	"shop/shop/service"
 )
 
 // ---------- 客服（GVA 管理端） ----------
 
 // Refunds 退款单列表
+
 func (a *Api) Refunds(c *gin.Context) {
 	list, err := a.s.RefundService.List(c.Query("status"))
 	if err != nil {
@@ -23,6 +24,7 @@ func (a *Api) Refunds(c *gin.Context) {
 }
 
 // RefundAudit 审核售前退款（同意→渠道退款；拒绝→回到待发货）
+
 func (a *Api) RefundAudit(c *gin.Context) {
 	var req request.RefundAudit
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -40,6 +42,7 @@ func (a *Api) RefundAudit(c *gin.Context) {
 }
 
 // RefundRetry 渠道失败后重试
+
 func (a *Api) RefundRetry(c *gin.Context) {
 	var req request.RefundRetry
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -56,6 +59,7 @@ func (a *Api) RefundRetry(c *gin.Context) {
 }
 
 // Abnormals 异常收款列表（客服）
+
 func (a *Api) CsAbnormals(c *gin.Context) {
 	list, err := a.s.PaymentService.AbnormalList(c.Query("status"))
 	if err != nil {
@@ -66,6 +70,7 @@ func (a *Api) CsAbnormals(c *gin.Context) {
 }
 
 // HandleAbnormal 处理迟到支付：核实后发起退款
+
 func (a *Api) HandleAbnormal(c *gin.Context) {
 	var req request.AbnormalHandle
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -82,6 +87,7 @@ func (a *Api) HandleAbnormal(c *gin.Context) {
 }
 
 // CsNotices 支付通知处理记录（客服）
+
 func (a *Api) CsNotices(c *gin.Context) {
 	limit := 100
 	if v, err := strconv.Atoi(c.Query("limit")); err == nil && v > 0 {
@@ -96,6 +102,7 @@ func (a *Api) CsNotices(c *gin.Context) {
 }
 
 // CsOrderTrace 订单全链路视图（客服视角）
+
 func (a *Api) CsOrderTrace(c *gin.Context) {
 	actorID, role := actor(c, "cs")
 	detail, err := a.s.ReportService.OrderDetail(c.Param("orderNo"), actorID, role)
@@ -107,6 +114,7 @@ func (a *Api) CsOrderTrace(c *gin.Context) {
 }
 
 // ChannelMode 切换模拟渠道退款结果（success | fail），用于复现「首次失败、再次成功」
+
 func (a *Api) ChannelMode(c *gin.Context) {
 	var req request.ChannelMode
 	if err := c.ShouldBindJSON(&req); err != nil {

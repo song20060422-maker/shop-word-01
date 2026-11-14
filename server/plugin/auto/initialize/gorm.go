@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	autoModel "github.com/flipped-aurora/gin-vue-admin/server/plugin/auto/model"
+	"shop/global"
+	autoModel "shop/plugin/auto/model"
 	"github.com/pkg/errors"
 	"go.uber.org/zap"
 )

@@ -19,9 +19,12 @@ import (
 	"golang.org/x/crypto/pbkdf2"
 )
 
+// pbkdf2Iter 口令派生迭代次数（演示环境取 4096，兼顾登录耗时与爆破成本）。
+
 const pbkdf2Iter = 4096
 
 // HashPassword 生成 pbkdf2$iter$salt$hash 形式的密码摘要。
+
 func HashPassword(plain string) (string, error) {
 	salt := make([]byte, 16)
 	if _, err := rand.Read(salt); err != nil {
@@ -32,6 +35,7 @@ func HashPassword(plain string) (string, error) {
 }
 
 // VerifyPassword 校验明文密码与摘要是否匹配，比较过程使用常量时间。
+
 func VerifyPassword(plain, encoded string) bool {
 	parts := strings.Split(encoded, "$")
 	if len(parts) != 4 || parts[0] != "pbkdf2" {
@@ -56,6 +60,7 @@ func VerifyPassword(plain, encoded string) bool {
 // ---------- JWT（HS256，标准库实现，避免额外依赖） ----------
 
 // Claims JWT 载荷
+
 type Claims struct {
 	UserID   uint64 `json:"sub"`
 	Username string `json:"username"`
@@ -65,11 +70,15 @@ type Claims struct {
 }
 
 // ErrInvalidToken 令牌非法
+
 var ErrInvalidToken = errors.New("令牌无效或已过期")
+
+// b64 JWT 段编码：无填充的 URL 安全 Base64。
 
 func b64(buf []byte) string { return base64.RawURLEncoding.EncodeToString(buf) }
 
 // SignJWT 签发令牌
+
 func SignJWT(secret string, c Claims) (string, error) {
 	header := b64([]byte(`{"alg":"HS256","typ":"JWT"}`))
 	payloadJSON, err := json.Marshal(c)
@@ -84,6 +93,7 @@ func SignJWT(secret string, c Claims) (string, error) {
 }
 
 // ParseJWT 解析并校验令牌
+
 func ParseJWT(secret, token string, now time.Time) (Claims, error) {
 	var claims Claims
 	parts := strings.Split(token, ".")
@@ -114,6 +124,8 @@ func ParseJWT(secret, token string, now time.Time) (Claims, error) {
 
 const noCharset = "0123456789"
 
+// randDigits 生成 n 位密码学随机数字串，用于订单号/退款单号的随机尾段。
+
 func randDigits(n int) string {
 	buf := make([]byte, 0, n)
 	for i := 0; i < n; i++ {
@@ -128,16 +140,19 @@ func randDigits(n int) string {
 }
 
 // NewOrderNo 生成 20 位订单号：SH + yyMMddHHmmss + 6 位随机数字。
+
 func NewOrderNo(now time.Time) string {
 	return "SH" + now.Format("060102150405") + randDigits(6)
 }
 
 // NewRefundNo 生成 20 位退款单号：RF + yyMMddHHmmss + 6 位随机数字。
+
 func NewRefundNo(now time.Time) string {
 	return "RF" + now.Format("060102150405") + randDigits(6)
 }
 
 // PaySign 模拟渠道通知签名：HMAC-SHA256(secret, orderNo|txn|amount)。
+
 func PaySign(secret, orderNo, txn string, amount int64) string {
 	mac := hmac.New(sha256.New, []byte(secret))
 	mac.Write([]byte(fmt.Sprintf("%s|%s|%d", orderNo, txn, amount)))
@@ -145,6 +160,7 @@ func PaySign(secret, orderNo, txn string, amount int64) string {
 }
 
 // Fen 把分转换为人民币字符串，便于页面展示。
+
 func Fen(cents int64) string {
 	sign := ""
 	if cents < 0 {

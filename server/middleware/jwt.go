@@ -5,11 +5,11 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	"github.com/flipped-aurora/gin-vue-admin/server/utils"
+	"shop/global"
+	"shop/utils"
 	"github.com/golang-jwt/jwt/v5"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/model/common/response"
+	"shop/model/common/response"
 	"github.com/gin-gonic/gin"
 )
 

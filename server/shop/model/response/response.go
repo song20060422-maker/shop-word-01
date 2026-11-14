@@ -1,9 +1,10 @@
 // Package response 存放统一响应体与对外 DTO。
 package response
 
-import "github.com/flipped-aurora/gin-vue-admin/server/shop/model"
+import "shop/shop/model"
 
 // Body 统一响应体（GVA 约定 code=0 成功）
+
 type Body struct {
 	Code int         `json:"code"`
 	Data interface{} `json:"data"`
@@ -11,12 +12,15 @@ type Body struct {
 }
 
 // OK 成功响应
+
 func OK(data interface{}) Body { return Body{Code: 0, Data: data, Msg: "success"} }
 
 // Fail 失败响应
+
 func Fail(code int, msg string) Body { return Body{Code: code, Data: nil, Msg: msg} }
 
 // LoginResult 登录结果
+
 type LoginResult struct {
 	Token    string     `json:"token"`
 	User     model.User `json:"user"`
@@ -24,6 +28,7 @@ type LoginResult struct {
 }
 
 // OrderDetail 订单聚合视图：买家能看懂钱与订单去向
+
 type OrderDetail struct {
 	Order         model.Order             `json:"order"`
 	Payment       *model.Payment          `json:"payment,omitempty"`
@@ -38,6 +43,7 @@ type OrderDetail struct {
 }
 
 // ProductStat 商品维度汇总
+
 type ProductStat struct {
 	ProductID     uint64 `json:"productId"`
 	SKU           string `json:"sku"`
@@ -53,6 +59,7 @@ type ProductStat struct {
 }
 
 // TradeSummary 交易汇总（运营核查用）
+
 type TradeSummary struct {
 	Products           []ProductStat    `json:"products"`
 	TotalPaidCents     int64            `json:"totalPaidCents"`

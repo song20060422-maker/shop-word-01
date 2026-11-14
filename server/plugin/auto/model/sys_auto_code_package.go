@@ -1,6 +1,6 @@
 package model
 
-import "github.com/flipped-aurora/gin-vue-admin/server/global"
+import "shop/global"
 
 type SysAutoCodePackage struct {
 	global.GVA_MODEL

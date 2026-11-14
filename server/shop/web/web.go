@@ -9,29 +9,35 @@ package web
 import "embed"
 
 //go:embed buyer.html index.html ops.html warehouse.html cs.html
+
 var files embed.FS
 
 // Index 返回集成版全功能页 HTML（五个页签同页，挂在根路径）。
+
 func Index() ([]byte, error) {
 	return files.ReadFile("index.html")
 }
 
 // Buyer 返回买家端页面 HTML。
+
 func Buyer() ([]byte, error) {
 	return files.ReadFile("buyer.html")
 }
 
 // Ops 返回运营核查独立页面 HTML。
+
 func Ops() ([]byte, error) {
 	return files.ReadFile("ops.html")
 }
 
 // Warehouse 返回仓库发货独立页面 HTML。
+
 func Warehouse() ([]byte, error) {
 	return files.ReadFile("warehouse.html")
 }
 
 // CS 返回客服退款独立页面 HTML。
+
 func CS() ([]byte, error) {
 	return files.ReadFile("cs.html")
 }

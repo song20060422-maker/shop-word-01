@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	"shop/shop/model"
+	"shop/shop/utils"
 )
 
 // I-18 并发防御回归：渠道退款调用必须受闸门保护，绝不重复发起。

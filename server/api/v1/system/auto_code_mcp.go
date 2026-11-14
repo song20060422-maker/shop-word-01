@@ -3,11 +3,11 @@ package system
 import (
 	"strings"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	mcpTool "github.com/flipped-aurora/gin-vue-admin/server/mcp"
-	"github.com/flipped-aurora/gin-vue-admin/server/mcp/client"
-	"github.com/flipped-aurora/gin-vue-admin/server/model/common/response"
-	"github.com/flipped-aurora/gin-vue-admin/server/model/system/request"
+	"shop/global"
+	mcpTool "shop/mcp"
+	"shop/mcp/client"
+	"shop/model/common/response"
+	"shop/model/system/request"
 	"github.com/gin-gonic/gin"
 	"github.com/mark3labs/mcp-go/mcp"
 )

@@ -1,7 +1,7 @@
 package example
 
 import (
-	"github.com/flipped-aurora/gin-vue-admin/server/middleware"
+	"shop/middleware"
 	"github.com/gin-gonic/gin"
 )
 

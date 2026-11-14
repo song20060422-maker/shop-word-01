@@ -3,16 +3,18 @@ package service
 import (
 	"strings"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model/response"
+	"shop/shop/model"
+	"shop/shop/model/response"
 )
 
 // ReportService 订单聚合视图与运营核查汇总
+
 type ReportService struct {
 	deps Deps
 }
 
 // OrderDetail 聚合订单、收款、退款、发货、异常与操作轨迹，买家可据此知道钱和货去了哪里。
+
 func (s ReportService) OrderDetail(orderNo string, viewerID uint64, viewerRole string) (response.OrderDetail, error) {
 	var detail response.OrderDetail
 	orderNo = strings.TrimSpace(orderNo)
@@ -50,6 +52,7 @@ func (s ReportService) OrderDetail(orderNo string, viewerID uint64, viewerRole s
 }
 
 // Summary 运营核查：商品可售数量、已收款、已退款与订单状态分布。
+
 func (s ReportService) Summary() (response.TradeSummary, error) {
 	out := response.TradeSummary{StatusCount: map[string]int64{}}
 
@@ -182,6 +185,7 @@ func (s ReportService) Summary() (response.TradeSummary, error) {
 }
 
 // Trail 订单全链路操作留痕（只读，异常不能被改状态抹掉）
+
 func (s ReportService) Trail(orderNo string) ([]model.OperationLog, error) {
 	var list []model.OperationLog
 	q := s.deps.DB
@@ -193,6 +197,7 @@ func (s ReportService) Trail(orderNo string) ([]model.OperationLog, error) {
 }
 
 // Ledger 库存流水（核对占用/释放/恢复/出库是否守恒）
+
 func (s ReportService) Ledger(productID uint64) ([]model.InventoryLedger, error) {
 	var list []model.InventoryLedger
 	q := s.deps.DB

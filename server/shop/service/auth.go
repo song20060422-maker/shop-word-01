@@ -4,17 +4,19 @@ import (
 	"strings"
 	"time"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model/response"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	"shop/shop/model"
+	"shop/shop/model/response"
+	"shop/shop/utils"
 )
 
 // AuthService 账号与令牌
+
 type AuthService struct {
 	deps Deps
 }
 
 // Login 校验账号密码并签发 JWT
+
 func (s AuthService) Login(username, password string) (response.LoginResult, error) {
 	var out response.LoginResult
 	username = strings.TrimSpace(username)
@@ -47,6 +49,7 @@ func (s AuthService) Login(username, password string) (response.LoginResult, err
 }
 
 // User 按 ID 查账号
+
 func (s AuthService) User(id uint64) (model.User, error) {
 	var user model.User
 	if err := s.deps.DB.Where("id = ?", id).First(&user).Error; err != nil {
@@ -56,6 +59,7 @@ func (s AuthService) User(id uint64) (model.User, error) {
 }
 
 // Users 按角色列出账号（运营核查页可查看角色分布）
+
 func (s AuthService) Users(role string) ([]model.User, error) {
 	var users []model.User
 	q := s.deps.DB

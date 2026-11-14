@@ -2,9 +2,9 @@ package system
 
 import (
 	"errors"
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
-	"github.com/flipped-aurora/gin-vue-admin/server/model/system"
+	"shop/global"
+	"shop/model/common/request"
+	"shop/model/system"
 	"gorm.io/gorm"
 	"strconv"
 )

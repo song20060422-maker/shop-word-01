@@ -15,10 +15,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
-	shopdb "github.com/flipped-aurora/gin-vue-admin/server/shop/db"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/migrations"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/service"
+	"shop/shop/config"
+	shopdb "shop/shop/db"
+	"shop/shop/migrations"
+	"shop/shop/service"
 )
 
 // 说明：HTTP 集成测试使用真实 MySQL（本机 3307，测试库 shop_test），

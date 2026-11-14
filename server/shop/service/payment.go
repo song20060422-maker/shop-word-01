@@ -9,20 +9,23 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	"shop/shop/model"
+	"shop/shop/utils"
 )
 
 // isDuplicateEntry 判定是否 MySQL 唯一键冲突（errno 1062）
+
 func isDuplicateEntry(err error) bool {
 	var me *mysql.MySQLError
 	return errors.As(err, &me) && me.Number == 1062
 }
 
 // errDuplicatePayment 内部哨兵：触发事务回滚，外层据此判定重复通知。
+
 var errDuplicatePayment = errors.New("duplicate payment")
 
 // NotifyResult 支付通知处理结果（渠道与运营都可查询）
+
 type NotifyResult struct {
 	Result       string `json:"result"` // accepted | rejected | duplicated | abnormal
 	OrderNo      string `json:"orderNo"`
@@ -35,11 +38,13 @@ type NotifyResult struct {
 }
 
 // PaymentService 支付通知受理与异常收款处理
+
 type PaymentService struct {
 	deps Deps
 }
 
 // Notify 受理支付通知：验签 → 匹配订单与金额 → 幂等记款 / 迟到支付转异常。
+
 func (s PaymentService) Notify(orderNo, txn string, amount int64, sign, rawBody string) (NotifyResult, error) {
 	now := s.deps.Now()
 	orderNo = strings.TrimSpace(orderNo)
@@ -137,6 +142,7 @@ func (s PaymentService) Notify(orderNo, txn string, amount int64, sign, rawBody 
 }
 
 // markAbnormal 迟到支付：登记异常收款，绝不恢复订单、绝不重新占用库存。
+
 func (s PaymentService) markAbnormal(tx *gorm.DB, r *NotifyResult, amount int64, now time.Time, rawBody, reason string) error {
 	ab := model.AbnormalPayment{
 		OrderNo:      r.OrderNo,
@@ -162,6 +168,7 @@ func (s PaymentService) markAbnormal(tx *gorm.DB, r *NotifyResult, amount int64,
 }
 
 // noticeInTx 事务内写通知留痕
+
 func (s PaymentService) noticeInTx(tx *gorm.DB, r *NotifyResult, signOK bool, rawBody string, now time.Time) error {
 	body := rawBody
 	notice := model.PaymentNotice{
@@ -182,6 +189,7 @@ func (s PaymentService) noticeInTx(tx *gorm.DB, r *NotifyResult, signOK bool, ra
 }
 
 // saveNotice 独立写通知留痕（验签失败等不进入主事务的场景）
+
 func (s PaymentService) saveNotice(r NotifyResult, signOK bool, rawBody string, now time.Time) {
 	body := rawBody
 	_ = s.deps.DB.Create(&model.PaymentNotice{
@@ -197,6 +205,7 @@ func (s PaymentService) saveNotice(r NotifyResult, signOK bool, rawBody string, 
 }
 
 // Notices 按订单查询通知处理结果（需求：金额不符/未知订单/验签失败须可查询）
+
 func (s PaymentService) Notices(orderNo string) ([]model.PaymentNotice, error) {
 	var list []model.PaymentNotice
 	err := s.deps.DB.Where("order_no = ?", strings.TrimSpace(orderNo)).Order("id asc").Find(&list).Error
@@ -204,6 +213,7 @@ func (s PaymentService) Notices(orderNo string) ([]model.PaymentNotice, error) {
 }
 
 // NoticesByResult 运营按处理结果过滤（可为空）
+
 func (s PaymentService) NoticesByResult(result string, limit int) ([]model.PaymentNotice, error) {
 	var list []model.PaymentNotice
 	q := s.deps.DB
@@ -218,6 +228,7 @@ func (s PaymentService) NoticesByResult(result string, limit int) ([]model.Payme
 }
 
 // AbnormalList 异常收款待处理列表
+
 func (s PaymentService) AbnormalList(status string) ([]model.AbnormalPayment, error) {
 	var list []model.AbnormalPayment
 	q := s.deps.DB
@@ -228,9 +239,13 @@ func (s PaymentService) AbnormalList(status string) ([]model.AbnormalPayment, er
 	return list, err
 }
 
+// isClosedStatus 判断订单是否已终结（关闭或取消）：迟到支付据此转异常收款而不是恢复订单。
+
 func isClosedStatus(status string) bool {
 	return status == model.OrderStatusClosed || status == model.OrderStatusCancelled
 }
+
+// statusLabel 订单状态中文名，用于通知留痕与审计描述。
 
 func statusLabel(status string) string {
 	switch status {
@@ -254,5 +269,7 @@ func statusLabel(status string) string {
 		return status
 	}
 }
+
+// itoa64 int64 版本的单号拼接辅助。
 
 func itoa64(v int64) string { return itoa(int(v)) }

@@ -10,8 +10,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	"github.com/flipped-aurora/gin-vue-admin/server/utils"
+	"shop/global"
+	"shop/utils"
 	"go.uber.org/zap"
 )
 

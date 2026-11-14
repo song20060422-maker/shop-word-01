@@ -11,11 +11,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
-	"github.com/flipped-aurora/gin-vue-admin/server/model/system"
-	systemReq "github.com/flipped-aurora/gin-vue-admin/server/model/system/request"
-	"github.com/flipped-aurora/gin-vue-admin/server/utils"
+	"shop/global"
+	"shop/model/common/request"
+	"shop/model/system"
+	systemReq "shop/model/system/request"
+	"shop/utils"
 	"github.com/xuri/excelize/v2"
 	"gorm.io/gorm"
 )

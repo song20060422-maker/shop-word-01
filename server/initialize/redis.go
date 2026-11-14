@@ -3,8 +3,8 @@ package initialize
 import (
 	"context"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/config"
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
+	"shop/config"
+	"shop/global"
 
 	"github.com/redis/go-redis/v9"
 	"go.uber.org/zap"

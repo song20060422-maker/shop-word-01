@@ -7,9 +7,9 @@ import (
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/global"
-	shopconfig "github.com/flipped-aurora/gin-vue-admin/server/shop/config"
-	shopdb "github.com/flipped-aurora/gin-vue-admin/server/shop/db"
+	"shop/global"
+	shopconfig "shop/shop/config"
+	shopdb "shop/shop/db"
 )
 
 // 共享测试库（shop_test）中可能残留其他包或历史运行的数据，

@@ -1,4 +1,4 @@
-module github.com/flipped-aurora/gin-vue-admin/server
+module shop
 
 go 1.26.10
 

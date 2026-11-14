@@ -9,7 +9,7 @@ autocode:
     web: web/src
     root: D:\Users\Lenovo\Desktop\shop_word\gin-vue-admin
     server: server
-    module: github.com/flipped-aurora/gin-vue-admin/server
+    module: shop
     ai-path: ""
 aws-s3:
     bucket: xxxxx-10005608
@@ -18,7 +18,7 @@ aws-s3:
     secret-id: your-secret-id
     secret-key: your-secret-key
     base-url: https://gin.vue.admin
-    path-prefix: github.com/flipped-aurora/gin-vue-admin/server
+    path-prefix: shop
     s3-force-path-style: false
     disable-ssl: false
 captcha:
@@ -264,10 +264,10 @@ tencent-cos:
     secret-id: your-secret-id
     secret-key: your-secret-key
     base-url: https://gin.vue.admin
-    path-prefix: github.com/flipped-aurora/gin-vue-admin/server
+    path-prefix: shop
 zap:
     level: info
-    prefix: '[github.com/flipped-aurora/gin-vue-admin/server]'
+    prefix: '[shop]'
     format: console
     director: log
     encode-level: LowercaseColorLevelEncoder

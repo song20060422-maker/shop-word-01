@@ -8,14 +8,17 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model/response"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	"shop/shop/model"
+	"shop/shop/model/response"
+	"shop/shop/utils"
 )
+
+// claimsKey gin.Context 中存放已验签 Claims 的键名，RequireRole 从这里取角色。
 
 const claimsKey = "shopClaims"
 
 // JWT 校验令牌，支持 Authorization: Bearer 与 token Cookie（页面演示免传头）。
+
 func JWT(secret string, now func() time.Time) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := ""
@@ -42,6 +45,7 @@ func JWT(secret string, now func() time.Time) gin.HandlerFunc {
 }
 
 // RequireRole 限制角色访问；买家越权访问员工接口时返回明确的 403。
+
 func RequireRole(roles ...string) gin.HandlerFunc {
 	allow := make(map[string]bool, len(roles))
 	for _, r := range roles {
@@ -58,6 +62,7 @@ func RequireRole(roles ...string) gin.HandlerFunc {
 }
 
 // ClaimsOf 读取当前请求的令牌载荷
+
 func ClaimsOf(c *gin.Context) utils.Claims {
 	if v, ok := c.Get(claimsKey); ok {
 		if claims, ok := v.(utils.Claims); ok {
@@ -68,4 +73,5 @@ func ClaimsOf(c *gin.Context) utils.Claims {
 }
 
 // IsBuyer 便于业务层判定
+
 func IsBuyer(c *gin.Context) bool { return ClaimsOf(c).Role == model.RoleBuyer }

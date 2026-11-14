@@ -6,16 +6,18 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/utils"
+	"shop/shop/model"
+	"shop/shop/utils"
 )
 
 // OrderService 下单、取消、超时关闭与查询
+
 type OrderService struct {
 	deps Deps
 }
 
 // Create 下单：条件扣减可售数量 → 订单快照 → 库存流水，全部在一个事务内。
+
 func (s OrderService) Create(buyerID, productID uint64, qty int) (model.Order, error) {
 	var order model.Order
 	if qty < 1 || qty > 2 {
@@ -69,6 +71,7 @@ func (s OrderService) Create(buyerID, productID uint64, qty int) (model.Order, e
 }
 
 // Cancel 买家取消待付款订单：状态条件更新成功才释放占用，重复关闭不会多释放。
+
 func (s OrderService) Cancel(buyerID uint64, orderNo string) (model.Order, error) {
 	now := s.deps.Now()
 	orderNo = strings.TrimSpace(orderNo)
@@ -105,6 +108,7 @@ func (s OrderService) Cancel(buyerID uint64, orderNo string) (model.Order, error
 }
 
 // CloseExpired 超时关闭：以服务端时间为准，逐单条件更新后释放占用。
+
 func (s OrderService) CloseExpired() (int, error) {
 	now := s.deps.Now()
 	var candidates []model.Order
@@ -138,6 +142,7 @@ func (s OrderService) CloseExpired() (int, error) {
 }
 
 // Get 按单号读取订单（不做视图权限判断，调用方负责）
+
 func (s OrderService) Get(orderNo string) (model.Order, error) {
 	var o model.Order
 	if err := s.deps.DB.Where("order_no = ?", strings.TrimSpace(orderNo)).First(&o).Error; err != nil {
@@ -147,6 +152,7 @@ func (s OrderService) Get(orderNo string) (model.Order, error) {
 }
 
 // ListByBuyer 买家自己的订单
+
 func (s OrderService) ListByBuyer(buyerID uint64, status string) ([]model.Order, error) {
 	var list []model.Order
 	q := s.deps.DB.Where("buyer_id = ?", buyerID)
@@ -158,6 +164,7 @@ func (s OrderService) ListByBuyer(buyerID uint64, status string) ([]model.Order,
 }
 
 // ListByStatus 员工视角按状态查询订单
+
 func (s OrderService) ListByStatus(status string, limit int) ([]model.Order, error) {
 	var list []model.Order
 	q := s.deps.DB
@@ -174,6 +181,7 @@ func (s OrderService) ListByStatus(status string, limit int) ([]model.Order, err
 // releaseStock 释放/归还可售数量：以该单库存流水净额为守恒依据，杜绝重复释放造成的虚增。
 // 说明：运营允许把可售数量覆盖到高于 initial_stock（如活动补货），因此不能用 initial_stock 作为上界，
 // 而是校验「该订单仍有数量处于占用状态」（净额为负）。
+
 func releaseStock(tx *gorm.DB, o model.Order, changeType string, now time.Time) error {
 	var net int
 	if err := tx.Model(&model.InventoryLedger{}).
@@ -193,6 +201,7 @@ func releaseStock(tx *gorm.DB, o model.Order, changeType string, now time.Time) 
 }
 
 // stateError 根据订单当前状态给出准确原因，避免笼统报错。
+
 func stateError(tx *gorm.DB, orderNo string) error {
 	var o model.Order
 	if err := tx.Where("order_no = ?", orderNo).First(&o).Error; err != nil {
@@ -210,6 +219,7 @@ func stateError(tx *gorm.DB, orderNo string) error {
 }
 
 // uniqueOrderNo 生成未占用的订单号（极端碰撞下重试）
+
 func (s OrderService) uniqueOrderNo(tx *gorm.DB, now time.Time) string {
 	for i := 0; i < 5; i++ {
 		no := utils.NewOrderNo(now)
@@ -221,6 +231,8 @@ func (s OrderService) uniqueOrderNo(tx *gorm.DB, now time.Time) string {
 	}
 	return utils.NewOrderNo(now.Add(time.Duration(1) * time.Nanosecond))
 }
+
+// itoa 整数转字符串（避免引入 fmt，错误码拼接路径高频调用）。
 
 func itoa(v int) string {
 	if v == 0 {

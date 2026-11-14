@@ -1,7 +1,7 @@
 package request
 
 import (
-	"github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
+	"shop/model/common/request"
 )
 
 type ExaAttachmentCategorySearch struct {

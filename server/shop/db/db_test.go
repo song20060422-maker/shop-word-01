@@ -13,8 +13,8 @@ import (
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/migrations"
+	"shop/shop/config"
+	"shop/shop/migrations"
 )
 
 // dsnOnTestHost 返回指向当前测试库主机端口的 DSN：

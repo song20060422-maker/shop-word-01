@@ -15,7 +15,7 @@
 ```go
 package request
 
-import common "github.com/flipped-aurora/gin-vue-admin/server/model/common/request"
+import common "shop/model/common/request"
 
 type CreateOrderReq struct {
 	Name   string `json:"name" form:"name"`

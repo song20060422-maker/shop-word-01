@@ -9,10 +9,11 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/config"
+	"shop/shop/config"
 )
 
 // Deps 服务依赖（可注入测试库、可控时钟与假渠道）
+
 type Deps struct {
 	DB      *gorm.DB
 	Now     func() time.Time
@@ -21,6 +22,7 @@ type Deps struct {
 }
 
 // ServiceGroup 业务服务集合（GVA GroupApp 约定）
+
 type ServiceGroup struct {
 	AuthService
 	CatalogService
@@ -34,6 +36,7 @@ type ServiceGroup struct {
 }
 
 // NewServiceGroup 组装全部业务服务
+
 func NewServiceGroup(d Deps) *ServiceGroup {
 	if d.Now == nil {
 		d.Now = time.Now
@@ -54,17 +57,22 @@ func NewServiceGroup(d Deps) *ServiceGroup {
 }
 
 // BizError 业务错误：携带稳定错误码，API 层直接映射 HTTP 状态与提示。
+
 type BizError struct {
 	Code int    `json:"code"`
 	Msg  string `json:"msg"`
 }
 
+// Error 实现 error 接口，msg 即对外提示文案。
+
 func (e BizError) Error() string { return e.Msg }
 
 // NewBizError 构造业务错误
+
 func NewBizError(code int, msg string) BizError { return BizError{Code: code, Msg: msg} }
 
 // 业务错误清单（对外可解释，禁止用「操作失败」这类含糊提示掩盖真实原因）
+
 var (
 	ErrInvalidParam      = NewBizError(1000, "参数不合法")
 	ErrProductNotFound   = NewBizError(1001, "商品不存在")
@@ -99,12 +107,14 @@ var (
 )
 
 // IsBiz 判断是否为业务错误（其余视为系统错误）
+
 func IsBiz(err error) bool {
 	var be BizError
 	return errors.As(err, &be)
 }
 
 // BizCode 提取业务错误码
+
 func BizCode(err error) (int, string) {
 	var be BizError
 	if errors.As(err, &be) {
@@ -114,6 +124,7 @@ func BizCode(err error) (int, string) {
 }
 
 // BizCodeMsg 仅取提示文案（接口层回传业务失败时使用）
+
 func BizCodeMsg(err error) string {
 	_, msg := BizCode(err)
 	return msg

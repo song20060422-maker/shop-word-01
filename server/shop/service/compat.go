@@ -7,13 +7,14 @@ import (
 
 	"gorm.io/gorm"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
+	"shop/shop/model"
 )
 
 // 本文件为「接口契约兼容层」补齐的 service 扩展方法。
 // 只新增方法，不修改任何既有方法签名与行为，保证原有 /api 原型接口语义不变。
 
 // ProductBySKU 按 SKU 查询商品：契约层以 SKU 作为对外商品 id。
+
 func (s CatalogService) ProductBySKU(sku string) (model.Product, error) {
 	var p model.Product
 	sku = strings.TrimSpace(sku)
@@ -28,6 +29,7 @@ func (s CatalogService) ProductBySKU(sku string) (model.Product, error) {
 
 // OverwriteAvailable 运营直接覆盖可售数量（契约约定：available 为绝对值，而非增量）。
 // 与占用/释放路径一致地追加库存流水，便于运营核对数量来源。
+
 func (s CatalogService) OverwriteAvailable(actorID uint64, actorRole string, productID uint64, available int) (model.Product, error) {
 	if available < 0 {
 		return model.Product{}, NewBizError(1006, "可售数量不能小于 0")
@@ -59,6 +61,7 @@ func (s CatalogService) OverwriteAvailable(actorID uint64, actorRole string, pro
 }
 
 // FindByRef 订单双寻址：先按 order_no，再按数字主键（契约 {id} 同时兼容两者）。
+
 func (s OrderService) FindByRef(ref string) (model.Order, error) {
 	ref = strings.TrimSpace(ref)
 	if ref == "" {
@@ -77,6 +80,7 @@ func (s OrderService) FindByRef(ref string) (model.Order, error) {
 }
 
 // PendingOrderNos 待付款订单号列表，按创建时间倒序（最新在前）。
+
 func (s OrderService) PendingOrderNos() ([]string, error) {
 	nos := make([]string, 0, 8)
 	err := s.deps.DB.Model(&model.Order{}).
@@ -86,6 +90,7 @@ func (s OrderService) PendingOrderNos() ([]string, error) {
 }
 
 // ForceExpire 把指定订单的到期时间提前到 at 之前（测试钩子：让最新一笔待付款订单立即到期）。
+
 func (s OrderService) ForceExpire(orderNo string, at time.Time) error {
 	orderNo = strings.TrimSpace(orderNo)
 	if orderNo == "" {
@@ -100,6 +105,7 @@ func (s OrderService) ForceExpire(orderNo string, at time.Time) error {
 }
 
 // FindByRef 退款单三寻址：refund_no / order_no / 数字主键（契约 {id} 传退款单号）。
+
 func (s RefundService) FindByRef(ref string) (model.Refund, error) {
 	ref = strings.TrimSpace(ref)
 	if ref == "" {
@@ -121,6 +127,7 @@ func (s RefundService) FindByRef(ref string) (model.Refund, error) {
 }
 
 // PaymentsByOrder 查询订单的成功收款记录（契约 /api/ops/payments 的记款部分）。
+
 func (s PaymentService) PaymentsByOrder(orderNo string) ([]model.Payment, error) {
 	list := make([]model.Payment, 0, 2)
 	err := s.deps.DB.Where("order_no = ?", strings.TrimSpace(orderNo)).
@@ -129,6 +136,7 @@ func (s PaymentService) PaymentsByOrder(orderNo string) ([]model.Payment, error)
 }
 
 // AbnormalByID 按主键查询异常收款记录（契约 /api/cs/payment-exceptions/{id}/refund 使用）。
+
 func (s PaymentService) AbnormalByID(id uint64) (model.AbnormalPayment, error) {
 	var ab model.AbnormalPayment
 	if err := s.deps.DB.Where("id = ?", id).First(&ab).Error; err != nil {

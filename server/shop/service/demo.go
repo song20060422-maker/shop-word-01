@@ -3,16 +3,18 @@ package service
 import (
 	"gorm.io/gorm"
 
-	"github.com/flipped-aurora/gin-vue-admin/server/shop/model"
+	"shop/shop/model"
 )
 
 // DemoService 演示数据重置：仅清理业务数据并恢复商品初始可售数量，保留账号。
 // 由 shop.demo-mode 配置开关保护，避免生产误用。
+
 type DemoService struct {
 	deps Deps
 }
 
 // Reset 按外键依赖顺序清理业务表，并把商品可售数量恢复到初始库存。
+
 func (s DemoService) Reset() error {
 	return s.deps.DB.Transaction(func(tx *gorm.DB) error {
 		// 先删子表，再删订单，避免外键约束失败
