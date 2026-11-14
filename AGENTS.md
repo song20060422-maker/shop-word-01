@@ -71,7 +71,7 @@
 
 ## 7. 本仓库当前事实（2026-11-13 拆分后，供快速定位，细节以 `.agents/01` 为准）
 
-- `server/cmd/shop`：买家端 + 模拟支付渠道独立服务（本地 `:8090`，容器 `:18099`），`config.shop.yaml` / `config.shop-docker.yaml`。
+- `server/cmd/shop`：买家端 + 模拟支付渠道独立服务（本地 `:8080`，与 cpolar 隧道对齐、支付宝回调直接走公网域名；容器 `:18099`），`config.shop.yaml` / `config.shop-docker.yaml`。
 - `server/shop/`：买家端业务（`api` / `service` / `model` / `db` / `migrations` / `scripts`）与后台接口 `adminapi`（运营/仓库/客服，GVA `:8099` 容器 `:18098`，`shop/router/admin.go` 挂 `/shop/**`）。
 - `web/src/view/shop/`：管理端三个后台页面 `ops.vue` / `warehouse.vue` / `cs.vue`。
 - `deploy/shop/`：`docker-compose.yaml`（mysql + redis + shop-buyer + shop-admin + admin-seed）、`gva-admin-shop.sql`、`gva-framework-seed.sql`、`admin-seed.sh`。

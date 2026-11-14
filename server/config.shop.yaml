@@ -2,7 +2,8 @@
 # 启动：cd server && go run ./cmd/shop -c config.shop.yaml
 # 环境变量覆盖：SHOP_DSN / SHOP_ADDR / SHOP_MODE / SHOP_JWT_SECRET / SHOP_PAY_SECRET
 system:
-    addr: ":8090"
+    # 8080 与 cpolar 隧道对齐（隧道固定指向本机 8080，回调/买家页直接走公网域名）
+    addr: ":8080"
     mode: debug
 mysql:
     # 业务表统一放在 gva 库（gva 框架表 + shop 业务 11 张表）
