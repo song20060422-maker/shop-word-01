@@ -83,6 +83,8 @@
 | `a545e77` | [docs][v0.2.0][T11] `.agents` 00~09 合并为 `00-index.md`（21KB→10.7KB，9 小节），删除 01-09 并更新 `dev-agent.md` 小节映射；`*.log` 移出版本库并加 `.gitignore` |
 | `ba000e7` | [feat][v0.2.0][T11] 支付宝沙箱渠道作可选渠道（A-20 裁决）：pay-channel=alipay 启用；page.pay 收银台 + RSA2 notify（复用 applyPayment 幂等/异常路径）+ trade.refund 退款；5 单测 + 9 包回归全过 |
 | `a401e48` | [opt][v0.2.0][T11] 移除误入库 vite 日志，加 web/*.log 忽略 |
+| `61dca97` | [feat][v0.2.0][T11] 买家端收敛纯买家前端：删内置 ops/warehouse/cs.html 与集成版 index.html，/ 与 /index.html 302→/shop，后台三页 404+迁移提示；buyer.html 导航改为 GVA 管理端说明；后台 Vue 三页 + api/shop.js 对接不变；9 包测试全过 |
+| `7d20c3f` | [deploy][v0.2.0][T11] 启用支付宝沙箱真实渠道：两端 pay-channel 切 alipay，实测登录/下单/alipay-pay code=0 返回沙箱签名地址 |
 
 > main 分支保留基线快照（`9dd5040`），整改全部落在 `dev/01-shop`；推送后对 main 发起 PR，由 CI 复核后再合并。
 
