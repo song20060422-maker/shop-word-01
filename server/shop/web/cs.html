@@ -6,58 +6,58 @@
 <title>SHOP·OS · 客服退款</title>
 <style>
 :root{
-  --bg:#0c0e11; --panel:#13161b; --panel2:#181c22; --line:#252b34;
-  --tx:#e9e7e2; --mut:#8f97a3; --dim:#5c6470;
-  --amber:#f0a636; --ok:#43c78f; --err:#e5484d; --info:#6aa1ff; --warn:#e2b93b;
+  --bg:#f4f6fb; --panel:#fff; --panel2:#fff; --line:#e3e8f0;
+  --tx:#1f2937; --mut:#6b7280; --dim:#9ca3af;
+  --amber:#2f54eb; --ok:#15803d; --err:#b91c1c; --info:#2f54eb; --warn:#b45309;
   --mono:ui-monospace,'Cascadia Code',Consolas,monospace;
-  --serif:Georgia,'Songti SC','STSong','SimSun',serif;
+  --serif:system-ui,'Microsoft YaHei',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--tx);font:14px/1.55 system-ui,'Microsoft YaHei',sans-serif;min-height:100vh;
-  background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);
-  background-size:28px 28px}
-header{display:flex;align-items:center;gap:16px;padding:14px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap}
-.brand{font-family:var(--serif);font-size:19px;letter-spacing:2px;color:var(--amber)}
-.brand small{color:var(--mut);font-size:11px;letter-spacing:1px;margin-left:8px;font-family:system-ui}
-.hctrl{display:flex;gap:10px;align-items:center;margin-left:auto;flex-wrap:wrap}
-select,input{background:var(--panel2);color:var(--tx);border:1px solid var(--line);border-radius:4px;padding:5px 8px;font:13px var(--mono)}
-select:focus,input:focus{outline:1px solid var(--amber)}
-.plabel{color:var(--mut);font-size:12px}
-nav{display:flex;gap:2px;padding:0 22px;border-bottom:1px solid var(--line);overflow-x:auto;position:sticky;top:0;z-index:30;background:var(--bg)}
+body{background:var(--bg);color:var(--tx);font:13px/1.55 "Segoe UI","Microsoft YaHei",sans-serif;min-height:100vh}
+header{background:#111827;color:#fff;display:flex;align-items:center;gap:14px;padding:10px 18px;flex-wrap:wrap}
+.brand{font-size:15px;font-weight:600;color:#fff;letter-spacing:.5px}
+.brand small{color:#9ca3af;font-size:12px;margin-left:8px;font-weight:400;letter-spacing:0}
+.hctrl{display:flex;gap:6px;align-items:center;margin-left:auto;flex-wrap:wrap;font-size:12px}
+select,input{background:#fff;color:#1f2937;border:1px solid #cbd5e1;border-radius:6px;padding:5px 8px;font:12px system-ui}
+select:focus,input:focus{outline:2px solid rgba(47,84,235,.22);border-color:var(--amber)}
+.plabel{color:#9ca3af;font-size:12px}
+nav{display:flex;gap:2px;background:#fff;border-bottom:1px solid var(--line);padding:0 14px;overflow-x:auto;position:sticky;top:0;z-index:30}
 nav::-webkit-scrollbar{height:0}
-nav a{color:var(--mut);padding:11px 16px;font-size:13.5px;cursor:pointer;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap}
-nav a.on{color:var(--amber);border-bottom-color:var(--amber)}
-main{padding:20px 22px 60px;max-width:1320px}
-h2{font-family:var(--serif);font-size:17px;letter-spacing:1.5px;margin-bottom:12px}
-.sec{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:16px 18px;margin-bottom:16px}
-table{width:100%;border-collapse:collapse;font-size:13px}
-th{color:var(--dim);text-align:left;font-weight:600;font-size:11.5px;letter-spacing:1px;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
-td{padding:7px 8px;border-bottom:1px solid #1c212a;vertical-align:top}
-tr:hover td{background:rgba(255,255,255,.02)}
+nav a{color:#6b7280;padding:9px 15px;font-size:13px;cursor:pointer;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap;transition:.15s}
+nav a:hover{color:#374151}
+nav a.on{color:#2f54eb;border-bottom-color:#2f54eb;font-weight:600}
+main{padding:14px;max-width:1240px;margin:0 auto}
+h2{font-size:13.5px;font-weight:600;margin-bottom:8px}
+.sec{background:#fff;border:1px solid var(--line);border-radius:9px;padding:12px 14px;margin-bottom:12px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:6px 7px;border-bottom:1px solid #eef2f8;text-align:left;vertical-align:top;font-size:12.5px}
+th{background:#f8fafc;color:#6b7280;font-weight:600;white-space:nowrap}
+tr:hover td{background:#fbfcff}
 .num{font-family:var(--mono);font-size:12.5px}
-.chip{display:inline-block;padding:1.5px 9px;border-radius:99px;font-size:11.5px;letter-spacing:.5px;border:1px solid;white-space:nowrap}
-.c-wait{color:var(--warn);border-color:var(--warn);background:rgba(226,185,59,.08)}
-.c-paid{color:var(--info);border-color:var(--info);background:rgba(106,161,255,.08)}
-.c-ship{color:var(--ok);border-color:var(--ok);background:rgba(67,199,143,.08)}
-.c-err{color:var(--err);border-color:var(--err);background:rgba(229,72,77,.08)}
-.c-ref{color:#c58af9;border-color:#c58af9;background:rgba(197,138,249,.08)}
-.c-dim{color:var(--dim);border-color:var(--dim)}
-.btn{background:var(--panel2);color:var(--tx);border:1px solid #323a46;padding:6px 14px;border-radius:4px;cursor:pointer;font-size:13px;letter-spacing:.5px;transition:.15s}
+.chip{display:inline-block;padding:1px 7px;border-radius:9px;color:#fff;font-size:11px;line-height:1.7;border:1px solid transparent;white-space:nowrap}
+.c-wait{background:#b45309;border-color:#b45309}
+.c-paid{background:#2f54eb;border-color:#2f54eb}
+.c-ship{background:#0f766e;border-color:#0f766e}
+.c-err{background:#b91c1c;border-color:#b91c1c}
+.c-ref{background:#7c3aed;border-color:#7c3aed}
+.c-dim{background:#6b7280;border-color:#6b7280}
+.btn{background:#fff;color:#1f2937;border:1px solid #cbd5e1;padding:4px 10px;border-radius:6px;cursor:pointer;font-size:12px;transition:.15s}
 .btn:hover{border-color:var(--amber);color:var(--amber)}
-.btn.ok{border-color:var(--ok);color:var(--ok)}.btn.ok:hover{background:rgba(67,199,143,.12)}
-.btn.err{border-color:var(--err);color:var(--err)}.btn.err:hover{background:rgba(229,72,77,.12)}
-.btn.warn{border-color:var(--warn);color:var(--warn)}.btn.warn:hover{background:rgba(226,185,59,.12)}
-.btn.sm{padding:3px 9px;font-size:12px}
-.btn:disabled{opacity:.35;cursor:not-allowed;border-color:var(--line);color:var(--mut)}
-.kpi{display:flex;gap:34px;flex-wrap:wrap}
-.kpi .v{font-family:var(--mono);font-size:20px;color:var(--amber)}
-.kpi .l{font-size:11.5px;color:var(--mut);letter-spacing:1px}
-.muted{color:var(--mut);font-size:12.5px}
-#toasts{position:fixed;right:18px;bottom:18px;z-index:99;display:flex;flex-direction:column;gap:8px;max-width:440px}
-.toast{background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--info);padding:10px 14px;border-radius:4px;font-size:13px;animation:tin .2s;box-shadow:0 6px 20px rgba(0,0,0,.5)}
-.toast.ok{border-left-color:var(--ok)}.toast.err{border-left-color:var(--err)}.toast.warn{border-left-color:var(--amber)}
+.btn.ok{border-color:#15803d;color:#15803d}.btn.ok:hover{background:#f0fdf4}
+.btn.err{border-color:#b91c1c;color:#b91c1c}.btn.err:hover{background:#fef2f2}
+.btn.warn{border-color:#b45309;color:#b45309}.btn.warn:hover{background:#fffbeb}
+.btn.sm{padding:2px 8px;font-size:11.5px}
+.btn:disabled{opacity:.45;cursor:not-allowed;border-color:var(--line);color:#9ca3af}
+.kpi{display:flex;gap:10px;flex-wrap:wrap}
+.kpi>div{background:#f8fafc;border:1px solid var(--line);border-radius:8px;padding:8px 12px;min-width:112px}
+.kpi .v{display:block;font-family:var(--mono);font-size:18px;color:var(--amber)}
+.kpi .l{font-size:11.5px;color:var(--mut)}
+.muted{color:var(--mut);font-size:12px}
+#toasts{position:fixed;right:16px;top:14px;z-index:99;display:flex;flex-direction:column;gap:8px;max-width:440px}
+.toast{background:#111827;color:#fff;border-radius:8px;padding:9px 14px;font-size:12.5px;animation:tin .2s;box-shadow:0 6px 20px rgba(15,23,42,.18)}
+.toast.ok{background:#15803d}.toast.err{background:#7f1d1d}.toast.warn{background:#b45309}
 @keyframes tin{from{transform:translateX(30px);opacity:0}}
-.loginbox{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.loginbox{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 </style>
 </head>
@@ -65,7 +65,7 @@ tr:hover td{background:rgba(255,255,255,.02)}
 <header>
   <div class="brand">SHOP·OS <small>客服退款 · 独立后台页（GVA 接口）</small></div>
   <div class="hctrl loginbox" id="loginBox">
-    <span class="plabel">GVA 账号</span>
+    <span class="plabel">客服账号（cs1 / admin）</span>
     <input id="u" value="admin" size="8" placeholder="用户名">
     <input id="p" type="password" value="123456" size="8" placeholder="密码">
     <button class="btn" onclick="doLogin()">登录</button>
@@ -132,10 +132,15 @@ function tag(s){const g={approved:'c-ship',refunded:'c-ship',handled:'c-ship',su
   pending:'c-wait',processing:'c-wait',abnormal:'c-wait',failed:'c-err',rejected:'c-err'}[s]||'c-dim';
   return `<span class="chip ${g}">${esc(s)}</span>`}
 
+const ROLE={id:9003,label:'客服'};
+const SUPER_ROLES=[888,9528];
 let token=localStorage.getItem(TOKEN_KEY)||'';
-function setToken(t,keep){token=t||'';if(keep)localStorage.setItem(TOKEN_KEY,t);else localStorage.removeItem(TOKEN_KEY);
+function setToken(t,keep,who,aid){token=t||'';
+  if(keep){localStorage.setItem(TOKEN_KEY,t);if(who)localStorage.setItem(TOKEN_KEY+'_who',who);if(aid)localStorage.setItem(TOKEN_KEY+'_aid',String(aid))}
+  else{localStorage.removeItem(TOKEN_KEY);localStorage.removeItem(TOKEN_KEY+'_who');localStorage.removeItem(TOKEN_KEY+'_aid')}
   document.getElementById('loginBox').style.display=token?'none':'flex';
-  document.getElementById('userBox').style.display=token?'flex':'none'}
+  document.getElementById('userBox').style.display=token?'flex':'none';
+  if(token)document.getElementById('who').textContent='已登录：'+(localStorage.getItem(TOKEN_KEY+'_who')||'缓存凭证');}
 async function api(path,opt){
   const o=Object.assign({headers:{}},opt||{});
   o.headers['x-token']=token;
@@ -144,6 +149,7 @@ async function api(path,opt){
   if(j.code!==0){
     if(j.data&&(j.data.refundNo||j.data.channelTxnId))return j.data; // 审核已生效但渠道失败：仍返回退款单
     if(r.status===401||j.code===7||j.code===700){setToken('');toast('登录已失效，请重新登录','err');throw new Error(j.msg||'未登录')}
+    if(r.status===403){toast('当前账号无'+ROLE.label+'权限','err');throw new Error(j.msg||'无权限')}
     throw new Error(j.msg||('code='+j.code));
   }
   return j.data;
@@ -154,9 +160,15 @@ async function doLogin(){
     const r=await fetch(API+'/base/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
     const j=await r.json();
     if(j.code!==0){toast('登录失败：'+(j.msg||''),'err');return}
-    setToken(j.data.token,true);
-    const name=(j.data.user&&j.data.user.userInfo&&j.data.user.userInfo.nickName)||u;
-    document.getElementById('who').textContent='已登录：'+name;
+    const user=(j.data&&j.data.user)||{};
+    const aid=Number(user.authorityId||0);
+    if(aid!==ROLE.id&&SUPER_ROLES.indexOf(aid)<0){
+      const an=(user.authority&&user.authority.authorityName)||aid;
+      toast('账号「'+u+'」的角色是「'+an+'」，无权进入'+ROLE.label+'页；请用 '+ROLE.label+'账号（如 cs1）或管理员登录','err');
+      return;
+    }
+    const an=(user.authority&&user.authority.authorityName)||'管理员';
+    setToken(j.data.token,true,(user.nickName||u)+'（'+an+'）',aid);
     toast('登录成功','ok');refresh();
   }catch(e){toast('登录请求失败：'+e.message,'err')}
 }
@@ -256,8 +268,15 @@ async function loadNotices(){
 }
 
 function refresh(){if(!token)return;loadRefunds();loadAbnormals();loadNotices();loadChannel()}
-if(token){document.getElementById('who').textContent='已登录（本地缓存凭证）';setToken(token,true);refresh()}
-else setToken('');
+// 缓存凭证也要校验角色：换账号登录过别的页时，不能凭旧 token 直接进来
+(function boot(){
+  const cachedAid=Number(localStorage.getItem(TOKEN_KEY+'_aid')||0);
+  if(token&&cachedAid&&cachedAid!==ROLE.id&&SUPER_ROLES.indexOf(cachedAid)<0){
+    setToken('');toast('缓存账号无权进入'+ROLE.label+'页，请重新登录','warn');return;
+  }
+  setToken(token,token?true:false);
+  if(token)refresh();
+})();
 </script>
 </body>
 </html>

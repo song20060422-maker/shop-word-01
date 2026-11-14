@@ -99,3 +99,88 @@ FROM (
 JOIN (SELECT 888 AS aid UNION SELECT 9528) a
 WHERE NOT EXISTS (SELECT 1 FROM casbin_rule c
                   WHERE c.ptype = 'p' AND c.v0 = a.aid AND c.v1 = x.path AND c.v2 = x.method);
+
+-- ---------- 5. 角色账号：运营 / 仓库 / 客服（独立后台页专用，最小权限） ----------
+-- 说明：ops1/wh1/cs1 在买家端 Gin 服务里是业务账号；这里在 GVA 侧建同名账号 + 独立角色，
+--       使「运营核查」页只能由运营账号进入、「仓库发货」页只能由仓库账号进入，依此类推。
+-- 密码统一 123456（与 admin 同 hash），仅用于演示环境；生产需改密并关闭演示入口。
+INSERT INTO sys_authorities (created_at, updated_at, deleted_at, authority_id, authority_name, parent_id, default_router)
+SELECT NOW(3), NOW(3), NULL, x.aid, x.aname, 0, 'shopAdmin'
+FROM (
+  SELECT 9001 AS aid, '运营' AS aname
+  UNION SELECT 9002, '仓库'
+  UNION SELECT 9003, '客服'
+) x
+WHERE NOT EXISTS (SELECT 1 FROM sys_authorities a WHERE a.authority_id = x.aid AND a.deleted_at IS NULL);
+
+INSERT INTO sys_users (created_at, updated_at, deleted_at, uuid, username, password, nick_name, header_img, authority_id, phone, email, enable, origin_setting)
+SELECT NOW(3), NOW(3), NULL, UUID(), x.un, '$2a$10$MEmG541pKYusIeo9Fs6JJeHACB775AVxGVxWbkYDoaTHPgp1ScbNa', x.nick, '', x.aid, '', '', 1, NULL
+FROM (
+  SELECT 'ops1' AS un, '运营·张敏' AS nick, 9001 AS aid
+  UNION SELECT 'wh1', '仓库·李强', 9002
+  UNION SELECT 'cs1', '客服·王芳', 9003
+) x
+WHERE NOT EXISTS (SELECT 1 FROM sys_users u WHERE u.username = x.un AND u.deleted_at IS NULL);
+
+INSERT INTO sys_user_authority (sys_user_id, sys_authority_authority_id)
+SELECT u.id, u.authority_id
+FROM sys_users u
+WHERE u.username IN ('ops1', 'wh1', 'cs1') AND u.deleted_at IS NULL
+  AND NOT EXISTS (SELECT 1 FROM sys_user_authority ua
+                  WHERE ua.sys_user_id = u.id AND ua.sys_authority_authority_id = u.authority_id);
+
+-- 菜单授权：各自只看得到自己那一页（目录 shopAdmin + 对应子菜单）
+INSERT INTO sys_authority_menus (sys_base_menu_id, sys_authority_authority_id)
+SELECT m.id, 9001 FROM sys_base_menus m
+WHERE m.name IN ('shopAdmin', 'shopOps') AND m.deleted_at IS NULL
+  AND NOT EXISTS (SELECT 1 FROM sys_authority_menus am WHERE am.sys_base_menu_id = m.id AND am.sys_authority_authority_id = 9001);
+
+INSERT INTO sys_authority_menus (sys_base_menu_id, sys_authority_authority_id)
+SELECT m.id, 9002 FROM sys_base_menus m
+WHERE m.name IN ('shopAdmin', 'shopWarehouse') AND m.deleted_at IS NULL
+  AND NOT EXISTS (SELECT 1 FROM sys_authority_menus am WHERE am.sys_base_menu_id = m.id AND am.sys_authority_authority_id = 9002);
+
+INSERT INTO sys_authority_menus (sys_base_menu_id, sys_authority_authority_id)
+SELECT m.id, 9003 FROM sys_base_menus m
+WHERE m.name IN ('shopAdmin', 'shopCs') AND m.deleted_at IS NULL
+  AND NOT EXISTS (SELECT 1 FROM sys_authority_menus am WHERE am.sys_base_menu_id = m.id AND am.sys_authority_authority_id = 9003);
+
+-- Casbin 最小权限：运营只能调 /shop/ops/**、仓库只能调 /shop/warehouse/**、客服只能调 /shop/cs/**
+INSERT INTO casbin_rule (ptype, v0, v1, v2)
+SELECT 'p', 9001, x.path, x.method
+FROM (
+  SELECT '/shop/ops/summary' AS path, 'GET' AS method
+  UNION SELECT '/shop/ops/products', 'GET'
+  UNION SELECT '/shop/ops/products/:id', 'PATCH'
+  UNION SELECT '/shop/ops/orders', 'GET'
+  UNION SELECT '/shop/ops/orders/:orderNo', 'GET'
+  UNION SELECT '/shop/ops/notices', 'GET'
+  UNION SELECT '/shop/ops/abnormals', 'GET'
+  UNION SELECT '/shop/ops/ledger', 'GET'
+  UNION SELECT '/shop/ops/trail', 'GET'
+) x
+WHERE NOT EXISTS (SELECT 1 FROM casbin_rule c WHERE c.ptype = 'p' AND c.v0 = '9001' AND c.v1 = x.path AND c.v2 = x.method);
+
+INSERT INTO casbin_rule (ptype, v0, v1, v2)
+SELECT 'p', 9002, x.path, x.method
+FROM (
+  SELECT '/shop/warehouse/shipable' AS path, 'GET' AS method
+  UNION SELECT '/shop/warehouse/ship', 'POST'
+  UNION SELECT '/shop/warehouse/shipments', 'GET'
+  UNION SELECT '/shop/warehouse/orders/:orderNo', 'GET'
+) x
+WHERE NOT EXISTS (SELECT 1 FROM casbin_rule c WHERE c.ptype = 'p' AND c.v0 = '9002' AND c.v1 = x.path AND c.v2 = x.method);
+
+INSERT INTO casbin_rule (ptype, v0, v1, v2)
+SELECT 'p', 9003, x.path, x.method
+FROM (
+  SELECT '/shop/cs/refunds' AS path, 'GET' AS method
+  UNION SELECT '/shop/cs/refunds/audit', 'POST'
+  UNION SELECT '/shop/cs/refunds/retry', 'POST'
+  UNION SELECT '/shop/cs/abnormals', 'GET'
+  UNION SELECT '/shop/cs/abnormals/handle', 'POST'
+  UNION SELECT '/shop/cs/notices', 'GET'
+  UNION SELECT '/shop/cs/orders/:orderNo', 'GET'
+  UNION SELECT '/shop/cs/channel/mode', 'POST'
+) x
+WHERE NOT EXISTS (SELECT 1 FROM casbin_rule c WHERE c.ptype = 'p' AND c.v0 = '9003' AND c.v1 = x.path AND c.v2 = x.method);
