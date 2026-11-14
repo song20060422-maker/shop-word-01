@@ -79,6 +79,8 @@
 | `86e3144` | [feat][v0.2.0][T11] 集成版全功能页恢复挂载到 `/` 与 `/index.html`（买家/渠道/仓库/客服/运营 五页签同页），独立页保留；买家页入口 pill 按钮化；镜像重建 `shop-buyer/shop-admin:86e3144`，容器五入口 200 |
 | `8eee633` | [fix][v0.2.0][T11] 支付通知兼容层支持演示页通道：识别 `channelTxnId` 别名、支持 body 内 `sign`（HMAC 订单号\|交易号\|金额），修复渠道页四个按钮全部报"参数不合法"；契约 header 签名路径与错误签名拒绝行为不变；补 contract 两用例；镜像重建 `8eee633` 容器复验 SUCCESS/paid |
 | `a47947a` | [feat][v0.2.0][T11] 后台三页对齐买家端白色主题（页签蓝色下划线、点击差异小）+ 运营/仓库/客服角色分权：GVA 侧新增角色 9001/9002/9003 与账号 ops1/wh1/cs1（123456），菜单与 Casbin 最小权限；页面登录校验 authorityId，不符拒绝；镜像重建 `a47947a`，本地与容器均验证 ops1 仅能调 ops 接口 |
+| `540002c` | [opt][v0.2.0][T11] Go 模块改名为 `shop`：337 个源文件 850 处 import + go.mod + config*.yaml + k8s configmap + aiDoc + 规则文件全部替换；同时规范 shop 包注释（补 14 处、87 处注释后留空行、10 个 TableName 补说明）；build/vet/test 全过 |
+| `a545e77` | [docs][v0.2.0][T11] `.agents` 00~09 合并为 `00-index.md`（21KB→10.7KB，9 小节），删除 01-09 并更新 `dev-agent.md` 小节映射；`*.log` 移出版本库并加 `.gitignore` |
 
 > main 分支保留基线快照（`9dd5040`），整改全部落在 `dev/01-shop`；推送后对 main 发起 PR，由 CI 复核后再合并。
 
