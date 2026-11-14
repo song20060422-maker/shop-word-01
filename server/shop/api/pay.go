@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/url"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 
@@ -37,17 +38,45 @@ func (a PayApi) Notify(c *gin.Context) {
 	c.JSON(status, response.Body{Code: code, Data: res, Msg: msg})
 }
 
-// AlipayPay 生成支付宝收银台跳转地址（电脑网站支付，买家本人 + 待付款订单）
+// AlipayPay 生成支付宝收银台跳转地址（电脑网站支付，买家本人 + 待付款订单）。
+// 回调地址按请求方实际访问域名动态生成（不写死配置）：内网穿透/域名变化零改动。
 
 func (a PayApi) AlipayPay(c *gin.Context) {
 	claims := middleware.ClaimsOf(c)
 	orderNo := c.Param("orderNo")
-	payURL, err := a.s.PaymentService.AlipayPayURL(orderNo, claims.UserID)
+	payURL, err := a.s.PaymentService.AlipayPayURL(orderNo, claims.UserID, publicBaseURL(c))
 	if err != nil {
 		fail(c, err)
 		return
 	}
 	ok(c, gin.H{"payURL": payURL})
+}
+
+// publicBaseURL 推导当前请求对外的访问根地址：优先反向代理头（内网穿透会带），
+// 否则用请求自身的 scheme + Host。例：经 http://xxx.cpolar.cn 访问则返回 http://xxx.cpolar.cn。
+
+func publicBaseURL(c *gin.Context) string {
+	scheme := c.Request.Header.Get("X-Forwarded-Proto")
+	if i := strings.IndexByte(scheme, ','); i >= 0 {
+		scheme = scheme[:i]
+	}
+	scheme = strings.TrimSpace(scheme)
+	if scheme == "" {
+		if c.Request.TLS != nil {
+			scheme = "https"
+		} else {
+			scheme = "http"
+		}
+	}
+	host := c.Request.Header.Get("X-Forwarded-Host")
+	if i := strings.IndexByte(host, ','); i >= 0 {
+		host = host[:i]
+	}
+	host = strings.TrimSpace(host)
+	if host == "" {
+		host = c.Request.Host
+	}
+	return scheme + "://" + host
 }
 
 // AlipayNotify 支付宝异步通知回调：POST 表单，RSA2 验签；任何分支都留痕可查。

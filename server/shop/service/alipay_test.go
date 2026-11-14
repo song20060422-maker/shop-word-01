@@ -146,19 +146,32 @@ func TestAlipayPagePayURL(t *testing.T) {
 	if err != nil {
 		t.Fatalf("下单失败: %v", err)
 	}
-	u, err := g.PaymentService.AlipayPayURL(o.OrderNo, b)
+	// 动态回调：从哪个域名访问，notify_url 就用哪个域名（数据不写死）
+	u, err := g.PaymentService.AlipayPayURL(o.OrderNo, b, "http://demo.cpolar.cn")
 	if err != nil {
 		t.Fatalf("生成收银台地址失败: %v", err)
 	}
-	for _, want := range []string{"alipay.trade.page.pay", "out_trade_no", "sign=", "9021000158651669"} {
+	for _, want := range []string{
+		"alipay.trade.page.pay", "out_trade_no", "sign=", "9021000158651669",
+		"notify_url=http%3A%2F%2Fdemo.cpolar.cn%2Fapi%2Fpay%2Falipay%2Fnotify",
+		"return_url=http%3A%2F%2Fdemo.cpolar.cn%2Fshop",
+	} {
 		if !strings.Contains(u, want) {
 			t.Fatalf("收银台地址缺少 %s：%s", want, u)
 		}
 	}
+	// 未传访问域名时回落 config 静态配置（显式指定仍生效）
+	u2, err := g.PaymentService.AlipayPayURL(o.OrderNo, b, "")
+	if err != nil {
+		t.Fatalf("回落配置生成失败: %v", err)
+	}
+	if !strings.Contains(u2, "sign=") {
+		t.Fatalf("回落配置地址异常：%s", u2)
+	}
 	// 未启用支付宝渠道时应报业务错误
 	g2, _, _ := newEnv(t)
 	o2, _ := g2.OrderService.Create(b, productID(t, "SKU-A"), 1)
-	if _, err := g2.PaymentService.AlipayPayURL(o2.OrderNo, b); err == nil {
+	if _, err := g2.PaymentService.AlipayPayURL(o2.OrderNo, b, "http://demo.cpolar.cn"); err == nil {
 		t.Fatal("模拟渠道下应拒绝生成收银台地址")
 	}
 }

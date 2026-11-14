@@ -181,7 +181,7 @@ func (s PaymentService) applyPayment(orderNo, txn string, amount int64, rawBody 
 // AlipayPayURL 为待付款订单生成支付宝收银台跳转地址（电脑网站支付）：
 // 校验本人订单与待付款状态，渠道未启用返回业务错误。
 
-func (s PaymentService) AlipayPayURL(orderNo string, buyerID uint64) (string, error) {
+func (s PaymentService) AlipayPayURL(orderNo string, buyerID uint64, publicBase string) (string, error) {
 	var o model.Order
 	if err := s.deps.DB.Where("order_no = ?", strings.TrimSpace(orderNo)).First(&o).Error; err != nil {
 		return "", ErrOrderNotFound
@@ -196,7 +196,13 @@ func (s PaymentService) AlipayPayURL(orderNo string, buyerID uint64) (string, er
 	if !isAli {
 		return "", ErrAlipayDisabled
 	}
-	return ac.PagePayURL(o.OrderNo, o.AmountCents, "商城订单："+o.ProductName)
+	// 回调地址不写死：买家从哪个域名访问，通知就回哪个域名（config 显式配置仍优先生效）
+	notifyURL, returnURL := "", ""
+	if b := strings.TrimSpace(publicBase); b != "" {
+		notifyURL = b + "/api/pay/alipay/notify"
+		returnURL = b + "/shop"
+	}
+	return ac.PagePayURL(o.OrderNo, o.AmountCents, "商城订单："+o.ProductName, notifyURL, returnURL)
 }
 
 // markAbnormal 迟到支付：登记异常收款，绝不恢复订单、绝不重新占用库存。

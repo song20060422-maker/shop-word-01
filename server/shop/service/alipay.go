@@ -59,15 +59,23 @@ func NewAlipayChannel(cfg config.Alipay) (*AlipayChannel, error) {
 }
 
 // PagePayURL 生成电脑网站支付的收银台跳转地址（GET，直接 302/window.open 即可）。
+// notifyURL / returnURL 由调用方按实际访问域名动态传入（数据不写死）；
+// 传空则回落 config.shop.alipay 的静态配置（兼容显式指定场景）。
 
-func (c *AlipayChannel) PagePayURL(orderNo string, amountCents int64, subject string) (string, error) {
+func (c *AlipayChannel) PagePayURL(orderNo string, amountCents int64, subject, notifyURL, returnURL string) (string, error) {
 	var p alipay.TradePagePay
 	p.OutTradeNo = orderNo
 	p.TotalAmount = centsToYuan(amountCents)
 	p.Subject = subject
 	p.ProductCode = "FAST_INSTANT_TRADE_PAY"
-	p.NotifyURL = c.cfg.NotifyURL
-	p.ReturnURL = c.cfg.ReturnURL
+	p.NotifyURL = notifyURL
+	if strings.TrimSpace(p.NotifyURL) == "" {
+		p.NotifyURL = c.cfg.NotifyURL
+	}
+	p.ReturnURL = returnURL
+	if strings.TrimSpace(p.ReturnURL) == "" {
+		p.ReturnURL = c.cfg.ReturnURL
+	}
 	u, err := c.client.TradePagePay(p)
 	if err != nil {
 		return "", fmt.Errorf("构造支付宝收银台地址失败: %w", err)
